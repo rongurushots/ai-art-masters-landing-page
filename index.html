@@ -88,6 +88,7 @@
    --mp (0..1) is driven by the scroll handler; each chip interpolates its own start offset/tilt. */
 #why .sec-h2{max-width:22ch}  /* longer headline: clean 2-line balance instead of 3 cramped lines */
 #why .cta-row{margin-top:56px;justify-content:center}
+#why{overflow-x:clip}  /* chips start translated +/-220px; clip horizontal spill so they don't cause mobile horizontal scroll. clip (not hidden) keeps vertical drop-shadows and adds no scroll container */
 #why .medley{padding:18px 10px 40px}  /* no clipping; room for shadows */
 .anim #why .medley{--mp:0}
 .anim #why .mchip{
