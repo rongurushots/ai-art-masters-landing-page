@@ -184,6 +184,36 @@
 /* "Made for you" title: no fade - just slide up into place */
 .anim #why .sec-head.reveal{opacity:1;transform:translateY(22px);transition:transform .55s cubic-bezier(.22,.61,.36,1)}
 .anim #why .sec-head.reveal.in{opacity:1;transform:none}
+
+/* ---- Mobile: replace the desktop scroll-scrubbed choreography with simple fade-in reveals ----
+   The how-it-works timeline (150vh scrub runway), the gallery scale-scrub and the medley converge
+   are tuned in vh/px for wide screens. On a tall, narrow phone they need far too much scroll and the
+   desktop pull-up margins (.how-lead -34vh, #briefs -124px) overlap the sections. On mobile we drop
+   the runway + pull-ups and reveal each piece once, with a short fade, as it scrolls into view. */
+@media(max-width:759px){
+  .anim #how.how-track.how-scroll{min-height:auto}     /* no 150vh scrub runway */
+  .how-lead{height:auto;margin-bottom:0}               /* no -34vh overlap */
+  .how-shift{transform:none}
+  #briefs{margin-top:0;transform:none}                 /* no -124px pull-up overlap */
+
+  /* how-it-works: fade + rise reveal (the .in class is added by the IntersectionObserver) */
+  .anim #how .sec-head,
+  .anim #how .flow.how-anim .fstep .ic,
+  .anim #how .flow.how-anim .fstep .fbody{
+    opacity:0;transform:translateY(14px);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .anim #how .sec-head.in,
+  .anim #how .flow.how-anim .fstep.in .ic,
+  .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
+  /* connectors drawn straight away (no scrub) */
+  .anim #how .flow.how-anim .fstep:nth-child(1)::after,
+  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(1)}
+
+  /* medley chips: converge once when the row enters, then rest - no continuous scrub */
+  .anim #why .mchip{transition:transform .6s cubic-bezier(.22,.61,.36,1),opacity .45s ease}
+  .anim #why .medley.in{--mp:1}
+}
 </style>
 </head>
 <body>
@@ -475,8 +505,14 @@
   document.querySelectorAll('.reveal,.stagger,.riseup').forEach(function(el){io.observe(el);});
   // "Missions made for you" icons: scroll-scrubbed. As the medley travels up through the viewport,
   // --mp goes 0 -> 1 and the chips converge from their wide stretch to their resting spots.
+  // On phones (<=759px) the vh/px-tuned scroll scrubbers below feel laggy and overlap, so we
+  // swap them for one-shot fade reveals driven by the IntersectionObserver above.
+  var mobileAnim=matchMedia('(max-width:759px)').matches;
   var medley=document.getElementById('medley');
   if(medley){
+    if(mobileAnim){
+      io.observe(medley);                         // .medley.in{--mp:1} converges the chips once on enter
+    } else {
     var mTicking=false;
     var setMP=function(){
       mTicking=false;
@@ -490,6 +526,7 @@
     window.addEventListener('scroll',onMScroll,{passive:true});
     window.addEventListener('resize',onMScroll);
     setMP();
+    }
   }
 
   // Available missions gallery: scroll-scrubbed. Each thumbnail scales + fades in tied directly to
@@ -497,7 +534,9 @@
   // reaches the centre of the screen. (Same approach as the "Missions made for you" medley above.)
   var bgrid=document.querySelector('#briefs .briefs');
   var bcards=Array.prototype.slice.call(document.querySelectorAll('#briefs .briefs>.brief'));
-  if(bgrid&&bcards.length){
+  if(bgrid&&bcards.length&&mobileAnim){
+    io.observe(bgrid);                            // .briefs.in reveals the cards once on enter (no scrub)
+  } else if(bgrid&&bcards.length){
     var bSpread=0.5, bN=bcards.length, bTick=false, bDone=false;   // cards stagger across the first 50% of the scrub
     var setGP=function(){
       bTick=false;
@@ -533,6 +572,13 @@
   if(howSec&&howFlow){
     howFlow.classList.add('how-anim');
     var root=document.documentElement;
+    if(mobileAnim){
+      // Phones: no scrub track. Draw the connectors and fade in the title + steps as they enter.
+      root.style.setProperty('--how-l1',1); root.style.setProperty('--how-l2',1);
+      var howHead=howSec.querySelector('.sec-head'); if(howHead) io.observe(howHead);
+      [].slice.call(howFlow.querySelectorAll('.fstep')).forEach(function(s){io.observe(s);});
+      return;
+    }
     var T=window.__howT||(window.__howT={
       center:6, after:10, pre:14, titleRise:28, rise:14,
       seq:[ {gap:-6,enter:14},   // title - starts at timeline start, animates longest
