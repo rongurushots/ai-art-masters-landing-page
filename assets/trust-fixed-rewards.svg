@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" width="240" height="150" role="img" aria-label="A price tag with a fixed reward and a gold coin">
+  <rect width="240" height="150" fill="#E7E9FF"/>
+  <circle cx="196" cy="34" r="30" fill="#fff" opacity=".55"/>
+  <circle cx="44" cy="120" r="20" fill="#fff" opacity=".5"/>
+  <!-- price tag -->
+  <g transform="rotate(-12 120 78)">
+    <path d="M78 48 h70 a14 14 0 0 1 14 14 v34 a14 14 0 0 1 -14 14 h-70 l-26 -31 z" fill="#4F5BFF"/>
+    <path d="M78 48 h70 a14 14 0 0 1 14 14 v6 h-84 z" fill="#6E78FF" opacity=".6"/>
+    <circle cx="66" cy="79" r="6.5" fill="#E7E9FF"/>
+    <text x="118" y="88" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="30" fill="#fff" text-anchor="middle">$5</text>
+  </g>
+  <!-- coin -->
+  <g transform="translate(150 92)">
+    <circle cx="0" cy="0" r="28" fill="#E0951A"/>
+    <circle cx="0" cy="0" r="25" fill="#FFC22E"/>
+    <circle cx="0" cy="0" r="18.5" fill="#FFD84D"/>
+    <text x="0" y="7" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="22" fill="#E0951A" text-anchor="middle">$</text>
+  </g>
+</svg>

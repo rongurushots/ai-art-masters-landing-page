@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" width="240" height="150" role="img" aria-label="A gift card and globe for reliable global payouts">
+  <rect width="240" height="150" fill="#FFE4F0"/>
+  <circle cx="44" cy="38" r="24" fill="#fff" opacity=".55"/>
+  <circle cx="204" cy="116" r="20" fill="#fff" opacity=".5"/>
+  <!-- globe -->
+  <g transform="translate(170 96)" opacity=".95">
+    <circle cx="0" cy="0" r="26" fill="#13B8D4"/>
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#fff" stroke-width="2.4" opacity=".8"/>
+    <path d="M0 -26 C 14 -8 14 8 0 26 C -14 8 -14 -8 0 -26 Z" fill="none" stroke="#fff" stroke-width="2.4" opacity=".8"/>
+    <line x1="-26" y1="0" x2="26" y2="0" stroke="#fff" stroke-width="2.4" opacity=".8"/>
+    <line x1="-22" y1="-13" x2="22" y2="-13" stroke="#fff" stroke-width="2" opacity=".6"/>
+    <line x1="-22" y1="13" x2="22" y2="13" stroke="#fff" stroke-width="2" opacity=".6"/>
+  </g>
+  <!-- gift card -->
+  <g transform="rotate(-8 96 74)">
+    <rect x="48" y="48" width="104" height="64" rx="12" fill="#FF4D94"/>
+    <rect x="48" y="48" width="104" height="64" rx="12" fill="url(#g)" opacity=".25"/>
+    <rect x="48" y="64" width="104" height="13" fill="#E0357D"/>
+    <rect x="60" y="90" width="34" height="9" rx="4.5" fill="#fff" opacity=".9"/>
+    <circle cx="132" cy="94" r="9" fill="#FFC22E"/>
+    <path d="M132 89 v10 M127 94 h10" stroke="#E0951A" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" width="240" height="150" role="img" aria-label="A checklist showing clear requirements">
+  <rect width="240" height="150" fill="#F1EAFE"/>
+  <circle cx="40" cy="36" r="24" fill="#fff" opacity=".55"/>
+  <circle cx="206" cy="116" r="20" fill="#fff" opacity=".5"/>
+  <!-- clipboard -->
+  <g transform="rotate(-4 120 75)">
+    <rect x="74" y="30" width="92" height="96" rx="14" fill="#8B5CF6"/>
+    <rect x="84" y="40" width="72" height="76" rx="9" fill="#fff"/>
+    <rect x="104" y="24" width="32" height="16" rx="8" fill="#6D28D9"/>
+    <!-- rows with checks -->
+    <g>
+      <circle cx="98" cy="58" r="7" fill="#13C783"/>
+      <path d="M95 58 l2.2 2.4 4-4.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="111" y="55" width="36" height="6" rx="3" fill="#E6E1F2"/>
+    </g>
+    <g>
+      <circle cx="98" cy="78" r="7" fill="#13C783"/>
+      <path d="M95 78 l2.2 2.4 4-4.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="111" y="75" width="30" height="6" rx="3" fill="#E6E1F2"/>
+    </g>
+    <g>
+      <circle cx="98" cy="98" r="7" fill="#FF4D94"/>
+      <path d="M95 98 l2.2 2.4 4-4.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="111" y="95" width="34" height="6" rx="3" fill="#E6E1F2"/>
+    </g>
+  </g>
+</svg>

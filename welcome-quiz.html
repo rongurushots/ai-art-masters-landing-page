@@ -1,0 +1,535 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Art Masters - Set up your profile</title>
+<meta name="description" content="Set up your creator profile and start earning from your photos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand/aam.css">
+<style>
+/* ===== Welcome quiz - page-specific layout (tokens come from aam.css) =====
+   Stable, minimal, flat (no card). The three anchors never move between steps:
+   progress (top) · title block (fixed top offset) · CTA (bottom).
+   Only the empty space between title and CTA flexes - so nothing the eye
+   tracks jumps as step content changes height.
+   Desktop just constrains the flow to a calm centred column. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);min-height:100vh;min-height:100dvh}
+
+.qz-shell{display:flex;flex-direction:column;height:100vh;height:100dvh}
+
+/* top: slim progress bar flush to the very top edge, then the nav row beneath it */
+.qz-top{flex:none}
+.qz-prog{height:6px;background:var(--line);overflow:hidden}
+.qz-prog span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:0 999px 999px 0;transition:width .35s cubic-bezier(.4,0,.2,1)}
+.qz-bar{display:flex;align-items:center;gap:14px;min-height:40px;padding:18px var(--pad) 0}
+.qz-bar.empty{padding:0;min-height:0}
+.qz-back{flex:none;width:40px;height:40px;margin-left:-9px;border:none;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2);transition:color .2s}
+.qz-back:hover{color:var(--primary)}
+.qz-back[hidden]{display:none}
+.qz-step{margin-left:auto;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--ink3)}
+
+/* body: title block anchored to a consistent top offset, content grows downward,
+   scrolls inside this area if a step is unusually tall */
+.qz-main{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;
+  padding:clamp(40px,9vh,88px) var(--pad) 24px}
+.qz-screen{width:100%;max-width:460px;margin:0 auto;opacity:0;transition:opacity .15s ease}
+.qz-screen.in{opacity:1}
+/* keep all intro content animating together, not just the <h1> */
+.anim .qz-eye{opacity:0;animation:fadeUp .5s ease .04s forwards}
+.anim .qz-h{opacity:0;animation:fadeUp .55s ease .12s forwards}
+.anim .qz-sub{opacity:0;animation:fadeUp .55s ease .2s forwards}
+.anim .qz-body{opacity:0;animation:fadeUp .55s ease .28s forwards}
+.qz-eye{font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;text-align:center}
+.qz-h{font-family:var(--fd);font-weight:800;font-size:clamp(26px,5vw,38px);line-height:1.08;text-align:center;letter-spacing:-.01em}
+.qz-sub{color:var(--ink2);font-size:15px;line-height:1.6;text-align:center;margin:14px auto 0;max-width:42ch}
+.qz-body{margin-top:30px}
+
+/* fields */
+.fld{width:100%;font-family:var(--fb);font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line2);border-radius:16px;padding:16px 18px;transition:border-color .2s,box-shadow .2s}
+.fld::placeholder{color:var(--ink3)}
+.fld:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 16%,transparent)}
+select.fld{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235B5685' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 16px center;padding-right:46px}
+.fld-row{display:grid;gap:12px}
+@media(min-width:480px){.fld-row.two{grid-template-columns:1fr 1fr}}
+.fld-lab{display:block;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--ink2);margin:0 0 7px 4px}
+
+/* minimal single-select option rows */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;border:1px solid var(--line2);border-radius:13px;padding:12px 16px;cursor:pointer;font-family:var(--fb);font-size:15.5px;color:var(--ink);transition:border-color .2s,background .2s}
+.opt:hover{border-color:var(--primary)}
+.opt .od{font-family:var(--fm);font-size:12.5px;color:var(--ink3);margin-top:1px}
+.opt .otx{display:flex;flex-direction:column}
+.opt .otx b{font-family:var(--fd);font-weight:700}
+.opt .ock{flex:none;margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s,border-color .2s}
+.opt .ock svg{width:13px;height:13px;opacity:0;transition:opacity .15s}
+.opt.sel{border-color:var(--primary);background:#fff}
+.opt.sel .ock{background:var(--primary);border-color:var(--primary)}
+.opt.sel .ock svg{opacity:1}
+
+/* multi chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--ink);background:#fff;border:1.5px solid var(--line2);border-radius:999px;padding:11px 18px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.chip:hover{border-color:var(--primary)}
+.chip.sel{background:var(--primary);border-color:var(--primary);color:#fff}
+
+/* selected-language tags (removable) - note: avoid .tag, that's a design-system badge */
+.langtags{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.langtags:empty{margin:0}
+.langtag{display:inline-flex;align-items:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:14px;color:#fff;background:var(--primary);border:none;border-radius:999px;padding:9px 10px 9px 16px;cursor:pointer;transition:background .2s}
+.langtag:hover{background:var(--primary-deep)}
+.langtag .langtag-x{display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.22);font-size:15px;line-height:1}
+
+/* segmented unit toggle */
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--line2);border-radius:999px;padding:3px}
+.seg button{border:none;background:transparent;font-family:var(--fd);font-weight:700;font-size:13px;color:var(--ink2);padding:7px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.seg button.on{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(36,31,71,.1)}
+
+/* skin tones */
+.tones{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.tone{width:58px;height:58px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line2);position:relative;transition:box-shadow .2s}
+.tone:hover{box-shadow:0 0 0 1.5px var(--primary)}
+.tone.sel{box-shadow:0 0 0 3px var(--primary)}
+.tone.sel::after{content:"";position:absolute;inset:0;margin:auto;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.9) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234F5BFF' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>") center/14px no-repeat}
+
+/* consent rows */
+.consent{display:flex;align-items:flex-start;gap:13px;background:#fff;border:1.5px solid var(--line2);border-radius:16px;padding:16px 18px;cursor:pointer;transition:border-color .2s,background .2s}
+.consent.sel{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,#fff)}
+.consent .cbx{flex:none;margin-top:1px;width:24px;height:24px;border-radius:7px;border:2px solid var(--line2);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s,border-color .2s}
+.consent .cbx svg{width:15px;height:15px;opacity:0;transition:opacity .15s}
+.consent.sel .cbx{background:var(--primary);border-color:var(--primary)}
+.consent.sel .cbx svg{opacity:1}
+.consent .ctx{font-size:14.5px;line-height:1.55;color:var(--ink)}
+.consent .ctx a{color:var(--primary);font-weight:600;text-decoration:underline}
+.consent + .consent{margin-top:12px}
+
+.qz-note{font-family:var(--fm);font-size:13px;color:var(--ink3);text-align:center;line-height:1.55;margin-top:18px}
+.qz-err{font-family:var(--fm);font-size:13px;font-weight:600;color:var(--accent-deep);text-align:center;margin-top:14px;min-height:18px}
+
+/* footer action - CTA always anchored to the bottom of the flow (never jumps) */
+.qz-foot{flex:none;padding:16px var(--pad) calc(18px + env(safe-area-inset-bottom))}
+.qz-foot-in{max-width:460px;margin:0 auto;display:flex;flex-direction:column;align-items:stretch;gap:6px}
+.qz-skip{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--ink3);background:none;border:none;cursor:pointer;padding:10px;align-self:center}
+.qz-skip:hover{color:var(--ink2)}
+.qz-skip[hidden]{display:block;visibility:hidden}   /* keep its space so Continue never shifts */
+.qz-next{width:100%}                     /* full-width primary CTA = clear, thumb-friendly on mobile */
+
+/* ===== Desktop / large screens: flat & minimal - no card.
+   The flow is a calm, fixed-size centred column; the three anchors stay put. ===== */
+@media(min-width:720px){
+  body{display:flex;align-items:center;justify-content:center;padding:40px 24px}
+  .qz-shell{flex:none;width:100%;max-width:520px;height:min(780px,calc(100dvh - 40px))}
+  /* progress bar flush to the very top edge of the screen, full width (same as mobile) */
+  .qz-prog{position:fixed;top:0;left:0;right:0;z-index:60}
+  .qz-bar{padding:18px 30px 0}
+  /* title pinned to a fixed top offset, CTA pinned at the bottom - only the gap flexes */
+  .qz-main{justify-content:flex-start;padding:32px 30px 20px}
+  .qz-foot{padding:20px 30px 8px}
+  .qz-foot-in{max-width:none;align-items:center}
+  .qz-next{width:auto;min-width:260px}    /* tidy pill, not full-bleed, on wide screens */
+}
+
+/* celebration */
+.cel{text-align:center}
+.cel .emoji{font-size:64px;line-height:1;margin-bottom:8px}
+
+@media(prefers-reduced-motion:reduce){
+  .qz-screen{transition:none;opacity:1}
+  .qz-prog span{transition:none}
+}
+</style>
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');}catch(e){}</script>
+</head>
+<body>
+
+<div class="qz-shell">
+  <header class="qz-top">
+    <div class="qz-prog"><span id="prog"></span></div>
+    <div class="qz-bar">
+      <button class="qz-back" id="back" type="button" aria-label="Go back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="qz-step" id="stepLabel"></span>
+    </div>
+  </header>
+
+  <main class="qz-main">
+    <div class="qz-screen" id="screen"></div>
+  </main>
+
+  <footer class="qz-foot" id="foot">
+    <div class="qz-foot-in">
+      <button class="btn btn-p btn-lg qz-next" id="next" type="button">Continue</button>
+      <button class="qz-skip" id="skip" type="button" hidden>Skip for now</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA MODEL  - everything the user enters lives in `profile`.
+   This single object is what gets saved per user later.
+   ============================================================ */
+var STORAGE_KEY = 'aam_welcome_quiz_v1';
+
+var profile = {
+  version: 1,
+  startedAt: new Date().toISOString(),
+  completedAt: null,
+  answers: {
+    firstName:'', lastName:'',
+    dob:'', age:null,
+    gender:'',
+    country:'', city:'',
+    height:{ value:null, unit:'cm', cm:null },
+    weight:{ value:null, unit:'kg', kg:null },
+    nativeLanguage:'', languages:[],
+    skinTone:null,
+    abilities:[],
+    profession:'',
+    modelRelease:false,
+    acceptedTerms:false,
+    email:''
+  }
+};
+/* password is intentionally NOT stored in the profile payload */
+var _pw='';
+
+/* restore any saved draft so a returning user keeps progress */
+try{ var saved = JSON.parse(localStorage.getItem(STORAGE_KEY)||'null'); if(saved && saved.answers){ profile = Object.assign(profile, saved); profile.answers = Object.assign({}, profile.answers, saved.answers); } }catch(e){}
+function saveDraft(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); }catch(e){} }
+
+/* ---- reference lists ---- */
+var COUNTRIES = ["United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Ireland","Portugal","Poland","Sweden","Norway","Denmark","Finland","Belgium","Austria","Switzerland","Greece","Czechia","Romania","Hungary","Israel","Turkey","India","Pakistan","Bangladesh","Philippines","Indonesia","Malaysia","Singapore","Thailand","Vietnam","Japan","South Korea","China","Hong Kong","Taiwan","United Arab Emirates","Saudi Arabia","Egypt","Morocco","Nigeria","Kenya","Ghana","South Africa","Brazil","Mexico","Argentina","Chile","Colombia","Peru","New Zealand","Ukraine","Russia","Other"];
+var LANGUAGES = ["English","Spanish","Portuguese","French","German","Italian","Dutch","Polish","Russian","Ukrainian","Arabic","Hebrew","Turkish","Hindi","Urdu","Bengali","Tamil","Indonesian","Malay","Tagalog","Thai","Vietnamese","Mandarin Chinese","Cantonese","Japanese","Korean","Greek","Swedish","Norwegian","Danish","Finnish","Romanian","Hungarian","Czech","Other"];
+var GENDERS = ["Female","Male","Other","Prefer not to say"];
+var TONES = [
+  {id:1,c:"#F6DBC6"},{id:2,c:"#EAC0A2"},{id:3,c:"#D6A179"},
+  {id:4,c:"#B97E58"},{id:5,c:"#8C5A3B"},{id:6,c:"#5E3B27"}
+];
+var ABILITIES = [
+  {id:"photos", t:"Photos", d:"Everyday photos and objects"},
+  {id:"selfies", t:"Selfies", d:"Photos of yourself"},
+  {id:"videos", t:"Videos", d:"Short video clips"},
+  {id:"audio", t:"Audio", d:"Voice or sound recordings"},
+  {id:"custom", t:"Custom production", d:"Shoot to a specific brief"}
+];
+
+/* small UI helpers */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function checkSVG(){ return "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>"; }
+function options(list, val){ return list.map(function(o){return "<option value='"+esc(o)+"'"+(o===val?" selected":"")+">"+esc(o)+"</option>";}).join(''); }
+
+/* ============================================================
+   STEPS - each describes a screen. `render` returns HTML,
+   `valid` returns true when the user can continue.
+   ============================================================ */
+var A = profile.answers;
+var steps = [
+  { key:'intro', count:false, render:function(){
+      return head('Welcome','Let\'s build your creator profile','It takes about 2 minutes. The more we know, the more paid missions we can match to you.');
+    }, valid:function(){return true;}, cta:'Get started' },
+
+  { key:'name', count:true, render:function(){
+      return head('About you','What\'s your name?','Use your real name as it appears on official documents.')+
+        "<div class='qz-body'><div class='fld-row two'>"+
+        "<div><label class='fld-lab'>First name</label><input class='fld' id='firstName' placeholder='First name' value='"+esc(A.firstName)+"'></div>"+
+        "<div><label class='fld-lab'>Last name</label><input class='fld' id='lastName' placeholder='Last name' value='"+esc(A.lastName)+"'></div>"+
+        "</div></div>";
+    },
+    bind:function(){ bindInput('firstName','firstName'); bindInput('lastName','lastName'); },
+    valid:function(){ return A.firstName.trim().length>0 && A.lastName.trim().length>0; } },
+
+  { key:'dob', count:true, render:function(){
+      return head('About you','What\'s your date of birth?','You need to be at least 18 to join.')+
+        "<div class='qz-body'><input type='date' class='fld' id='dob' value='"+esc(A.dob)+"' max='"+maxDob()+"'></div>";
+    },
+    bind:function(){ var el=document.getElementById('dob'); el.addEventListener('change',function(){ A.dob=el.value; A.age=ageFrom(el.value); saveDraft(); refreshNext(); }); },
+    valid:function(){ return A.age!=null && A.age>=18; },
+    err:function(){ if(A.dob && A.age!=null && A.age<18) return 'You need to be at least 18 years old to join.'; return ''; } },
+
+  { key:'gender', count:true, render:function(){
+      return head('About you','How do you describe yourself?','Optional, but it helps us match more missions to you.')+
+        "<div class='qz-body opts'>"+GENDERS.map(function(g){return optCard(g,'',A.gender===g);}).join('')+"</div>";
+    },
+    bind:function(){ bindOptCards(function(v){A.gender=v;}, function(){return A.gender;}); },
+    valid:function(){ return true; }, optional:true },
+
+  { key:'location', count:true, render:function(){
+      return head('About you','Where do you live?','')+
+        "<div class='qz-body fld-row'>"+
+        "<div><label class='fld-lab'>Country</label><select class='fld' id='country'><option value='' "+(!A.country?'selected':'')+" disabled>Select your country</option>"+options(COUNTRIES,A.country)+"</select></div>"+
+        "<div><label class='fld-lab'>City</label><input class='fld' id='city' placeholder='City' value='"+esc(A.city)+"'></div>"+
+        "</div>";
+    },
+    bind:function(){ var c=document.getElementById('country'); c.addEventListener('change',function(){A.country=c.value;saveDraft();refreshNext();}); bindInput('city','city'); },
+    valid:function(){ return !!A.country && A.city.trim().length>0; } },
+
+  { key:'body', count:true, render:function(){
+      return head('About you','Your height and weight','This helps match you to modelling and try-on missions.')+
+        "<div class='qz-body'>"+
+        "<div style='margin-bottom:22px'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:9px'><label class='fld-lab' style='margin:0'>Height</label>"+
+          "<div class='seg' id='hUnit'><button type='button' data-u='cm' class='"+(A.height.unit==='cm'?'on':'')+"'>cm</button><button type='button' data-u='ft' class='"+(A.height.unit==='ft'?'on':'')+"'>ft / in</button></div></div>"+
+          "<div id='hInputs'></div></div>"+
+        "<div><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:9px'><label class='fld-lab' style='margin:0'>Weight</label>"+
+          "<div class='seg' id='wUnit'><button type='button' data-u='kg' class='"+(A.weight.unit==='kg'?'on':'')+"'>kg</button><button type='button' data-u='lb' class='"+(A.weight.unit==='lb'?'on':'')+"'>lb</button></div></div>"+
+          "<div id='wInputs'></div></div>"+
+        "</div>";
+    },
+    bind:bindBody,
+    valid:function(){ return A.height.cm>0 && A.weight.kg>0; } },
+
+  { key:'languages', count:true, render:function(){
+      return head('About you','Languages you speak','')+
+        "<div class='qz-body'>"+
+        "<label class='fld-lab'>Native language</label>"+
+        "<select class='fld' id='native'><option value='' "+(!A.nativeLanguage?'selected':'')+" disabled>Select your native language</option>"+options(LANGUAGES,A.nativeLanguage)+"</select>"+
+        "<label class='fld-lab' style='margin-top:20px'>Other languages you speak (optional)</label>"+
+        "<select class='fld' id='langAdd'><option value='' selected disabled>Add a language</option></select>"+
+        "<div class='langtags' id='langTags'></div>"+
+        "</div>";
+    },
+    bind:function(){
+      var native=document.getElementById('native');
+      function rebuild(){
+        var avail=LANGUAGES.filter(function(l){return l!==A.nativeLanguage && A.languages.indexOf(l)<0;});
+        document.getElementById('langAdd').innerHTML="<option value='' selected disabled>Add a language</option>"+options(avail,'');
+        document.getElementById('langTags').innerHTML=A.languages.map(function(l){
+          return "<button type='button' class='langtag' data-val='"+esc(l)+"'>"+esc(l)+"<span class='langtag-x' aria-hidden='true'>×</span></button>";
+        }).join('');
+      }
+      native.addEventListener('change',function(){ A.nativeLanguage=native.value; A.languages=A.languages.filter(function(l){return l!==native.value;}); saveDraft(); rebuild(); refreshNext(); });
+      document.getElementById('langAdd').addEventListener('change',function(e){ var v=e.target.value; if(v && A.languages.indexOf(v)<0)A.languages.push(v); saveDraft(); rebuild(); });
+      document.getElementById('langTags').addEventListener('click',function(e){ var t=e.target.closest('.langtag'); if(!t)return; var v=t.getAttribute('data-val'); A.languages=A.languages.filter(function(l){return l!==v;}); saveDraft(); rebuild(); });
+      rebuild();
+    },
+    valid:function(){ return !!A.nativeLanguage; } },
+
+  { key:'tone', count:true, render:function(){
+      return head('About you','Which skin tone is closest to yours?','This helps match you to the right paid missions.')+
+        "<div class='qz-body tones' id='tones'>"+TONES.map(function(t){return "<button type='button' class='tone"+(A.skinTone===t.id?' sel':'')+"' data-id='"+t.id+"' style='background:"+t.c+"' aria-label='Tone "+t.id+"'></button>";}).join('')+"</div>";
+    },
+    bind:function(){ document.getElementById('tones').addEventListener('click',function(e){ var b=e.target.closest('.tone'); if(!b)return; A.skinTone=parseInt(b.getAttribute('data-id'),10); saveDraft(); [].forEach.call(this.querySelectorAll('.tone'),function(x){x.classList.remove('sel');}); b.classList.add('sel'); refreshNext(); }); },
+    valid:function(){ return A.skinTone!=null; }, optional:true },
+
+  { key:'abilities', count:true, render:function(){
+      return head('Your work','What can you create?','Pick everything you\'re happy to do. You can change this later.')+
+        "<div class='qz-body opts' id='abil'>"+ABILITIES.map(function(a){return optCard(a.t,a.d,A.abilities.indexOf(a.id)>-1,a.id);}).join('')+"</div>";
+    },
+    bind:function(){ document.getElementById('abil').addEventListener('click',function(e){ var c=e.target.closest('.opt'); if(!c)return; var id=c.getAttribute('data-val'); var i=A.abilities.indexOf(id); if(i>-1){A.abilities.splice(i,1);c.classList.remove('sel');}else{A.abilities.push(id);c.classList.add('sel');} saveDraft(); refreshNext(); }); },
+    valid:function(){ return A.abilities.length>0; } },
+
+  { key:'profession', count:true, render:function(){
+      return head('Your work','What do you do?','Optional - tell us your job or main skill.')+
+        "<div class='qz-body'><input class='fld' id='profession' placeholder='e.g. Student, Photographer, Nurse' value='"+esc(A.profession)+"'></div>";
+    },
+    bind:function(){ bindInput('profession','profession'); },
+    valid:function(){ return true; }, optional:true },
+
+  { key:'release', count:true, render:function(){
+      return head('Almost done','Model release','Please read and agree before you send any photos or videos of people.')+
+        "<div class='qz-body'><div class='consent"+(A.modelRelease?' sel':'')+"' id='release'><span class='cbx'>"+checkSVG()+"</span>"+
+        "<span class='ctx'>I agree that the photos and videos I choose to send can be used to train AI models and create AI content. I confirm I have the right to share them, and that anyone shown in them has agreed.</span></div></div>";
+    },
+    bind:function(){ var el=document.getElementById('release'); el.addEventListener('click',function(){ A.modelRelease=!A.modelRelease; saveDraft(); el.classList.toggle('sel',A.modelRelease); refreshNext(); }); },
+    valid:function(){ return A.modelRelease===true; } },
+
+  { key:'terms', count:true, render:function(){
+      return head('Almost done','Review and accept','')+
+        "<div class='qz-body'><div class='consent"+(A.acceptedTerms?' sel':'')+"' id='terms'><span class='cbx'>"+checkSVG()+"</span>"+
+        "<span class='ctx'>I'm 18 or older and I accept the <a href='#' target='_blank' rel='noopener'>Terms</a> and <a href='#' target='_blank' rel='noopener'>Privacy Policy</a>.</span></div></div>";
+    },
+    bind:function(){ var el=document.getElementById('terms'); el.addEventListener('click',function(e){ if(e.target.closest('a'))return; A.acceptedTerms=!A.acceptedTerms; saveDraft(); el.classList.toggle('sel',A.acceptedTerms); refreshNext(); }); },
+    valid:function(){ return A.acceptedTerms===true; }, cta:'Continue' },
+
+  { key:'signup', count:true, render:function(){
+      return head('Last step','Create your account','Sign up so we can save your profile, match you to missions, and pay you.')+
+        "<div class='qz-body'>"+
+        "<label class='fld-lab'>Email</label>"+
+        "<input class='fld' id='email' type='email' inputmode='email' autocomplete='email' placeholder='you@example.com' value='"+esc(A.email)+"'>"+
+        "<label class='fld-lab' style='margin-top:16px'>Password</label>"+
+        "<input class='fld' id='password' type='password' autocomplete='new-password' placeholder='At least 8 characters' value='"+esc(_pw)+"'>"+
+        "<div class='qz-note' style='margin-top:14px'>By creating an account you agree to keep your details accurate. You can edit them anytime.</div>"+
+        "</div>";
+    },
+    bind:function(){
+      var em=document.getElementById('email'); em.addEventListener('input',function(){ A.email=em.value.trim(); saveDraft(); refreshNext(); });
+      var pw=document.getElementById('password'); pw.addEventListener('input',function(){ _pw=pw.value; refreshNext(); });
+    },
+    valid:function(){ return /.+@.+\..+/.test(A.email) && _pw.length>=8; },
+    err:function(){ if(A.email && !/.+@.+\..+/.test(A.email)) return 'Enter a valid email address.'; if(_pw && _pw.length<8) return 'Password must be at least 8 characters.'; return ''; },
+    cta:'Create account' },
+
+  { key:'done', count:false, render:function(){
+      return "<div class='cel'><div class='emoji'>🎉</div>"+
+        "<div class='qz-eye'>Account created</div>"+
+        "<h1 class='qz-h'>You're in"+(A.firstName?', '+esc(A.firstName):'')+"!</h1>"+
+        "<p class='qz-sub'>Taking you to your profile, where you can pick missions and start earning…</p></div>";
+    }, valid:function(){return true;}, cta:'Go to my profile', final:true }
+];
+
+/* shared header markup */
+function head(eye,title,sub){ return "<div class='qz-eye'>"+esc(eye)+"</div><h1 class='qz-h'>"+esc(title)+"</h1>"+(sub?"<p class='qz-sub'>"+esc(sub)+"</p>":""); }
+function optCard(label,desc,sel,val){ return "<button type='button' class='opt"+(sel?' sel':'')+"'"+(val?" data-val='"+esc(val)+"'":" data-val='"+esc(label)+"'")+"><span class='otx'><b>"+esc(label)+"</b>"+(desc?"<span class='od'>"+esc(desc)+"</span>":"")+"</span><span class='ock'>"+checkSVG()+"</span></button>"; }
+function chip(label,sel){ return "<button type='button' class='chip"+(sel?' sel':'')+"' data-val='"+esc(label)+"'>"+esc(label)+"</button>"; }
+
+/* binders */
+function bindInput(id,key){ var el=document.getElementById(id); if(!el)return; el.addEventListener('input',function(){ A[key]=el.value; saveDraft(); refreshNext(); }); }
+/* attach to the per-step .opts container (recreated each render) so the listener
+   never leaks onto the persistent #screen and interferes with later steps */
+function bindOptCards(set,get){ var box=document.getElementById('screen').querySelector('.opts'); if(!box)return; box.addEventListener('click',function(e){ var c=e.target.closest('.opt'); if(!c)return; set(c.getAttribute('data-val')); saveDraft(); [].forEach.call(box.querySelectorAll('.opt'),function(x){x.classList.remove('sel');}); c.classList.add('sel'); refreshNext(); }); }
+function bindChips(containerId,get,set){ document.getElementById(containerId).addEventListener('click',function(e){ var c=e.target.closest('.chip'); if(!c)return; var v=c.getAttribute('data-val'); var arr=get().slice(); var i=arr.indexOf(v); if(i>-1)arr.splice(i,1); else arr.push(v); set(arr); saveDraft(); c.classList.toggle('sel'); }); }
+
+function bindBody(){
+  function drawH(){
+    var box=document.getElementById('hInputs');
+    if(A.height.unit==='cm'){
+      box.innerHTML="<input class='fld' id='hcm' type='number' inputmode='numeric' placeholder='Height in cm' value='"+(A.height.cm||'')+"'>";
+      document.getElementById('hcm').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.height.cm=v>0?Math.round(v):null; A.height.value=A.height.cm; saveDraft(); refreshNext(); });
+    } else {
+      var ft=A.height.cm?Math.floor(A.height.cm/30.48):''; var inch=A.height.cm?Math.round((A.height.cm/2.54)-(Math.floor(A.height.cm/30.48)*12)):'';
+      box.innerHTML="<div class='fld-row two'><input class='fld' id='hft' type='number' inputmode='numeric' placeholder='Feet' value='"+ft+"'><input class='fld' id='hin' type='number' inputmode='numeric' placeholder='Inches' value='"+inch+"'></div>";
+      function upd(){ var f=parseFloat(document.getElementById('hft').value)||0; var i=parseFloat(document.getElementById('hin').value)||0; var cm=Math.round((f*12+i)*2.54); A.height.cm=cm>0?cm:null; A.height.value=A.height.cm; saveDraft(); refreshNext(); }
+      document.getElementById('hft').addEventListener('input',upd); document.getElementById('hin').addEventListener('input',upd);
+    }
+  }
+  function drawW(){
+    var box=document.getElementById('wInputs');
+    if(A.weight.unit==='kg'){
+      box.innerHTML="<input class='fld' id='wkg' type='number' inputmode='numeric' placeholder='Weight in kg' value='"+(A.weight.kg||'')+"'>";
+      document.getElementById('wkg').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.weight.kg=v>0?Math.round(v):null; A.weight.value=A.weight.kg; saveDraft(); refreshNext(); });
+    } else {
+      var lb=A.weight.kg?Math.round(A.weight.kg*2.2046):'';
+      box.innerHTML="<input class='fld' id='wlb' type='number' inputmode='numeric' placeholder='Weight in lb' value='"+lb+"'>";
+      document.getElementById('wlb').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.weight.kg=v>0?Math.round(v/2.2046):null; A.weight.value=v>0?Math.round(v):null; saveDraft(); refreshNext(); });
+    }
+  }
+  drawH(); drawW();
+  document.getElementById('hUnit').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; A.height.unit=b.getAttribute('data-u'); saveDraft(); [].forEach.call(this.children,function(x){x.classList.remove('on');}); b.classList.add('on'); drawH(); });
+  document.getElementById('wUnit').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; A.weight.unit=b.getAttribute('data-u'); saveDraft(); [].forEach.call(this.children,function(x){x.classList.remove('on');}); b.classList.add('on'); drawW(); });
+}
+
+/* date helpers */
+function maxDob(){ var d=new Date(); d.setFullYear(d.getFullYear()-18); return d.toISOString().slice(0,10); }
+function ageFrom(iso){ if(!iso)return null; var b=new Date(iso), n=new Date(); var a=n.getFullYear()-b.getFullYear(); var m=n.getMonth()-b.getMonth(); if(m<0||(m===0&&n.getDate()<b.getDate()))a--; return a; }
+
+/* ============================================================
+   FLOW CONTROL
+   ============================================================ */
+var idx = 0;
+var countedSteps = steps.filter(function(s){return s.count;}).length;
+var screenEl=document.getElementById('screen'), backEl=document.getElementById('back'),
+    nextEl=document.getElementById('next'), skipEl=document.getElementById('skip'),
+    progEl=document.getElementById('prog'), stepLabel=document.getElementById('stepLabel'),
+    footEl=document.getElementById('foot'), barEl=document.querySelector('.qz-bar'),
+    topEl=document.querySelector('.qz-top');
+
+function currentCountIndex(){ var c=0; for(var i=0;i<=idx;i++){ if(steps[i].count)c++; } return c; }
+
+function render(){
+  var s=steps[idx];
+  // remember where the user is so a returning user resumes here
+  profile.lastStepKey=s.key; saveDraft();
+  screenEl.classList.remove('in');
+  screenEl.innerHTML=s.render();
+  if(s.bind)s.bind();
+  // progress + labels
+  if(s.count){ var ci=currentCountIndex(); progEl.style.width=((ci/countedSteps)*100)+'%'; stepLabel.textContent=ci+' / '+countedSteps; }
+  else if(s.key==='done'){ progEl.style.width='100%'; stepLabel.textContent=''; }
+  else { progEl.style.width='0%'; stepLabel.textContent=''; }
+  backEl.hidden = (idx===0 || s.key==='done');
+  // welcome screen: no progress yet → hide the whole top bar for a clean start
+  topEl.style.display = (idx===0) ? 'none' : '';
+  // collapse the top bar when it has no back button and no step label (e.g. done)
+  barEl.classList.toggle('empty', backEl.hidden && !stepLabel.textContent);
+  footEl.style.display = '';
+  skipEl.hidden = !s.optional;
+  nextEl.textContent = s.cta || 'Continue';
+  refreshNext();
+  requestAnimationFrame(function(){ screenEl.classList.add('in'); });
+  window.scrollTo(0,0);
+}
+
+function refreshNext(){
+  var s=steps[idx];
+  var ok=s.valid();
+  nextEl.disabled=!ok;
+  nextEl.style.opacity=ok?'1':'.5';
+  nextEl.style.pointerEvents=ok?'auto':'none';
+  // inline error (e.g. under-18)
+  var existing=screenEl.querySelector('.qz-err');
+  var msg=s.err?s.err():'';
+  if(msg){ if(!existing){ existing=document.createElement('div'); existing.className='qz-err'; screenEl.appendChild(existing);} existing.textContent=msg; }
+  else if(existing){ existing.textContent=''; }
+}
+
+function goNext(){
+  var s=steps[idx];
+  if(!s.valid())return;
+  if(s.final){ finish(); return; }
+  if(idx<steps.length-1){ idx++; render(); }
+}
+function goBack(){ if(idx>0){ idx--; render(); } }
+
+nextEl.addEventListener('click',goNext);
+backEl.addEventListener('click',goBack);
+skipEl.addEventListener('click',function(){ if(idx<steps.length-1){ idx++; render(); } });
+document.addEventListener('keydown',function(e){ if(e.key==='Enter' && !nextEl.disabled && steps[idx].key!=='done'){ goNext(); } });
+
+/* ============================================================
+   SUBMIT  - called on the final step.
+   This is the single place that hands the profile off for saving.
+   ============================================================ */
+function buildPayload(){
+  profile.completedAt = new Date().toISOString();
+  return JSON.parse(JSON.stringify(profile));
+}
+
+function submitQuiz(payload){
+  // Draft is always kept locally so nothing is lost.
+  saveDraft();
+  // TODO(backend): persist this profile per user.
+  //   Set window.AAM_PROFILE_ENDPOINT to your API URL and this will POST it.
+  //   Expected: { ...profile } -> 200 OK. Add auth headers as needed.
+  var endpoint = window.AAM_PROFILE_ENDPOINT || null;
+  if(endpoint){
+    return fetch(endpoint, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.ok; }).catch(function(){ return false; });
+  }
+  // No backend yet: stash completed profiles locally so they're not lost.
+  try{
+    var all = JSON.parse(localStorage.getItem('aam_profiles')||'[]');
+    all.push(payload); localStorage.setItem('aam_profiles', JSON.stringify(all));
+  }catch(e){}
+  console.log('[AAM] welcome quiz profile (no endpoint set, saved locally):', payload);
+  return Promise.resolve(true);
+}
+
+function finish(){
+  // account created -> go to the user's profile / home
+  window.location.href = 'home.html';
+}
+
+/* when we ARRIVE at the done screen, submit the profile and auto-continue to the profile */
+var _render = render, _redirected=false;
+render = function(){
+  _render();
+  if(steps[idx].key==='done' && !_redirected){
+    _redirected=true;
+    submitQuiz(buildPayload());
+    setTimeout(finish, 1800);   // brief celebration, then straight to the profile
+  }
+};
+
+/* resume where the user left off (the draft remembers the last step) */
+(function(){
+  var k=profile.lastStepKey; if(!k) return;
+  for(var i=0;i<steps.length;i++){ if(steps[i].key===k){ if(i>0 && k!=='done') idx=i; break; } }
+})();
+
+render();
+})();
+</script>
+</body></html>
