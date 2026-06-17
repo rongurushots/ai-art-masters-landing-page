@@ -82,6 +82,7 @@
 @media(max-width:600px){
   .hero .cta-row{flex-direction:column;align-items:stretch}
   .hero .cta-row .btn{width:100%}
+  .hero-in{gap:64px}            /* more breathing room between the CTA buttons and the phone mockup */
 }
 
 /* "Missions made for you" — centered CTA + icons scrubbed by scroll: wide stretch -> resting spots.
@@ -185,34 +186,29 @@
 .anim #why .sec-head.reveal{opacity:1;transform:translateY(22px);transition:transform .55s cubic-bezier(.22,.61,.36,1)}
 .anim #why .sec-head.reveal.in{opacity:1;transform:none}
 
-/* ---- Mobile: replace the desktop scroll-scrubbed choreography with simple fade-in reveals ----
-   The how-it-works timeline (150vh scrub runway), the gallery scale-scrub and the medley converge
-   are tuned in vh/px for wide screens. On a tall, narrow phone they need far too much scroll and the
-   desktop pull-up margins (.how-lead -34vh, #briefs -124px) overlap the sections. On mobile we drop
-   the runway + pull-ups and reveal each piece once, with a short fade, as it scrolls into view. */
+/* ---- Mobile: minimal motion ----
+   The desktop choreography (how-it-works 150vh scrub runway, gallery scale-scrub, medley converge,
+   plus the pull-up margins .how-lead -34vh / #briefs -124px) feels off on a tall, narrow phone:
+   too much scroll, overlap, and big slide-ins. On mobile we drop all of it - content is simply
+   visible, with at most a quick opacity fade and no slide/scale movement. */
 @media(max-width:759px){
   .anim #how.how-track.how-scroll{min-height:auto}     /* no 150vh scrub runway */
   .how-lead{height:auto;margin-bottom:0}               /* no -34vh overlap */
   .how-shift{transform:none}
   #briefs{margin-top:0;transform:none}                 /* no -124px pull-up overlap */
 
-  /* how-it-works: fade + rise reveal (the .in class is added by the IntersectionObserver) */
+  /* the three scroll-scrubbed sections: just visible (no scrub, no slide, no scale) */
   .anim #how .sec-head,
   .anim #how .flow.how-anim .fstep .ic,
-  .anim #how .flow.how-anim .fstep .fbody{
-    opacity:0;transform:translateY(14px);
-    transition:opacity .5s ease,transform .5s cubic-bezier(.22,.61,.36,1);
-  }
-  .anim #how .sec-head.in,
-  .anim #how .flow.how-anim .fstep.in .ic,
-  .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
-  /* connectors drawn straight away (no scrub) */
+  .anim #how .flow.how-anim .fstep .fbody{opacity:1;transform:none;transition:none}
   .anim #how .flow.how-anim .fstep:nth-child(1)::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(1)}
+  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(1)}   /* connectors drawn */
+  .anim #why .medley{--mp:1}                            /* chips at rest, visible - no converge */
+  .anim #why .mchip{transform:none!important;opacity:1!important;transition:none}  /* force rest+visible regardless of scrub var */
+  .anim #briefs .briefs>.brief{opacity:1;transform:none;transition:none}
 
-  /* medley chips: converge once when the row enters, then rest - no continuous scrub */
-  .anim #why .mchip{transition:transform .6s cubic-bezier(.22,.61,.36,1),opacity .45s ease}
-  .anim #why .medley.in{--mp:1}
+  /* generic reveals: keep the quick opacity fade but drop all slide/scale movement */
+  .anim .reveal,.anim .stagger,.anim .stagger>*,.anim .riseup,.anim .riseup>*{transform:none!important}
 }
 </style>
 </head>

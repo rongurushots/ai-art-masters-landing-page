@@ -58,7 +58,7 @@ a{color:inherit;text-decoration:none}
 .signin{font-size:14px;font-weight:600;color:var(--ink2);transition:color .2s}.signin:hover{color:var(--ink)}
 
 /* hamburger toggle (mobile) */
-.nav-toggle{margin-left:auto;display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;padding:0;background:var(--primary);border:none;border-radius:999px;cursor:pointer;box-shadow:0 4px 0 var(--primary-deep);transition:transform .15s cubic-bezier(.34,1.56,.64,1),filter .2s,box-shadow .15s}
+.nav-toggle{margin-left:auto;flex:none;display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;padding:0;background:var(--primary);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 0 var(--primary-deep);transition:transform .15s cubic-bezier(.34,1.56,.64,1),filter .2s,box-shadow .15s}
 .nav-toggle:hover{transform:scale(1.04);filter:brightness(1.05)}
 .nav-toggle:active{transform:scale(.97) translateY(2px);box-shadow:0 1px 0 var(--primary-deep)}
 .nav-toggle span{display:block;width:18px;height:2.5px;border-radius:2px;background:#fff;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
@@ -72,6 +72,7 @@ a{color:inherit;text-decoration:none}
 .nav-mobile a{font-family:var(--fd);font-weight:700;font-size:16px;color:var(--ink);padding:13px 6px;border-bottom:1px solid var(--line)}
 .nav-mobile a.m-signin{color:var(--ink2);font-weight:600}
 .nav-mobile .btn{margin-top:12px;width:100%}
+.nav-mobile .btn-p{color:#fff}   /* keep the primary CTA's white text - .nav-mobile a would otherwise force it dark */
 .nav-mobile .m-sep{border:none}
 
 /* BUTTONS (atom) — centered scale, chunky drop */
