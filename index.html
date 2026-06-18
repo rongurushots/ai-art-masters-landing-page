@@ -82,7 +82,7 @@
 @media(max-width:600px){
   .hero .cta-row{flex-direction:column;align-items:stretch}
   .hero .cta-row .btn{width:100%}
-  .hero-in{gap:64px}            /* more breathing room between the CTA buttons and the phone mockup */
+  .hero-in{gap:84px}            /* more breathing room between the CTA buttons and the phone mockup */
 }
 
 /* "Missions made for you" - centered CTA + icons scrubbed by scroll: wide stretch -> resting spots.
@@ -115,7 +115,7 @@
 .qshield{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;box-sizing:border-box;border-radius:16px;background:color-mix(in srgb,var(--primary) 14%,#fff);color:var(--primary);flex:none;transform-origin:center}  /* JS sizes it to a perfect square matching the text-block height on desktop */
 .qshield svg{width:46px;height:46px}
 @media(max-width:560px){
-  #love .qband{flex-direction:column;align-items:center;text-align:center}  /* center icon + text on mobile */
+  #love .qband{flex-direction:column;align-items:center;text-align:center;padding:24px 30px}  /* center icon + text; roomier side padding so copy clears the edge */
   .qshield{width:64px;height:64px}  /* column layout: fixed square above the text */
 }
 
@@ -205,8 +205,15 @@
   .anim #how .sec-head.in,
   .anim #how .flow.how-anim .fstep.in .ic,
   .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
-  .anim #how .flow.how-anim .fstep:nth-child(1)::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(1)}   /* connectors drawn */
+  /* connectors: always drawn, clearly visible, and reaching down into the next icon
+     (the default faint --line2 on the lavender bg read as "missing" on a phone). */
+  #how .flow .fstep:nth-child(1)::after,
+  #how .flow .fstep:nth-child(2)::after{
+    transform:none;
+    top:62px;
+    height:calc(100% - 62px + 12px);                                  /* close the ~11px gap before the next icon */
+    border-left-color:color-mix(in srgb,var(--primary) 42%,var(--line2));
+  }
 
   /* medley chips: subtle fade + small rise, NOT the big horizontal converge */
   .anim #why .mchip{transform:translateY(12px)!important;opacity:0!important;transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .45s ease}
@@ -229,7 +236,7 @@
 <nav class="nav" id="nav"><div class="nav-in">
   <a class="brand" href="#"><svg viewBox="0 0 24 20" style="width:26px;height:22px"><path d="M14.9297 0C15.5984 1.83494e-05 16.2228 0.334243 16.5938 0.890625L17.4062 2.10938C17.7772 2.66576 18.4016 2.99998 19.0703 3H20C22.2091 3 24 4.79086 24 7V16C24 18.2091 22.2091 20 20 20H4C1.79086 20 8.05333e-09 18.2091 0 16V7C0 4.79086 1.79086 3 4 3H4.92969C5.59837 2.99998 6.22283 2.66576 6.59375 2.10938L7.40625 0.890625C7.77717 0.334243 8.40163 1.83494e-05 9.07031 0H14.9297ZM12 5C12 8.3135 9.3135 11 6 11C9.3135 11 12 13.6865 12 17C12 13.6865 14.6865 11 18 11C14.6865 11 12 8.3135 12 5Z" fill="#4F5BFF"/></svg><span class="wm">AI Art Masters</span></a>
   <div class="nav-links"><a href="#how">How it works</a><a href="#briefs">Start earning</a><a href="#faq">FAQ</a></div>
-  <div class="nav-right"><a class="signin" href="home.html">Sign in</a><a class="btn btn-p" href="welcome-quiz.html">Start Earning</a></div>
+  <div class="nav-right"><a class="signin" href="home.html">Sign in</a><a class="btn btn-p" href="welcome-quiz.html">Start earning</a></div>
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile"><span></span><span></span><span></span></button>
 </div>
 <div class="nav-mobile" id="navMobile">
@@ -237,7 +244,7 @@
   <a href="#briefs">Start earning</a>
   <a href="#faq">FAQ</a>
   <a class="m-signin" href="home.html">Sign in</a>
-  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start Earning</a>
+  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a>
 </div></nav>
 
 <header class="hero wrap">
@@ -245,7 +252,7 @@
     <div class="hcopy">
       <h1>Turn your everyday content into <span class="hl">rewards.</span></h1>
       <p class="sub">Get custom missions made just for you, and earn for every accepted submission. No special skills required.</p>
-      <div class="cta-row"><a class="btn btn-p btn-lg" href="welcome-quiz.html">Start Earning</a><a class="btn btn-g btn-lg" href="#briefs">See Available Missions</a></div>
+      <div class="cta-row"><a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a><a class="btn btn-g btn-lg" href="#briefs">See available missions</a></div>
     </div>
     <div class="mock">
       <div class="device" id="device" data-step="1">
@@ -412,7 +419,7 @@
 <section class="final wrap">
   <h2>There may be <span class="hl">money in your phone</span> already</h2>
   <p>The photos and videos you already have can earn right now. Pick a mission, upload, and get paid for what's on your phone.</p>
-  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start Earning</a>
+  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a>
 </section>
 
 <footer class="wrap">
@@ -576,30 +583,38 @@
   var bgrid=document.querySelector('#briefs .briefs');
   var bcards=Array.prototype.slice.call(document.querySelectorAll('#briefs .briefs>.brief'));
   if(bgrid&&bcards.length){
-    var bSpread=0.5, bN=bcards.length, bTick=false, bDone=false;   // cards stagger across the first 50% of the scrub
+    var bSpread=0.5, bN=bcards.length, bTick=false, bDone=false, bLatched=false;   // cards stagger across the first 50% of the scrub
+    // Reveal the whole gallery and stop scrubbing. Called when the scrub completes once (play-once
+    // per refresh) or when a link jumps straight to #briefs - so the footer/nav never lands on a
+    // half-scrubbed grid.
+    function revealAllBriefs(){
+      bLatched=true; bDone=true; bgrid.classList.add('in');
+      bcards.forEach(function(c){c.style.opacity='';c.style.transform='';});
+    }
     var setGP=function(){
       bTick=false;
+      if(bLatched) return;                         // play once per refresh: never re-scrub after a full reveal
       var vh=window.innerHeight||document.documentElement.clientHeight;
       if(matchMedia('(max-width:759px)').matches){
         // Mobile: per-card scrub. Each thumbnail scales 62%->100% as its own centre rises from the
         // bottom of the screen (vh) up to ~80% down, so it finishes low on screen - never too high/late.
-        if(bDone){ bDone=false; bgrid.classList.remove('in'); }
+        var allIn=true;
         for(var j=0;j<bN;j++){
           var rc=bcards[j].getBoundingClientRect(), cyc=rc.top+rc.height/2;
           var pc=(vh-cyc)/(vh*0.28); pc=pc<0?0:pc>1?1:pc;   // 1 when card centre is ~72% down the screen
+          if(pc<(bcards[j]._mx||0)) pc=bcards[j]._mx;       // monotonic: a revealed card never scrubs back on scroll-up
+          bcards[j]._mx=pc;
           bcards[j].style.opacity=pc.toFixed(3);
           bcards[j].style.transform='scale('+(0.62+0.38*pc).toFixed(3)+')';
+          if(pc<1) allIn=false;
         }
+        if(allIn) revealAllBriefs();               // every card fully in -> latch
         return;
       }
       var r=bgrid.getBoundingClientRect(), center=r.top+r.height/2;
       var startY=vh*1.15, endY=vh*0.5;            // begins as the grid enters from below, ends when it's centred
       var p=(startY-center)/(startY-endY); p=p<0?0:p>1?1:p;
-      if(p>=1){                                    // settled: drop inline styles + add .in so hover works normally
-        if(!bDone){ bDone=true; bgrid.classList.add('in'); bcards.forEach(function(c){c.style.opacity='';c.style.transform='';}); }
-        return;
-      }
-      if(bDone){ bDone=false; bgrid.classList.remove('in'); }
+      if(p>=1){ revealAllBriefs(); return; }       // settled: latch + drop inline styles so hover works normally
       for(var i=0;i<bN;i++){
         var off=(bN>1?i/(bN-1):0)*bSpread;
         var lp=(p-off)/(1-bSpread); lp=lp<0?0:lp>1?1:lp;
@@ -610,6 +625,12 @@
     var onBScroll=function(){ if(!bTick){ bTick=true; requestAnimationFrame(setGP); } };
     window.addEventListener('scroll',onBScroll,{passive:true});
     window.addEventListener('resize',onBScroll);
+    // A link straight to the gallery (footer "Open missions", nav/hero "missions" CTAs) reveals the
+    // full grid instead of a half-scrubbed frame.
+    function briefsJump(){ if(location.hash==='#briefs') revealAllBriefs(); }
+    addEventListener('hashchange',briefsJump);
+    [].slice.call(document.querySelectorAll('a[href="#briefs"]')).forEach(function(a){ a.addEventListener('click',function(){ setTimeout(revealAllBriefs,0); }); });
+    briefsJump();
     setGP();
   }
 
@@ -707,7 +728,7 @@
     +'#howtune .row{margin:0 0 12px}'
     +'#howtune .lab{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:2px}'
     +'#howtune .lab b{color:#4F5BFF}'
-    +'#howtune .desc{font-size:10.5px;color:#8A86A6;line-height:1.35;margin:0 0 5px}'
+    +'#howtune .desc{font-size:11px;color:#8A86A6;line-height:1.35;margin:0 0 5px}'
     +'#howtune .total{font-size:11px;color:#241F47;background:#F3F2FA;border-radius:8px;padding:6px 9px;margin:0 0 12px}'
     +'#howtune input[type=range]{width:100%;accent-color:#4F5BFF;margin:0}'
     +'#howtune .btns{display:flex;gap:8px}'

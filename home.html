@@ -22,31 +22,62 @@
 /* single-column profile layout */
 .home.wrap{max-width:980px}
 
-/* profile-completion / onboarding progress */
-.setup{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 18px;box-shadow:0 6px 16px rgba(36,31,71,.05);margin-bottom:20px;transition:border-color .2s}
+/* profile-completion / onboarding progress - two rows: heading, then [bars + reward] beside button */
+.setup{display:flex;flex-direction:column;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:0 6px 16px rgba(36,31,71,.05);margin-bottom:20px;transition:border-color .2s}
 .setup:hover{border-color:var(--primary)}
-.setup-h{font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink);flex:none}
-.setup-count{font-family:var(--fm);font-size:13px;color:var(--ink3);flex:none}
-.setup-steps{flex:1;min-width:120px;display:flex;gap:5px}
+.setup-top{display:flex;align-items:center;gap:10px}
+.setup-bot{display:flex;align-items:center;gap:16px}
+.setup-prog{flex:1;display:flex;align-items:center;gap:12px;min-width:0}   /* bars + reward stay together as one unit */
+.setup-h{font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+.setup-count{font-family:var(--fm);font-size:13px;color:var(--ink3)}
+.setup-steps{flex:1;min-width:80px;display:flex;gap:5px}
 .setup-steps span{flex:1;height:5px;border-radius:999px;background:var(--line)}
 .setup-steps span.on{background:var(--primary)}
 .setup-reward{flex:none;display:inline-flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:800;font-size:13px;color:var(--primary-deep);white-space:nowrap}
 .setup-reward svg{width:15px;height:15px}
 .setup-go{flex:none;padding:9px 16px 8px;font-size:13px}
-@media(max-width:560px){.setup-go{padding:8px 12px 7px}}
+@media(max-width:560px){.setup-go{padding:8px 14px 7px}}
 
-/* stat tiles row - balance, score, accepted */
-.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 6px 16px rgba(36,31,71,.05)}
-.stat .lbl{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);font-weight:700}
-.stat .num{font-family:var(--fd);font-weight:800;font-size:26px;line-height:1.05;margin-top:6px;display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
-.stat .num .ci{align-self:center;width:20px;height:20px;flex:none}
+/* stat tiles row - approved, score, balance. Three uniform, compact tiles (label + figure only);
+   the wallet action lives in its own row below so no tile is taller or busier than the others. */
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 15px;box-shadow:0 6px 16px rgba(36,31,71,.05)}
+.stat .lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);font-weight:700}
+.stat .num{font-family:var(--fd);font-weight:800;font-size:24px;line-height:1.05;margin-top:5px;display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
+.stat .num .ci{align-self:center;width:19px;height:19px;flex:none}
 .stat .num .u{font-size:12px;color:var(--primary);font-weight:600}
 .stat .num .den{font-size:13px;color:var(--ink3);font-weight:600}
 .stat .sub{font-family:var(--fm);font-size:11px;color:var(--ink3);margin-top:5px}
-.stat-bal{display:flex;align-items:center;gap:12px}
-.stat-bal>div{min-width:0}
-.stat-cash{margin-left:auto;flex:none;padding:9px 16px 8px;font-size:13px}
+/* desktop: a regular pink primary "Cash out" button under the stats (btn-k carries the brand shadow) */
+.cashrow{display:flex;justify-content:flex-end;margin-bottom:20px}
+.stat-cash{font-size:14px;padding:11px 22px 10px}
+
+/* mobile only (enabled in the @media block): the balance tile morphs into a Cash out button styled
+   like the primary button. A small pink dot hints it; tap arms it, a second tap opens the modal. */
+#balance{position:relative;overflow:hidden;transition:background .35s cubic-bezier(.22,.61,.36,1),border-color .35s ease,box-shadow .3s cubic-bezier(.34,1.56,.64,1)}
+#balance .lbl,#balance .num{transition:opacity .22s ease}
+.cash-dot,.cash-label{display:none}
+.cash-dot{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--accent);transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1)}
+.cash-label{position:absolute;inset:0;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:14px;color:#fff;opacity:0;pointer-events:none;transition:opacity .3s ease .08s}
+/* arm: the tile fills pink and gives a soft scale-up bounce (settles back to rest) */
+#balance.armed{background:var(--accent);border-color:var(--accent);box-shadow:0 4px 0 var(--accent-deep);animation:cashpop .46s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cashpop{0%{transform:scale(1)}55%{transform:scale(1.05)}100%{transform:scale(1)}}
+#balance.armed .lbl,#balance.armed .num{opacity:0}
+#balance.armed .cash-dot{opacity:0;transform:scale(.4)}
+#balance.armed .cash-label{opacity:1}
+
+/* cash-out approval modal */
+.cash-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s}
+.cash-modal.show{opacity:1;visibility:visible}
+.cash-backdrop{position:absolute;inset:0;background:rgba(36,31,71,.45)}
+.cash-sheet{position:relative;width:min(380px,100%);background:var(--surface);border-radius:20px;padding:24px;box-shadow:0 24px 60px rgba(36,31,71,.28);text-align:center;transform:translateY(14px) scale(.97);transition:transform .32s cubic-bezier(.34,1.3,.64,1)}
+.cash-modal.show .cash-sheet{transform:none}
+.cash-sheet-ico{width:54px;height:54px;margin:0 auto 14px;border-radius:50%;background:color-mix(in srgb,var(--accent) 14%,#fff);display:flex;align-items:center;justify-content:center}
+.cash-sheet-ico svg{width:30px;height:30px}
+.cash-sheet h3{font-family:var(--fd);font-weight:800;font-size:20px;color:var(--ink)}
+.cash-sheet p{font-family:var(--fb);font-size:14px;line-height:1.55;color:var(--ink2);margin-top:8px}
+.cash-actions{display:flex;gap:10px;margin-top:20px}
+.cash-actions .btn{flex:1}
 
 /* slim, dismissable new-mission strip */
 .newstrip{position:relative;display:flex;flex-direction:column;gap:18px;background:var(--primary);border-radius:18px;padding:20px;margin-bottom:24px;box-shadow:0 16px 36px color-mix(in srgb,var(--primary) 30%,transparent)}
@@ -57,7 +88,7 @@
 .newstrip .nsicon svg{width:26px;height:26px}
 .newstrip .ntext{min-width:0}
 .newstrip .nstitle{font-family:var(--fd);font-weight:800;font-size:17px;color:#fff;line-height:1.15}
-.newstrip .nssub{font-family:var(--fm);font-size:13px;color:rgba(255,255,255,.82);line-height:1.5;margin-top:2px}
+.newstrip .nssub{font-family:var(--fm);font-size:13px;color:rgba(255,255,255,.95);line-height:1.55;margin-top:4px}
 .newstrip .nsgo{flex:none;padding:12px 20px 11px;font-size:14px}
 .nclose{position:absolute;top:12px;right:12px;width:26px;height:26px;border:none;border-radius:8px;background:transparent;color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
 .nclose:hover{background:rgba(255,255,255,.2);color:#fff}
@@ -69,7 +100,7 @@
 .mcard+.mcard{border-top:none}
 .mcard:hover{background:color-mix(in srgb,var(--primary) 4%,#fff)}
 .mchev{display:none}
-@media(max-width:560px){.statgrid{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}}
+@media(max-width:560px){.mgrid{grid-template-columns:1fr}}
 
 /* minimalist missions - color only carries status meaning */
 .mcard{gap:13px;padding:14px 16px}
@@ -83,7 +114,7 @@
 .mchev{display:flex;color:var(--ink3);flex:none;transition:color .2s,transform .2s}
 .mchev svg{width:18px;height:18px}
 .mcard:hover .mchev{color:var(--primary);transform:translateX(2px)}
-.mstat.s-earn{color:#0E9E69}
+.mstat.s-earn{color:var(--green-ink)}
 .mstat.s-review{color:var(--primary-deep)}
 .mstat.s-new{color:var(--accent-deep)}
 .mstat.s-open{color:var(--ink3)}
@@ -94,6 +125,41 @@
 .actr{transition:background .2s}
 .actr:hover{background:color-mix(in srgb,var(--primary) 4%,#fff)}
 .actr .aav{background:color-mix(in srgb,var(--c,#8E8AAE) 15%,#fff);color:var(--c,#8E8AAE)}
+
+/* the footer here is just the copyright row, so the section's top border + the foot-bot border
+   stacked as two dividers below activity. Drop the outer one - keep a single divider. */
+footer.wrap{border-top:none}
+
+/* ---- mobile profile layout ---- */
+@media(max-width:560px){
+  /* compact stat tiles in one row; smaller eyebrow + figure so they read tidy, not bulky */
+  .statgrid{grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+  .stat{padding:10px 9px 10px 14px}   /* a touch more left padding so the figure isn't cramped against the edge */
+  .stat .lbl{font-size:9px;letter-spacing:.04em}
+  .stat .num{font-size:19px;margin-top:3px;gap:3px}
+  .stat .num .ci{width:15px;height:15px}
+  .stat .num .den{font-size:10px}
+  /* mobile cash-out: hide the desktop button, turn the balance tile into the control */
+  .cashrow{display:none}
+  #balance{cursor:pointer}
+  #balance .num .ci{display:none}              /* tight tile: drop the coin glyph so the figure clears the dot */
+  .cash-dot{display:block}
+  .cash-label{display:flex;font-size:13px}
+
+  /* complete-profile card: keep the two-row layout tight */
+  .setup{gap:11px;padding:13px 14px;margin-bottom:16px}
+  .setup-bot{gap:12px}
+
+  /* new-mission card: title+X on top, then icon (top-aligned) + text, then button left;
+     roomier vertical spacing between elements */
+  .newstrip{gap:18px;padding:20px 18px;margin-bottom:30px}   /* extra space below, above "Your missions" */
+  .newstrip .nsrow{flex-direction:column;align-items:flex-start;gap:18px}
+  .newstrip .nsmain{align-items:flex-start}
+  .newstrip .nsicon{width:38px;height:38px;border-radius:11px}   /* smaller video icon on mobile */
+  .newstrip .nsicon svg{width:21px;height:21px}
+  .newstrip .nssub{margin-top:5px;max-width:80%}                 /* ~20% narrower paragraph */
+  .newstrip .nsgo{align-self:flex-start}
+}
 </style>
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');}catch(e){}</script>
 </head>
@@ -118,10 +184,6 @@
 </div></nav>
 
 <main class="home wrap">
-  <div class="home-hi reveal">
-    <h1>Welcome back, Ron.</h1>
-  </div>
-
   <!-- STATS - approved, score, balance -->
   <div class="statgrid stagger">
     <div class="stat">
@@ -132,22 +194,31 @@
       <div class="lbl">Score</div>
       <div class="num"><svg class="ci" viewBox="0 0 24 24" style="fill:var(--primary)" aria-hidden="true"><path d="M12 2l2.4 6.4L21 9.3l-5 4.3 1.6 6.4L12 16.8 6.4 20l1.6-6.4-5-4.3 6.6-.9z"/></svg><span id="statScore">73</span><span class="den">/ 100</span></div>
     </div>
-    <div class="stat stat-bal" id="balance">
-      <div>
-        <div class="lbl">Balance</div>
-        <div class="num"><svg class="ci" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="7.2" cy="6.6" rx="2.3" ry="1.1" fill="#fff" opacity=".32"/></svg>1,240</div>
-      </div>
-      <button type="button" class="btn btn-k stat-cash">Cash out</button>
+    <!-- balance tile. On mobile it doubles as the cash-out control (a pink dot hints it; tap arms the
+         whole tile into a Cash out button for 2s, tap again opens the modal). On desktop the regular
+         button below handles it - the tile's interactivity is added by JS only at mobile widths. -->
+    <div class="stat cashable" id="balance" aria-label="Balance">
+      <div class="lbl">Balance</div>
+      <div class="num"><svg class="ci" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="7.2" cy="6.6" rx="2.3" ry="1.1" fill="#fff" opacity=".32"/></svg>1,240</div>
+      <span class="cash-dot" aria-hidden="true"></span>
+      <span class="cash-label" aria-hidden="true">Cash out</span>
     </div>
   </div>
+  <div class="cashrow"><button type="button" class="btn btn-k stat-cash" id="cashOut">Cash out</button></div>
 
   <!-- PROFILE SETUP - onboarding progress; nudges users to finish for starter coins -->
   <a class="setup reveal" href="welcome-quiz.html">
-    <span class="setup-h">Complete your profile</span>
-    <span class="setup-count">4/9</span>
-    <div class="setup-steps" role="img" aria-label="4 of 9 steps complete"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
-    <span class="setup-reward"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg>+50</span>
-    <span class="btn btn-p setup-go">Finish setup</span>
+    <div class="setup-top">
+      <span class="setup-h">Complete your profile</span>
+      <span class="setup-count">4/9</span>
+    </div>
+    <div class="setup-bot">
+      <div class="setup-prog">
+        <div class="setup-steps" role="img" aria-label="4 of 9 steps complete"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+        <span class="setup-reward"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg>+50</span>
+      </div>
+      <span class="btn btn-p setup-go">Finish setup</span>
+    </div>
   </a>
 
   <!-- NEW MISSION - slim strip; remove block or add hidden when nothing is new -->
@@ -171,12 +242,12 @@
       <h2 class="col-h reveal" id="missions">Your missions</h2>
       <p class="msum reveal">You've submitted to <b>3 of 6</b> missions. Keep going - most are still open for more.</p>
       <div class="mgrid stagger">
-        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 frames in review · +5 / frame</div></div><div class="mr"><span class="mstat s-review">In review</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted · +4 / frame</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted · +2 / item</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week · +8 / clip</div></div><div class="mr"><span class="mstat s-new">New</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started · +3 / frame</div></div><div class="mr"><span class="mstat s-open">Open</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days · +6 / frame</div></div><div class="mr"><span class="mstat s-soon">Closing soon</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 in review · +5 coins / photo</div></div><div class="mr"><span class="mstat s-review">In review</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted · +4 coins / photo</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted · +2 coins / email</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week · +8 coins / clip</div></div><div class="mr"><span class="mstat s-new">New</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started · +3 coins / barcode</div></div><div class="mr"><span class="mstat s-open">Open</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days · +6 coins / photo</div></div><div class="mr"><span class="mstat s-soon">Closing soon</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
       </div>
 
       <h2 class="col-h mt reveal" id="activity">Recent activity</h2>
@@ -191,6 +262,20 @@
 <footer class="wrap">
   <div class="foot-bot"><span>© 2026 AI Art Masters</span><span>Privacy · Terms</span></div>
 </footer>
+
+<!-- Cash-out approval modal -->
+<div class="cash-modal" id="cashModal" aria-hidden="true">
+  <div class="cash-backdrop" data-close></div>
+  <div class="cash-sheet" role="dialog" aria-modal="true" aria-labelledby="cashTitle">
+    <div class="cash-sheet-ico"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+    <h3 id="cashTitle">Cash out coins</h3>
+    <p>Withdraw your balance of <b>1,240 coins</b> to your payout method?</p>
+    <div class="cash-actions">
+      <button type="button" class="btn btn-g" data-close>Not now</button>
+      <button type="button" class="btn btn-p" id="cashConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
 
 <script src="assets/user-score.js"></script>
 <script>
@@ -226,6 +311,44 @@
     if(el.getBoundingClientRect().top < window.innerHeight*0.92){ setTimeout(function(){el.classList.add('in');}, ci*90); ci++; }
     else { io.observe(el); }
   });
+})();
+(function(){
+  // Cash-out. Desktop: the regular button under the stats opens the approval modal. Mobile: the
+  // balance tile arms into a "Cash out" button for 2s; a second tap opens the modal. Prototype.
+  var tile=document.getElementById('balance'), armT;
+  var modal=document.getElementById('cashModal');
+  var mq=window.matchMedia('(max-width:560px)');
+  function isMobile(){ return mq.matches; }
+  function disarm(){ if(tile) tile.classList.remove('armed'); clearTimeout(armT); }
+  function openModal(){ if(!modal)return; modal.classList.add('show'); modal.setAttribute('aria-hidden','false'); }
+  function closeModal(){ if(!modal)return; modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); disarm(); }
+  function act(){
+    if(!isMobile()) return;                                          // desktop uses the regular button below
+    if(!tile.classList.contains('armed')){
+      tile.classList.add('armed');                                   // whole tile -> Cash out button
+      clearTimeout(armT); armT=setTimeout(disarm,2000);              // disarm after 2s
+    } else {
+      clearTimeout(armT); openModal();                               // second tap -> approval modal
+    }
+  }
+  function syncCash(){                                               // tile is only a button on mobile
+    if(!tile) return;
+    if(isMobile()){ tile.setAttribute('role','button'); tile.setAttribute('tabindex','0'); tile.setAttribute('aria-label','Cash out your balance'); }
+    else { tile.removeAttribute('role'); tile.removeAttribute('tabindex'); tile.setAttribute('aria-label','Balance'); disarm(); }
+  }
+  if(tile){
+    tile.addEventListener('click',act);
+    tile.addEventListener('keydown',function(e){ if((e.key==='Enter'||e.key===' ')&&isMobile()){ e.preventDefault(); act(); } });
+    syncCash();
+    if(mq.addEventListener) mq.addEventListener('change',syncCash); else window.addEventListener('resize',syncCash);
+  }
+  var deskCash=document.getElementById('cashOut');
+  if(deskCash) deskCash.addEventListener('click',openModal);
+  if(modal){
+    [].forEach.call(modal.querySelectorAll('[data-close]'),function(el){el.addEventListener('click',closeModal);});
+    var cc=document.getElementById('cashConfirm'); if(cc) cc.addEventListener('click',closeModal);
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+  }
 })();
 </script>
 </body></html>
