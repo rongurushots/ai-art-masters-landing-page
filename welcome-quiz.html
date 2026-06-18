@@ -26,6 +26,10 @@ body{margin:0;background:var(--bg);min-height:100vh;min-height:100dvh}
 .qz-back:hover{color:var(--primary)}
 .qz-back[hidden]{display:none}
 .qz-step{margin-left:auto;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--ink3)}
+/* save & exit: always-available way to leave the quiz (draft is kept) */
+.qz-quit{flex:none;width:40px;height:40px;margin-right:-9px;border:none;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink3);transition:color .2s}
+.qz-quit:hover{color:var(--ink)}
+.qz-quit[hidden]{display:none}
 
 /* body: title block anchored to a consistent top offset, content grows downward,
    scrolls inside this area if a step is unusually tall */
@@ -146,6 +150,7 @@ select.fld{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xm
     <div class="qz-bar">
       <button class="qz-back" id="back" type="button" aria-label="Go back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <span class="qz-step" id="stepLabel"></span>
+      <button class="qz-quit" id="quit" type="button" aria-label="Save and exit"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
   </header>
 
@@ -421,7 +426,8 @@ var screenEl=document.getElementById('screen'), backEl=document.getElementById('
     nextEl=document.getElementById('next'), skipEl=document.getElementById('skip'),
     progEl=document.getElementById('prog'), stepLabel=document.getElementById('stepLabel'),
     footEl=document.getElementById('foot'), barEl=document.querySelector('.qz-bar'),
-    topEl=document.querySelector('.qz-top');
+    topEl=document.querySelector('.qz-top'),
+    quitEl=document.getElementById('quit'), progWrap=document.querySelector('.qz-prog');
 
 function currentCountIndex(){ var c=0; for(var i=0;i<=idx;i++){ if(steps[i].count)c++; } return c; }
 
@@ -437,10 +443,11 @@ function render(){
   else if(s.key==='done'){ progEl.style.width='100%'; stepLabel.textContent=''; }
   else { progEl.style.width='0%'; stepLabel.textContent=''; }
   backEl.hidden = (idx===0 || s.key==='done');
-  // welcome screen: no progress yet → hide the whole top bar for a clean start
-  topEl.style.display = (idx===0) ? 'none' : '';
-  // collapse the top bar when it has no back button and no step label (e.g. done)
-  barEl.classList.toggle('empty', backEl.hidden && !stepLabel.textContent);
+  quitEl.hidden = (s.key==='done');                          // save & exit is available on every step but the finish screen
+  topEl.style.display = '';                                   // keep the top bar visible so the exit is always reachable
+  if(progWrap) progWrap.style.visibility = (idx===0) ? 'hidden' : 'visible';  // hide the empty progress track on the welcome screen
+  // collapse the top bar only when nothing is in it (e.g. the done screen)
+  barEl.classList.toggle('empty', backEl.hidden && !stepLabel.textContent && quitEl.hidden);
   footEl.style.display = '';
   skipEl.hidden = !s.optional;
   nextEl.textContent = s.cta || 'Continue';
@@ -473,6 +480,7 @@ function goBack(){ if(idx>0){ idx--; render(); } }
 nextEl.addEventListener('click',goNext);
 backEl.addEventListener('click',goBack);
 skipEl.addEventListener('click',function(){ if(idx<steps.length-1){ idx++; render(); } });
+quitEl.addEventListener('click',function(){ try{saveDraft();}catch(e){} window.location.href='home.html'; });  // leave the quiz; draft is kept so it can be resumed
 document.addEventListener('keydown',function(e){ if(e.key==='Enter' && !nextEl.disabled && steps[idx].key!=='done'){ goNext(); } });
 
 /* ============================================================
