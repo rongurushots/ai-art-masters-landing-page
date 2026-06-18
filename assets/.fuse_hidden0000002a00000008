@@ -1,6 +1,6 @@
-/* AI Art Masters - User Score
+/* AI Art Masters — User Score
  * Reputation primitive. Spec: docs/USER_SCORE.md.
- * Pure logic, no DOM - safe to unit-test and to reuse as the backend reference.
+ * Pure logic, no DOM — safe to unit-test and to reuse as the backend reference.
  * Exposes window.AAMScore (browser) and module.exports (Node).
  */
 (function (root) {

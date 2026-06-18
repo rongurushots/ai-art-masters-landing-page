@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Art Masters — Turn your content into rewards</title>
+<title>AI Art Masters - Turn your content into rewards</title>
 <meta name="description" content="Browse active missions, upload qualifying photos, videos, emails and more, and earn rewards for every accepted submission.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 .paylogo:hover>img{filter:grayscale(1);opacity:.9}
 /* Dissolve the big white card so the logo tiles sit directly on the page */
 .paycard{background:transparent;border:0;box-shadow:none;padding:0}
-/* Drop the individual logo cards too — logos sit straight on the page bg */
+/* Drop the individual logo cards too - logos sit straight on the page bg */
 .paylogo{background:transparent;border:0;box-shadow:none}
 .paylogo:hover{box-shadow:none;transform:translateY(-2px)}
 .paylogo.more{background:transparent;border:0;box-shadow:none}
@@ -44,13 +44,13 @@
 .anim #briefs .briefs.in>*:nth-child(6){transition-delay:.45s}
 #briefs .sec-head{margin-bottom:clamp(28px,4vw,40px)}
 
-/* How it works — fully scroll-scrubbed timeline. The JS scrubber below sets every element's
+/* How it works - fully scroll-scrubbed timeline. The JS scrubber below sets every element's
    opacity / transform straight from scroll position, so the whole sequence is measured in vh
    of scrolling. Defaults live in the JS (window.__howT); #tune exposes every value. */
 .anim #how.how-track.how-scroll{min-height:var(--how-track,150vh)}
 .how-lead{height:0;margin-bottom:var(--how-lead,-34vh)}  /* +pushes the section down, −pulls it up so it centers with less scroll */
 .how-shift{transform:translateY(var(--how-shift,-30px))}
-/* no time-based transitions — the scrubber drives these elements per frame */
+/* no time-based transitions - the scrubber drives these elements per frame */
 .anim #how .sec-head,
 .anim #how .flow.how-anim .fstep .ic,
 .anim #how .flow.how-anim .fstep .fbody,
@@ -85,7 +85,7 @@
   .hero-in{gap:64px}            /* more breathing room between the CTA buttons and the phone mockup */
 }
 
-/* "Missions made for you" — centered CTA + icons scrubbed by scroll: wide stretch -> resting spots.
+/* "Missions made for you" - centered CTA + icons scrubbed by scroll: wide stretch -> resting spots.
    --mp (0..1) is driven by the scroll handler; each chip interpolates its own start offset/tilt. */
 #why .sec-h2{max-width:22ch}  /* longer headline: clean 2-line balance instead of 3 cramped lines */
 #why .cta-row{margin-top:56px;justify-content:center}
@@ -105,20 +105,21 @@
 .anim #why .mchip:nth-child(6){--mx:220px;--mr:6deg}
 .anim #why .mchip:hover{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
 
-/* Privacy banner — floating strip (same family as the profile new-mission banner), not a card */
+/* Privacy banner - floating strip (same family as the profile new-mission banner), not a card */
 #love{padding-top:clamp(8px,2vw,20px)}
-#love .qband{display:flex;align-items:center;gap:18px;text-align:left;max-width:608px;padding:20px 24px;background:color-mix(in srgb,var(--primary) 20%,#e4e7ee);border:1px solid color-mix(in srgb,var(--primary) 28%,#fff);border-radius:20px;box-shadow:0 18px 40px rgba(36,31,71,.13);overflow:visible}
+#love .qband{display:flex;align-items:center;gap:18px;text-align:left;max-width:608px;padding:20px 24px;background:color-mix(in srgb,var(--primary) 20%,#e4e7ee);border:1px solid color-mix(in srgb,var(--primary) 28%,#fff);border-radius:20px;box-shadow:0 18px 40px rgba(36,31,71,.13);overflow:visible;transform-origin:center;will-change:transform}
 #love .qband::before{display:none}
 #love .qband .qtxt{position:relative}
 #love .qband .q{font-size:clamp(16px,1.9vw,19px);color:var(--ink);max-width:none;margin:0}
 #love .qband .a{font-family:var(--fb);font-size:13px;line-height:1.6;color:var(--ink2);margin-top:6px}
-.qshield{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:16px;background:color-mix(in srgb,var(--primary) 14%,#fff);color:var(--primary);flex:none}
-.qshield svg{width:28px;height:28px}
+.qshield{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;box-sizing:border-box;border-radius:16px;background:color-mix(in srgb,var(--primary) 14%,#fff);color:var(--primary);flex:none;transform-origin:center}  /* JS sizes it to a perfect square matching the text-block height on desktop */
+.qshield svg{width:46px;height:46px}
 @media(max-width:560px){
-  #love .qband{flex-direction:column;align-items:flex-start;text-align:left}
+  #love .qband{flex-direction:column;align-items:center;text-align:center}  /* center icon + text on mobile */
+  .qshield{width:64px;height:64px}  /* column layout: fixed square above the text */
 }
 
-/* FAQ — tighter spacing between question cards */
+/* FAQ - tighter spacing between question cards */
 #faq .faq{gap:8px}
 
 /* Rewards heading stays on one line on desktop */
@@ -186,29 +187,39 @@
 .anim #why .sec-head.reveal{opacity:1;transform:translateY(22px);transition:transform .55s cubic-bezier(.22,.61,.36,1)}
 .anim #why .sec-head.reveal.in{opacity:1;transform:none}
 
-/* ---- Mobile: minimal motion ----
-   The desktop choreography (how-it-works 150vh scrub runway, gallery scale-scrub, medley converge,
-   plus the pull-up margins .how-lead -34vh / #briefs -124px) feels off on a tall, narrow phone:
-   too much scroll, overlap, and big slide-ins. On mobile we drop all of it - content is simply
-   visible, with at most a quick opacity fade and no slide/scale movement. */
+/* ---- Mobile: subtle scroll animations ----
+   The desktop choreography (how-it-works 150vh scrub runway, gallery scale-scrub, medley ±220px
+   converge, plus the pull-up margins .how-lead -34vh / #briefs -124px) is too much on a tall, narrow
+   phone. On mobile we drop the runway/pull-ups and replace it with one light fade + small rise per
+   element as it scrolls into view - subtle, not the heavy desktop motion. */
 @media(max-width:759px){
   .anim #how.how-track.how-scroll{min-height:auto}     /* no 150vh scrub runway */
   .how-lead{height:auto;margin-bottom:0}               /* no -34vh overlap */
   .how-shift{transform:none}
   #briefs{margin-top:0;transform:none}                 /* no -124px pull-up overlap */
 
-  /* the three scroll-scrubbed sections: just visible (no scrub, no slide, no scale) */
+  /* how-it-works: subtle fade + small rise (the .in class is added by the IntersectionObserver) */
   .anim #how .sec-head,
   .anim #how .flow.how-anim .fstep .ic,
-  .anim #how .flow.how-anim .fstep .fbody{opacity:1;transform:none;transition:none}
+  .anim #how .flow.how-anim .fstep .fbody{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,.61,.36,1)}
+  .anim #how .sec-head.in,
+  .anim #how .flow.how-anim .fstep.in .ic,
+  .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
   .anim #how .flow.how-anim .fstep:nth-child(1)::after,
   .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(1)}   /* connectors drawn */
-  .anim #why .medley{--mp:1}                            /* chips at rest, visible - no converge */
-  .anim #why .mchip{transform:none!important;opacity:1!important;transition:none}  /* force rest+visible regardless of scrub var */
-  .anim #briefs .briefs>.brief{opacity:1;transform:none;transition:none}
 
-  /* generic reveals: keep the quick opacity fade but drop all slide/scale movement */
-  .anim .reveal,.anim .stagger,.anim .stagger>*,.anim .riseup,.anim .riseup>*{transform:none!important}
+  /* medley chips: subtle fade + small rise, NOT the big horizontal converge */
+  .anim #why .mchip{transform:translateY(12px)!important;opacity:0!important;transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .45s ease}
+  .anim #why .medley.in .mchip{transform:none!important;opacity:1!important}
+
+  /* gallery cards keep the desktop scroll-scrub on mobile (handled by JS + the base #briefs rules) */
+
+  /* re-enable a subtle fade + rise for generic section reveals on mobile (aam.css makes them static) */
+  .anim .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,.61,.36,1)}
+  .anim .reveal.in{opacity:1;transform:none}
+
+  /* "There may be money in your phone" - widen ~20% on mobile so it wraps less tightly */
+  .final h2{max-width:94%}
 }
 </style>
 </head>
@@ -250,11 +261,11 @@
           <div class="scrn s1">
             <div class="stitle">Pick a mission</div>
             <div class="mlist">
-              <div class="mrow m-photo"><span class="mic" style="background:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13.5" r="3.4"/><path d="M8 6l1.4-2.4h5.2L16 6"/></svg></span><span class="nm">Photo</span><span class="pay">+4 / photo</span><span class="ripple"></span></div>
-              <div class="mrow m-video"><span class="mic" style="background:#4F5BFF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><span class="nm">Video</span><span class="pay">+8 / clip</span><span class="ripple"></span></div>
-              <div class="mrow m-audio"><span class="mic" style="background:#845EF7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg></span><span class="nm">Audio</span><span class="pay">+6 / clip</span><span class="ripple"></span></div>
+              <div class="mrow m-photo"><span class="mic" style="background:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13.5" r="3.4"/><path d="M8 6l1.4-2.4h5.2L16 6"/></svg></span><span class="nm">Photo</span><span class="pay">+4 / photo</span></div>
+              <div class="mrow m-video"><span class="mic" style="background:#4F5BFF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><span class="nm">Video</span><span class="pay">+8 / clip</span></div>
+              <div class="mrow m-audio"><span class="mic" style="background:#845EF7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg></span><span class="nm">Audio</span><span class="pay">+6 / clip</span></div>
             </div>
-            <svg class="hand" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg>
+            <span class="tapper"><span class="tapring"></span><svg class="hand" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span>
           </div>
 
           <!-- 2 · submit media: pick a photo → upload → submitted -->
@@ -284,7 +295,7 @@
             </div>
             <div class="prog"><span></span></div>
             <div class="pstat"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="ptxt">Uploading…</span></div>
-            <svg class="hand hands2" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg>
+            <span class="tapper"><span class="tapring"></span><svg class="hand hands2" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span>
           </div>
 
           <!-- 3 · earn coins -->
@@ -305,7 +316,7 @@
               <div class="amt">$50</div>
             </div>
             <div class="cashbtn">Cash out</div>
-            <svg class="hand handb" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg>
+            <span class="tapper"><span class="tapring"></span><svg class="hand handb" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span>
             <div class="sent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gift card sent</div>
           </div>
 
@@ -332,7 +343,7 @@
 <section class="sec wrap" id="briefs">
   <div class="sec-head reveal"><h2 class="sec-h2">Available missions</h2></div>
   <div class="briefs">
-    <a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-selfie-videos-C1RBq8Ui.png" alt="Selfie Videos" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#FF5A5F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg>Selfie Videos</h4><p class="breq">One 10–60 sec selfie video, recorded at home, spoken in any Arabic dialect.</p><div class="prow"><span class="ppay">$8 / video clip</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-dogs-B6dPZelV.jpg" alt="Dogs" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#3B82F6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg>Dogs</h4><p class="breq">70+ clear photos of your dog, taken over 12+ months in different places. Natural, no studio.</p><div class="prow"><span class="ppay">$4 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-cats-A4a5-G7o.jpg" alt="Cats" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#F59E0B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg>Cats</h4><p class="breq">70+ clear photos of your cat, taken over 12+ months in varied settings. Natural and unedited.</p><div class="prow"><span class="ppay">$5 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/emailshunter-hero-CJdpmLfI.jpg" alt="Emails" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg>Emails</h4><p class="breq">Real business emails — we keep only the subject and sender. Originals, recent, in your language.</p><div class="prow"><span class="ppay">$2 / email</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-barcodes-9BbnRcBm.jpg" alt="Barcodes" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg>Barcodes</h4><p class="breq">A clear photo of one full barcode you own — used or expired cards, tickets, coupons.</p><div class="prow"><span class="ppay">$3 / barcode</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-virtual-tryon-CLUfoxf-.png" alt="Virtual Try On" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg>Virtual Try On</h4><p class="breq">5 real full-outfit photos of yourself from your camera roll — no filters, no studio shots.</p><div class="prow"><span class="ppay">$6 / photo</span></div></a>
+    <a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-selfie-videos-C1RBq8Ui.png" alt="Selfie Videos" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#FF5A5F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg>Selfie Videos</h4><p class="breq">One 10–60 sec selfie video, recorded at home, spoken in any Arabic dialect.</p><div class="prow"><span class="ppay">$8 / video clip</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-dogs-B6dPZelV.jpg" alt="Dogs" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#3B82F6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg>Dogs</h4><p class="breq">70+ clear photos of your dog, taken over 12+ months in different places. Natural, no studio.</p><div class="prow"><span class="ppay">$4 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-cats-A4a5-G7o.jpg" alt="Cats" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#F59E0B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg>Cats</h4><p class="breq">70+ clear photos of your cat, taken over 12+ months in varied settings. Natural and unedited.</p><div class="prow"><span class="ppay">$5 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/emailshunter-hero-CJdpmLfI.jpg" alt="Emails" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg>Emails</h4><p class="breq">Real business emails - we keep only the subject and sender. Originals, recent, in your language.</p><div class="prow"><span class="ppay">$2 / email</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-barcodes-9BbnRcBm.jpg" alt="Barcodes" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg>Barcodes</h4><p class="breq">A clear photo of one full barcode you own - used or expired cards, tickets, coupons.</p><div class="prow"><span class="ppay">$3 / barcode</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-virtual-tryon-CLUfoxf-.png" alt="Virtual Try On" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg>Virtual Try On</h4><p class="breq">5 real full-outfit photos of yourself from your camera roll - no filters, no studio shots.</p><div class="prow"><span class="ppay">$6 / photo</span></div></a>
   </div>
 </section>
 
@@ -372,11 +383,11 @@
 </section>
 
 <section class="sec wrap" id="love">
-  <div class="qband reveal">
+  <div class="qband">
     <span class="qshield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.6-3.1 7.7-7 9-3.9-1.3-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
     <div class="qtxt">
       <div class="q">Your content stays yours. Your data stays private.</div>
-      <div class="a">We only use what you choose to upload for the mission you picked. We never sell your personal information, and you can delete your account and data whenever you want.</div>
+      <div class="a">We only use what you upload for the mission you pick. We never sell your data, and you can delete it anytime.</div>
     </div>
   </div>
 </section>
@@ -384,23 +395,23 @@
 <section class="sec wrap" id="faq">
   <div class="sec-head reveal"><h2 class="sec-h2">FAQ</h2></div>
   <div class="faq stagger">
-    <details><summary>What is AI Art Masters?<span class="pm">+</span></summary><div class="faq-a">AI Art Master is a marketplace that connects you with companies that need real, original data to build and improve AI. You complete simple missions using your own device — capture something quick like a selfie or a short video, or submit photos you already have — and earn points you redeem for gift cards.</div></details>
-    <details><summary>What kinds of missions are there?<span class="pm">+</span></summary><div class="faq-a">Two kinds, mostly. Quick captures — a selfie, a 15-second clip of you speaking, a photo of something around you. And gallery missions that use content you already have, like 50 photos of your cat or the clothes you wear. Surveys and annotation tasks are also available as a complementary, optional way to earn extra points between missions.</div></details>
+    <details><summary>What is AI Art Masters?<span class="pm">+</span></summary><div class="faq-a">AI Art Master is a marketplace that connects you with companies that need real, original data to build and improve AI. You complete simple missions using your own device - capture something quick like a selfie or a short video, or submit photos you already have - and earn points you redeem for gift cards.</div></details>
+    <details><summary>What kinds of missions are there?<span class="pm">+</span></summary><div class="faq-a">Two kinds, mostly. Quick captures - a selfie, a 15-second clip of you speaking, a photo of something around you. And gallery missions that use content you already have, like 50 photos of your cat or the clothes you wear. Surveys and annotation tasks are also available as a complementary, optional way to earn extra points between missions.</div></details>
     <details><summary>How much can I earn?<span class="pm">+</span></summary><div class="faq-a">It depends on how many missions you complete and which ones you take on. As your user score grows, you unlock advanced missions worth far more points. You'll always see the reward before you start, so there are no surprises.</div></details>
-    <details><summary>How do I get paid?<span class="pm">+</span></summary><div class="faq-a">Your points collect in your AI Art Master wallet, and you can easily redeem them whenever you like for gift cards from well-known brands available in your region. Your gift card is delivered straight to your email — no payment or bank details required.</div></details>
+    <details><summary>How do I get paid?<span class="pm">+</span></summary><div class="faq-a">Your points collect in your AI Art Master wallet, and you can easily redeem them whenever you like for gift cards from well-known brands available in your region. Your gift card is delivered straight to your email - no payment or bank details required.</div></details>
     <details><summary>What is the user score, and why does it matter?<span class="pm">+</span></summary><div class="faq-a">Your user score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</div></details>
     <details><summary>Do I need any experience or special equipment?<span class="pm">+</span></summary><div class="faq-a">No. If you have a smartphone, you can start. Every mission includes clear, step-by-step guidance, so you always know exactly what to do.</div></details>
-    <details><summary>Why do you ask for details like my location or languages?<span class="pm">+</span></summary><div class="faq-a">Companies request data from specific places, languages, and backgrounds. Sharing a few attributes lets us show you only the missions you're eligible for and that fit your skills and capabilities — so you never waste time on missions that aren't a fit. You stay in control of what you share.</div></details>
+    <details><summary>Why do you ask for details like my location or languages?<span class="pm">+</span></summary><div class="faq-a">Companies request data from specific places, languages, and backgrounds. Sharing a few attributes lets us show you only the missions you're eligible for and that fit your skills and capabilities - so you never waste time on missions that aren't a fit. You stay in control of what you share.</div></details>
     <details><summary>Is my data and privacy protected?<span class="pm">+</span></summary><div class="faq-a">Yes. AI Art Master is operated by a publicly traded company, which means we follow data-protection and compliance rules closely. You choose what to submit, and your contributions are handled responsibly. <a href="#">Read our full privacy policy.</a></div></details>
-    <details><summary>How long does it take to get my reward?<span class="pm">+</span></summary><div class="faq-a">We guarantee a review within 48 hours of your submission. Once a mission is approved, your points are added to your wallet and you can redeem a gift card right away — delivered straight to your email.</div></details>
+    <details><summary>How long does it take to get my reward?<span class="pm">+</span></summary><div class="faq-a">We guarantee a review within 48 hours of your submission. Once a mission is approved, your points are added to your wallet and you can redeem a gift card right away - delivered straight to your email.</div></details>
     <details><summary>Where is AI Art Master available?<span class="pm">+</span></summary><div class="faq-a">AI Art Master is built for a global audience, with missions and gift-card options tailored to your country.</div></details>
     <details><summary>How do I get started?<span class="pm">+</span></summary><div class="faq-a">Sign up for free, set up your profile, and pick your first mission. You can be earning within minutes.</div></details>
   </div>
 </section>
 
 <section class="final wrap">
-  <h2>There may be <span class="hl">money in your phone</span> already.</h2>
-  <p>The photos and videos you already have could match a mission right now. Pick one, upload, and turn what's on your phone into real rewards.</p>
+  <h2>There may be <span class="hl">money in your phone</span> already</h2>
+  <p>The photos and videos you already have can earn right now. Pick a mission, upload, and get paid for what's on your phone.</p>
   <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start Earning</a>
 </section>
 
@@ -426,7 +437,7 @@
     tog.addEventListener('click',function(){var open=menu.classList.toggle('open');tog.setAttribute('aria-expanded',open?'true':'false');});
     menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
   }
-  // hero device — three submission flows (photo → video → audio), each running
+  // hero device - three submission flows (photo → video → audio), each running
   // the full earn-loop: pick → submit → earn → cash out. Each lands on 50 coins.
   var dev=document.getElementById('device');
   if(dev){
@@ -471,7 +482,7 @@
     }
   }
 
-  // Touch devices have no hover — first tap reveals the requirement, second follows the link.
+  // Touch devices have no hover - first tap reveals the requirement, second follows the link.
   if(window.matchMedia&&matchMedia('(hover: none)').matches){
     var briefs=Array.prototype.slice.call(document.querySelectorAll('.briefs .brief'));
     briefs.forEach(function(b){
@@ -488,7 +499,41 @@
     });
   }
 
+  // Safety banner: size the shield icon to a perfect square matching the text-block height (desktop
+  // row layout). On mobile (stacked) CSS keeps it a fixed 64px square.
+  (function(){
+    var qb=document.querySelector('#love .qband'), sh=qb&&qb.querySelector('.qshield'), tx=qb&&qb.querySelector('.qtxt');
+    if(!sh||!tx) return;
+    function sizeShield(){
+      if(matchMedia('(max-width:560px)').matches){ sh.style.width=sh.style.height=''; return; }
+      var h=tx.offsetHeight;   // layout height (NOT affected by the banner's scale transform)
+      sh.style.height=h+'px'; sh.style.width=h+'px';
+    }
+    sizeShield();
+    addEventListener('resize',sizeShield,{passive:true});
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(sizeShield);
+  })();
+
   if(!anim) return;
+
+  // Safety banner: scale-scrubbed by scroll - 70% as it enters from the bottom, growing to 100%
+  // exactly when the banner reaches the centre of the screen (then it stays at 100%).
+  var qband=document.querySelector('#love .qband');
+  if(qband){
+    var qTick=false;
+    var setQ=function(){ qTick=false;
+      var r=qband.getBoundingClientRect(), vh=window.innerHeight||document.documentElement.clientHeight;
+      var cy=r.top+r.height/2;                 // banner centre, relative to viewport
+      var endFrac=matchMedia('(max-width:759px)').matches?0.78:0.5;  // mobile finishes when banner is ~78% down (between too-high 0.72 and too-low 0.85); desktop at centre
+      var p=(vh-cy)/(vh*(1-endFrac));          // 0 when entering at the bottom, 1 at the end point
+      p=p<0?0:p>1?1:p;
+      qband.style.transform='scale('+(0.7+0.3*p).toFixed(3)+')';
+    };
+    var onQ=function(){ if(!qTick){ qTick=true; requestAnimationFrame(setQ); } };
+    window.addEventListener('scroll',onQ,{passive:true});
+    window.addEventListener('resize',onQ);
+    setQ();
+  }
   var io=new IntersectionObserver(function(ents){ents.forEach(function(x){if(x.isIntersecting){
     x.target.classList.add('in');io.unobserve(x.target);
     // When a section title reveals, bring its content in right after so it doesn't lag.
@@ -525,18 +570,28 @@
     }
   }
 
-  // Available missions gallery: scroll-scrubbed. Each thumbnail scales + fades in tied directly to
-  // scroll position, cascading first -> last, and the whole grid finishes exactly when the section
-  // reaches the centre of the screen. (Same approach as the "Missions made for you" medley above.)
+  // Available missions gallery: scroll-scrubbed on every screen size (Ron wants the scrub kept on
+  // mobile). Each thumbnail scales + fades in tied directly to scroll position, cascading first ->
+  // last, and the whole grid finishes when the section reaches the centre of the screen.
   var bgrid=document.querySelector('#briefs .briefs');
   var bcards=Array.prototype.slice.call(document.querySelectorAll('#briefs .briefs>.brief'));
-  if(bgrid&&bcards.length&&mobileAnim){
-    io.observe(bgrid);                            // .briefs.in reveals the cards once on enter (no scrub)
-  } else if(bgrid&&bcards.length){
+  if(bgrid&&bcards.length){
     var bSpread=0.5, bN=bcards.length, bTick=false, bDone=false;   // cards stagger across the first 50% of the scrub
     var setGP=function(){
       bTick=false;
       var vh=window.innerHeight||document.documentElement.clientHeight;
+      if(matchMedia('(max-width:759px)').matches){
+        // Mobile: per-card scrub. Each thumbnail scales 62%->100% as its own centre rises from the
+        // bottom of the screen (vh) up to ~80% down, so it finishes low on screen - never too high/late.
+        if(bDone){ bDone=false; bgrid.classList.remove('in'); }
+        for(var j=0;j<bN;j++){
+          var rc=bcards[j].getBoundingClientRect(), cyc=rc.top+rc.height/2;
+          var pc=(vh-cyc)/(vh*0.28); pc=pc<0?0:pc>1?1:pc;   // 1 when card centre is ~72% down the screen
+          bcards[j].style.opacity=pc.toFixed(3);
+          bcards[j].style.transform='scale('+(0.62+0.38*pc).toFixed(3)+')';
+        }
+        return;
+      }
       var r=bgrid.getBoundingClientRect(), center=r.top+r.height/2;
       var startY=vh*1.15, endY=vh*0.5;            // begins as the grid enters from below, ends when it's centred
       var p=(startY-center)/(startY-endY); p=p<0?0:p>1?1:p;
@@ -558,7 +613,7 @@
     setGP();
   }
 
-  // How it works — fully scroll-scrubbed timeline. Every element (title, the 3 steps, the 2
+  // How it works - fully scroll-scrubbed timeline. Every element (title, the 3 steps, the 2
   // dashed connectors) is tied directly to scroll position. The whole sequence is described in
   // window.__howT as vh-of-scroll amounts: a "center" settle, then per element a gap-before and
   // an enter span, then an "after" reading room. "pre" lets it start before the section is
@@ -598,8 +653,10 @@
       function(lp){ root.style.setProperty('--how-l2',lp); },
       stepSetter(2)
     ];
-    var raf=0;
+    var raf=0, howDone=false;
+    function revealAllHow(){ if(howDone)return; howDone=true; for(var i=0;i<els.length;i++) els[i](1); }
     function update(){
+      if(howDone) return;            // play once per refresh: stay fully revealed, never reverse on scroll-up
       var vh=window.innerHeight, t=window.__howT;
       var pre=(t.pre||0)/100*vh;
       var top=howSec.getBoundingClientRect().top;
@@ -612,6 +669,7 @@
         els[i](clamp01((sv-start)/Math.max(seg.enter,0.001)));
         cur=start+seg.enter;
       }
+      if(sv>=total) revealAllHow();   // sequence finished -> latch so it won't replay
     }
     howSec.classList.add('how-scroll');
     // Derive the section height from the timeline the same way the #tune panel does,
@@ -623,11 +681,17 @@
     update();
     addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;update();});},{passive:true});
     addEventListener('resize',update,{passive:true});
+    // Jumping straight to #how (footer/nav link or a #how URL) must show the section, not an empty
+    // scrub frame - reveal it fully on navigation.
+    function howJump(){ if(location.hash==='#how') revealAllHow(); }
+    addEventListener('hashchange',howJump);
+    [].slice.call(document.querySelectorAll('a[href="#how"]')).forEach(function(a){ a.addEventListener('click',function(){ setTimeout(revealAllHow,0); }); });
+    howJump();
   }
 })();
 </script>
 
-<!-- How it works animation tuner — only loads when the URL contains #tune (hidden from visitors) -->
+<!-- How it works animation tuner - only loads when the URL contains #tune (hidden from visitors) -->
 <script>
 (function(){
   if(!/tune/i.test(location.hash+location.search)) return;
@@ -735,7 +799,7 @@
     r.addEventListener('input',function(){ out.textContent=show(r.value); applyOne(c); });
     r.addEventListener('change',function(){ hist.push(last); if(hist.length>120)hist.shift(); last=snap(); saveLS(); }); // commit one step to history + remember
   });
-  // restore values saved from a previous session BEFORE first paint — a refresh keeps your tuning
+  // restore values saved from a previous session BEFORE first paint - a refresh keeps your tuning
   (function(){ var o=null; try{ o=JSON.parse(localStorage.getItem(LS)||'null'); }catch(e){}
     if(o){ C.forEach(function(c){ if(c[0][0]==='_'||o[c[0]]==null)return; var r=document.getElementById('r_'+c[0]); r.value=o[c[0]]; document.getElementById('v_'+c[0]).textContent=show(o[c[0]]); }); }
   })();
@@ -752,7 +816,7 @@
     applyAll(); last=snap(); saveLS();
   });
   box.querySelector('.copy').addEventListener('click',function(){
-    var b=this, lines=['How it works — animation timeline (all in vh of scroll unless noted):'];
+    var b=this, lines=['How it works - animation timeline (all in vh of scroll unless noted):'];
     C.forEach(function(c){ if(c[0][0]==='_'){lines.push('['+c[1]+']');return;} lines.push('• '+c[1]+': '+show(val(c[0]))+c[7]); });
     var T=window.__howT, total=T.center+T.after; T.seq.forEach(function(s){total+=s.gap+s.enter;});
     lines.push('→ derived: timeline '+Math.round(total)+'vh, '+Math.round(T.pre)+'vh before centered, section '+Math.round(total-T.pre+100)+'vh tall');

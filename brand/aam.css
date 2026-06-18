@@ -45,7 +45,7 @@ a{color:inherit;text-decoration:none}
 /* NAV */
 .nav{position:sticky;top:0;z-index:100;background:transparent;border-bottom:1px solid transparent;transition:background .3s,border-color .3s,backdrop-filter .3s}
 .nav.scrolled{background:var(--bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav-in{max-width:1140px;margin:0 auto;padding:15px var(--pad);display:flex;align-items:center;gap:20px}
+.nav-in{max-width:1140px;margin:0 auto;padding:15px var(--pad);display:flex;align-items:center;gap:20px;position:relative;z-index:2}
 .brand{display:flex;align-items:center;gap:9px}
 .brand svg{flex:none;display:block}
 .brand .wm{font-family:var(--fd);font-weight:800;letter-spacing:.01em;font-size:17px;line-height:1}
@@ -58,21 +58,21 @@ a{color:inherit;text-decoration:none}
 .signin{font-size:14px;font-weight:600;color:var(--ink2);transition:color .2s}.signin:hover{color:var(--ink)}
 
 /* hamburger toggle (mobile) */
-.nav-toggle{margin-left:auto;flex:none;display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;padding:0;background:var(--primary);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 0 var(--primary-deep);transition:transform .15s cubic-bezier(.34,1.56,.64,1),filter .2s,box-shadow .15s}
-.nav-toggle:hover{transform:scale(1.04);filter:brightness(1.05)}
-.nav-toggle:active{transform:scale(.97) translateY(2px);box-shadow:0 1px 0 var(--primary-deep)}
+.nav-toggle{margin-left:auto;flex:none;display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;aspect-ratio:1;box-sizing:border-box;padding:0;background:var(--primary);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 6px 16px rgba(36,31,71,.24);transition:transform .15s cubic-bezier(.34,1.56,.64,1),filter .2s,box-shadow .15s}
+.nav-toggle:hover{transform:scale(1.06);filter:brightness(1.04)}
+.nav-toggle:active{transform:scale(.95);box-shadow:0 3px 10px rgba(36,31,71,.22)}
 .nav-toggle span{display:block;width:18px;height:2.5px;border-radius:2px;background:#fff;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s}
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
 .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
 
 /* mobile menu panel */
-.nav-mobile{display:none;flex-direction:column;gap:4px;padding:8px var(--pad) 20px;background:var(--bg);border-bottom:1px solid var(--line)}
-.nav-mobile.open{display:flex}
-.nav-mobile a{font-family:var(--fd);font-weight:700;font-size:16px;color:var(--ink);padding:13px 6px;border-bottom:1px solid var(--line)}
+.nav-mobile{display:none;flex-direction:column;gap:14px;padding:8px var(--pad) 20px;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-mobile.open{display:flex;position:fixed;left:0;right:0;top:0;bottom:0;height:100vh;height:100dvh;z-index:1;overflow-y:auto;justify-content:flex-start;padding:84px var(--pad) 32px;border-bottom:none}
+/* link styling must NOT touch .btn children - the CTA reuses the full button component */
+.nav-mobile a:not(.btn){font-family:var(--fd);font-weight:700;font-size:16px;color:var(--ink);padding:13px 6px;border-bottom:1px solid var(--line)}
 .nav-mobile a.m-signin{color:var(--ink2);font-weight:600}
-.nav-mobile .btn{margin-top:12px;width:100%}
-.nav-mobile .btn-p{color:#fff}   /* keep the primary CTA's white text - .nav-mobile a would otherwise force it dark */
+.nav-mobile .btn{margin-top:16px;width:100%}
 .nav-mobile .m-sep{border:none}
 
 /* BUTTONS (atom) — centered scale, chunky drop */
@@ -174,22 +174,26 @@ h1{font-family:var(--fd);font-weight:800;letter-spacing:-.01em;font-size:clamp(4
 .anim .device[data-step="1"][data-media="photo"] .mrow.m-photo,
 .anim .device[data-step="1"][data-media="video"] .mrow.m-video,
 .anim .device[data-step="1"][data-media="audio"] .mrow.m-audio{border-color:var(--primary);box-shadow:0 10px 22px color-mix(in srgb,var(--primary) 24%,transparent)}
-.device .ripple{position:absolute;right:13px;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;background:color-mix(in srgb,var(--primary) 32%,transparent);opacity:0}
-.anim .device[data-step="1"][data-media="photo"] .mrow.m-photo .ripple,
-.anim .device[data-step="1"][data-media="video"] .mrow.m-video .ripple,
-.anim .device[data-step="1"][data-media="audio"] .mrow.m-audio .ripple{animation:dripple 1.3s ease 1s}
-@keyframes dripple{0%{opacity:.7;transform:scale(.3)}55%{opacity:.22;transform:scale(1.5)}100%{opacity:0;transform:scale(2)}}
-/* gesture hand — single click: right of the row (s1), the photo box (s2), the cash-out button (s4) */
-.device .hand{position:absolute;width:46px;height:46px;filter:drop-shadow(0 3px 5px rgba(36,31,71,.32));opacity:0;pointer-events:none;transform-origin:30% 19%;z-index:6}
-.device .s1 .hand{right:6px;top:44px;transition:top .3s ease}
-.device[data-media="video"] .s1 .hand{top:100px}
-.device[data-media="audio"] .s1 .hand{top:156px}
-.device .s2 .hand{left:50%;top:58px;margin-left:4px}
-.device .s4 .hand{left:50%;top:50%;margin-left:24px;margin-top:-42px}
+/* gesture hand — single click: right of the row (s1), the photo box (s2), the cash-out button (s4).
+   .tapper holds the on-screen position; the hand presses inside it; .tapring pulses at the fingertip. */
+.device .tapper{position:absolute;width:46px;height:46px;pointer-events:none;z-index:6}
+.device .hand{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 3px 5px rgba(36,31,71,.32));opacity:0;transform-origin:30% 19%;z-index:1}
+/* tap ring — translucent pulse centered on the fingertip (the hand's 30% 19% press point), sits above
+   the hand so the opaque silhouette doesn't clip it. Fires once per tap. */
+.device .tapring{position:absolute;left:30%;top:19%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:color-mix(in srgb,var(--primary) 30%,transparent);opacity:0;z-index:2}
+.device .s1 .tapper{right:6px;top:44px;transition:top .3s ease}
+.device[data-media="video"] .s1 .tapper{top:100px}
+.device[data-media="audio"] .s1 .tapper{top:156px}
+.device .s2 .tapper{left:50%;top:58px;margin-left:4px}
+.device .s4 .tapper{left:50%;top:50%;margin-left:24px;margin-top:-42px}
 .anim .device[data-step="1"] .s1 .hand{animation:tap 1.7s ease .35s}
 .anim .device[data-s2="pick"] .s2 .hand{animation:tap 1.7s ease .2s}
 .anim .device[data-step="4"] .s4 .hand{animation:tap 1.7s ease 1.4s}
+.anim .device[data-step="1"] .s1 .tapring{animation:tapring 1.7s ease .35s}
+.anim .device[data-s2="pick"] .s2 .tapring{animation:tapring 1.7s ease .2s}
+.anim .device[data-step="4"] .s4 .tapring{animation:tapring 1.7s ease 1.4s}
 @keyframes tap{0%{opacity:0;transform:translate(10px,12px) scale(1)}24%{opacity:1;transform:translate(0,0) scale(1)}44%{transform:translate(0,2px) scale(.8)}62%{transform:translate(0,0) scale(1)}86%,100%{opacity:0;transform:translate(-2px,-4px) scale(1)}}
+@keyframes tapring{0%,34%{opacity:0;transform:scale(.35)}46%{opacity:.5;transform:scale(.55)}100%{opacity:0;transform:scale(1.8)}}
 
 /* S2 — submit media: pick photo → upload → submitted */
 .device .shot{position:relative;border-radius:16px;overflow:hidden;height:120px;background:linear-gradient(150deg,#FFE4C4,#FFC9E2);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(36,31,71,.06);transition:background .4s ease}
