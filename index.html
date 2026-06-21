@@ -206,11 +206,14 @@
   .anim #how .flow.how-anim .fstep.in .ic,
   .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
   /* connector base: clearly visible (the faint --line2 read as "missing" on a phone) and reaching
-     into the next icon. Applies with or without motion. */
+     into the next icon. Anchor BOTH ends (top + bottom) instead of using a % height: iOS Safari
+     computes percentage heights against an auto-height flex parent as 0, so the line had no height
+     and never showed. top/bottom uses the rendered box, which renders correctly everywhere. */
   #how .flow .fstep:nth-child(1)::after,
   #how .flow .fstep:nth-child(2)::after{
     top:62px;
-    height:calc(100% - 62px + 12px);                                  /* close the ~11px gap before the next icon */
+    bottom:-12px;                                                     /* reach ~12px into the next icon */
+    height:auto;
     border-left-color:color-mix(in srgb,var(--primary) 42%,var(--line2));
   }
   /* with motion: each dashed line draws in (scaleY 0 -> 1) as its step scrolls into view.
@@ -704,6 +707,7 @@
       var pre=Math.min(Math.max(t.pre||0,0), total-2, 90); t.pre=pre;
       root.style.setProperty('--how-track', Math.max(total-pre+100,100)+'vh'); })();
     window.__howUpdate=update;                        // tuner re-runs after changing values
+    window.__howReveal=revealAllHow;                  // let the nav-link scroller reveal the section
     update();
     addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;update();});},{passive:true});
     addEventListener('resize',update,{passive:true});
@@ -714,6 +718,26 @@
     [].slice.call(document.querySelectorAll('a[href="#how"]')).forEach(function(a){ a.addEventListener('click',function(){ setTimeout(revealAllHow,0); }); });
     howJump();
   }
+})();
+(function(){
+  // "How it works" links: reveal the section and scroll so its title sits just under the nav -
+  // a controlled scroll (not the native hash jump) so it never overshoots into the gallery and the
+  // title is always in view. Works on desktop and mobile.
+  var how=document.getElementById('how'), nav=document.getElementById('nav');
+  if(!how) return;
+  [].slice.call(document.querySelectorAll('a[href="#how"]')).forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var menu=document.getElementById('navMobile'), tog=document.getElementById('navToggle');
+      if(menu){ menu.classList.remove('open'); if(tog) tog.setAttribute('aria-expanded','false'); }
+      if(window.__howReveal) window.__howReveal();                                  // desktop scrub reveal
+      [].forEach.call(how.querySelectorAll('.sec-head,.fstep'),function(el){el.classList.add('in');});  // mobile fade-in
+      var navH = nav ? nav.offsetHeight : 0;
+      var y = how.getBoundingClientRect().top + window.scrollY - navH - 14;         // title clears the fixed nav
+      window.scrollTo({ top: Math.max(y,0), behavior:'smooth' });
+      if(history.replaceState) history.replaceState(null,'','#how');
+    });
+  });
 })();
 </script>
 
