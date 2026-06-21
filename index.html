@@ -205,15 +205,20 @@
   .anim #how .sec-head.in,
   .anim #how .flow.how-anim .fstep.in .ic,
   .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
-  /* connectors: always drawn, clearly visible, and reaching down into the next icon
-     (the default faint --line2 on the lavender bg read as "missing" on a phone). */
+  /* connector base: clearly visible (the faint --line2 read as "missing" on a phone) and reaching
+     into the next icon. Applies with or without motion. */
   #how .flow .fstep:nth-child(1)::after,
   #how .flow .fstep:nth-child(2)::after{
-    transform:none;
     top:62px;
     height:calc(100% - 62px + 12px);                                  /* close the ~11px gap before the next icon */
     border-left-color:color-mix(in srgb,var(--primary) 42%,var(--line2));
   }
+  /* with motion: each dashed line draws in (scaleY 0 -> 1) as its step scrolls into view.
+     Higher specificity + later in source than the scrub rules above, so this wins on mobile. */
+  .anim #how .flow.how-anim .fstep:nth-child(1)::after,
+  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(0);transform-origin:top;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+  .anim #how .flow.how-anim .fstep:nth-child(1).in::after,
+  .anim #how .flow.how-anim .fstep:nth-child(2).in::after{transform:scaleY(1)}
 
   /* medley chips: subtle fade + small rise, NOT the big horizontal converge */
   .anim #why .mchip{transform:translateY(12px)!important;opacity:0!important;transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .45s ease}

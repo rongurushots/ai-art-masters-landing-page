@@ -480,7 +480,7 @@ function goBack(){ if(idx>0){ idx--; render(); } }
 nextEl.addEventListener('click',goNext);
 backEl.addEventListener('click',goBack);
 skipEl.addEventListener('click',function(){ if(idx<steps.length-1){ idx++; render(); } });
-quitEl.addEventListener('click',function(){ try{saveDraft();}catch(e){} window.location.href='home.html'; });  // leave the quiz; draft is kept so it can be resumed
+quitEl.addEventListener('click',function(){ try{saveDraft();}catch(e){} window.location.href='index.html'; });  // leave the quiz -> back to the landing (profile is only reached via Sign in); draft is kept
 document.addEventListener('keydown',function(e){ if(e.key==='Enter' && !nextEl.disabled && steps[idx].key!=='done'){ goNext(); } });
 
 /* ============================================================
