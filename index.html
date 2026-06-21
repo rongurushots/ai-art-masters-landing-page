@@ -216,12 +216,13 @@
     background:repeating-linear-gradient(to bottom,#8088db 0 5px,transparent 5px 11px);
     transform-origin:top;
   }
-  /* visible by default (override the scrub var rule above); the line draws in on .in, and if the
-     animation never runs the line still shows. */
+  /* with motion: each line starts collapsed and draws down only once the step it points TO has
+     scrolled in (JS adds .conn-on). Tying it to its own step fired far too early, because the line
+     leads down to the next step. Without .anim (reduced motion) the line just stays visible. */
   .anim #how .flow.how-anim .fstep:nth-child(1)::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:none}
-  .anim #how .flow.how-anim .fstep:nth-child(1).in::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2).in::after{animation:howDraw .55s cubic-bezier(.4,0,.2,1) both}
+  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(0)}
+  .anim #how .flow.how-anim .fstep:nth-child(1).conn-on::after,
+  .anim #how .flow.how-anim .fstep:nth-child(2).conn-on::after{animation:howDraw .55s cubic-bezier(.4,0,.2,1) both}
   @keyframes howDraw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 
   /* medley chips: subtle fade + small rise, NOT the big horizontal converge */
@@ -654,10 +655,15 @@
     howFlow.classList.add('how-anim');
     var root=document.documentElement;
     if(mobileAnim){
-      // Phones: no scrub track. Draw the connectors and fade in the title + steps as they enter.
-      root.style.setProperty('--how-l1',1); root.style.setProperty('--how-l2',1);
+      // Phones: no scrub track. Fade in the title + steps as they enter, and draw each connector
+      // only when the step it leads TO scrolls in (so the line never animates ahead of its target).
       var howHead=howSec.querySelector('.sec-head'); if(howHead) io.observe(howHead);
-      [].slice.call(howFlow.querySelectorAll('.fstep')).forEach(function(s){io.observe(s);});
+      var fsteps=[].slice.call(howFlow.querySelectorAll('.fstep'));
+      fsteps.forEach(function(s){io.observe(s);});
+      var connIo=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){ var i=fsteps.indexOf(e.target); if(i>0) fsteps[i-1].classList.add('conn-on'); connIo.unobserve(e.target); }
+      });},{threshold:.4});
+      for(var k=1;k<fsteps.length;k++){ connIo.observe(fsteps[k]); }   // connector k-1 lights when step k is ~40% in
       return;
     }
     var T=window.__howT||(window.__howT={
