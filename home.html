@@ -19,6 +19,14 @@
 .scoretip::after{content:"";position:absolute;bottom:100%;right:18px;border:7px solid transparent;border-bottom-color:var(--ink)}
 .scorechip:hover .scoretip,.scorechip:focus-within .scoretip{opacity:1;visibility:visible;transform:translateY(0)}
 
+/* mobile-only "?" explainer on the Score stat tile (desktop uses the nav score pill tooltip) */
+.scoretile{position:relative}
+.scorehelp{display:none;position:absolute;top:8px;right:8px;width:22px;height:22px;border:none;border-radius:50%;background:var(--line);color:var(--ink3);font-family:var(--fd);font-weight:800;font-size:12px;line-height:1;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+.scorehelp:hover,.scorehelp[aria-expanded="true"]{background:var(--primary);color:#fff}
+.scorepop{position:absolute;top:calc(100% + 8px);right:0;width:min(290px,84vw);background:var(--ink);color:#fff;font-family:var(--fb);font-weight:500;font-size:12px;line-height:1.6;text-align:left;text-wrap:pretty;padding:13px 15px;border-radius:12px;box-shadow:0 12px 30px rgba(36,31,71,.22);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:120}
+.scorepop::after{content:"";position:absolute;bottom:100%;right:14px;border:7px solid transparent;border-bottom-color:var(--ink)}
+.scorehelp[aria-expanded="true"]+.scorepop{opacity:1;visibility:visible;transform:translateY(0)}
+
 /* single-column profile layout */
 .home.wrap{max-width:980px}
 
@@ -40,21 +48,24 @@
 
 /* stat tiles row - approved, score, balance. Three uniform, compact tiles (label + figure only);
    the wallet action lives in its own row below so no tile is taller or busier than the others. */
-.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 15px;box-shadow:0 6px 16px rgba(36,31,71,.05)}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{display:flex;flex-direction:column;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 15px;box-shadow:0 6px 16px rgba(36,31,71,.05)}
 .stat .lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);font-weight:700}
 .stat .num{font-family:var(--fd);font-weight:800;font-size:24px;line-height:1.05;margin-top:5px;display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
 .stat .num .ci{align-self:center;width:19px;height:19px;flex:none}
 .stat .num .u{font-size:12px;color:var(--primary);font-weight:600}
 .stat .num .den{font-size:13px;color:var(--ink3);font-weight:600}
 .stat .sub{font-family:var(--fm);font-size:11px;color:var(--ink3);margin-top:5px}
-/* desktop: a regular pink primary "Cash out" button under the stats (btn-k carries the brand shadow) */
-.cashrow{display:flex;justify-content:flex-end;margin-bottom:20px}
-.stat-cash{font-size:14px;padding:11px 22px 10px}
+/* desktop: the pink primary "Cash out" button lives inside the balance card, to the RIGHT of the
+   figure (btn-k carries the brand shadow). The figure block can shrink (min-width:0) so the button,
+   which never shrinks, sits flush right without overlapping. */
+#balance{flex-direction:row;align-items:center;gap:8px}
+.bal-main{display:flex;flex-direction:column;min-width:0}
+.stat-cash{flex:none;margin-left:auto;padding:10px 18px 9px;font-size:13px}
 
 /* mobile only (enabled in the @media block): the balance tile morphs into a Cash out button styled
    like the primary button. A small pink dot hints it; tap arms it, a second tap opens the modal. */
-#balance{position:relative;overflow:hidden;transition:background .35s cubic-bezier(.22,.61,.36,1),border-color .35s ease,box-shadow .3s cubic-bezier(.34,1.56,.64,1)}
+#balance{position:relative;transition:background .35s cubic-bezier(.22,.61,.36,1),border-color .35s ease,box-shadow .3s cubic-bezier(.34,1.56,.64,1)}
 #balance .lbl,#balance .num{transition:opacity .22s ease}
 .cash-dot,.cash-label{display:none}
 .cash-dot{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--accent);transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1)}
@@ -139,9 +150,10 @@ footer.wrap{border-top:none}
   .stat .num{font-size:19px;margin-top:3px;gap:3px}
   .stat .num .ci{width:15px;height:15px}
   .stat .num .den{font-size:10px}
-  /* mobile cash-out: hide the desktop button, turn the balance tile into the control */
-  .cashrow{display:none}
-  #balance{cursor:pointer}
+  .scorehelp{display:flex}   /* show the score "?" explainer on the mobile profile */
+  /* mobile cash-out: hide the in-card button, turn the balance tile itself into the control */
+  .stat-cash{display:none}
+  #balance{cursor:pointer;flex-direction:column;align-items:stretch;overflow:hidden}   /* clip the armed pink fill to the rounded corners */
   #balance .num .ci{display:none}              /* tight tile: drop the coin glyph so the figure clears the dot */
   .cash-dot{display:block}
   .cash-label{display:flex;font-size:13px}
@@ -169,7 +181,7 @@ footer.wrap{border-top:none}
   <a class="brand" href="home.html"><svg viewBox="0 0 24 20" style="width:26px;height:22px"><path d="M14.9297 0C15.5984 1.83494e-05 16.2228 0.334243 16.5938 0.890625L17.4062 2.10938C17.7772 2.66576 18.4016 2.99998 19.0703 3H20C22.2091 3 24 4.79086 24 7V16C24 18.2091 22.2091 20 20 20H4C1.79086 20 8.05333e-09 18.2091 0 16V7C0 4.79086 1.79086 3 4 3H4.92969C5.59837 2.99998 6.22283 2.66576 6.59375 2.10938L7.40625 0.890625C7.77717 0.334243 8.40163 1.83494e-05 9.07031 0H14.9297ZM12 5C12 8.3135 9.3135 11 6 11C9.3135 11 12 13.6865 12 17C12 13.6865 14.6865 11 18 11C14.6865 11 12 8.3135 12 5Z" fill="#4F5BFF"/></svg><span class="wm">AI Art Masters</span></a>
   <div class="nav-links"><a href="#missions">Missions</a><a href="#activity">Activity</a></div>
   <div class="nav-right">
-    <span class="scorechip" tabindex="0" aria-label="Your score: 73 out of 100"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 6.4L21 9.3l-5 4.3 1.6 6.4L12 16.8 6.4 20l1.6-6.4-5-4.3 6.6-.9z"/></svg><span id="navScore">73</span><span class="sden">/100</span><span class="scoretip" role="tooltip">Your score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved, and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</span></span>
+    <span class="scorechip" tabindex="0" aria-label="Your score: 73 out of 100"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><span id="navScore">73</span><span class="sden">/100</span><span class="scoretip" role="tooltip">Your score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved, and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</span></span>
     <span class="coinchip"><svg class="coin" width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg>1,240 coins</span>
     <a class="signin" href="index.html">Sign out</a>
     <span style="width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--fd);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center">R</span>
@@ -188,23 +200,27 @@ footer.wrap{border-top:none}
   <div class="statgrid stagger">
     <div class="stat">
       <div class="lbl">Approved</div>
-      <div class="num"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="#13C783" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.4l2.6 2.6L16 9"/></svg>11</div>
+      <div class="num"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="#13C783" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>11</div>
     </div>
-    <div class="stat">
+    <div class="stat scoretile">
       <div class="lbl">Score</div>
-      <div class="num"><svg class="ci" viewBox="0 0 24 24" style="fill:var(--primary)" aria-hidden="true"><path d="M12 2l2.4 6.4L21 9.3l-5 4.3 1.6 6.4L12 16.8 6.4 20l1.6-6.4-5-4.3 6.6-.9z"/></svg><span id="statScore">73</span><span class="den">/ 100</span></div>
+      <div class="num"><svg class="ci" viewBox="0 0 24 24" style="fill:var(--primary)" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><span id="statScore">73</span><span class="den">/ 100</span></div>
+      <button class="scorehelp" type="button" aria-expanded="false" aria-label="What is the user score?">?</button>
+      <div class="scorepop" role="tooltip">Your score reflects how closely you follow each mission's instructions and the quality of your submissions. Follow the guidance well and you're more likely to be approved — and your score climbs. A higher score unlocks advanced, higher-value missions, so great work means earning more.</div>
     </div>
-    <!-- balance tile. On mobile it doubles as the cash-out control (a pink dot hints it; tap arms the
-         whole tile into a Cash out button for 2s, tap again opens the modal). On desktop the regular
-         button below handles it - the tile's interactivity is added by JS only at mobile widths. -->
+    <!-- balance tile. Desktop: the Cash out button sits inside the card (below the figure). Mobile:
+         the tile itself is the control (a pink dot hints it; tap arms it into a Cash out button, tap
+         again opens the modal) - the in-card button is hidden and the tile interactivity is added by JS. -->
     <div class="stat cashable" id="balance" aria-label="Balance">
-      <div class="lbl">Balance</div>
-      <div class="num"><svg class="ci" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="7.2" cy="6.6" rx="2.3" ry="1.1" fill="#fff" opacity=".32"/></svg>1,240</div>
+      <div class="bal-main">
+        <div class="lbl">Balance</div>
+        <div class="num"><svg class="ci" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="7.2" cy="6.6" rx="2.3" ry="1.1" fill="#fff" opacity=".32"/></svg>1,240</div>
+      </div>
+      <button type="button" class="btn btn-k stat-cash" id="cashOut">Cash out</button>
       <span class="cash-dot" aria-hidden="true"></span>
       <span class="cash-label" aria-hidden="true">Cash out</span>
     </div>
   </div>
-  <div class="cashrow"><button type="button" class="btn btn-k stat-cash" id="cashOut">Cash out</button></div>
 
   <!-- PROFILE SETUP - onboarding progress; nudges users to finish for starter coins -->
   <a class="setup reveal" href="welcome-quiz.html">
@@ -226,7 +242,7 @@ footer.wrap{border-top:none}
     <span class="nseye">New mission</span>
     <div class="nsrow">
       <div class="nsmain">
-        <span class="nsicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="13" height="10" rx="2"/><path d="M15.5 10.5l6-3v9l-6-3z"/></svg></span>
+        <span class="nsicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
         <div class="ntext">
           <div class="nstitle">Selfie Videos</div>
           <div class="nssub">Record a short video and earn $8 for every accepted clip</div>
@@ -234,7 +250,7 @@ footer.wrap{border-top:none}
       </div>
       <a class="btn btn-w nsgo" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener">Start earning</a>
     </div>
-    <button class="nclose" id="newsClose" type="button" aria-label="Dismiss new mission"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="nclose" id="newsClose" type="button" aria-label="Dismiss new mission"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
   </div>
 
   <!-- MISSIONS STATUS + ACTIVITY -->
@@ -242,19 +258,19 @@ footer.wrap{border-top:none}
       <h2 class="col-h reveal" id="missions">Your missions</h2>
       <p class="msum reveal">You've submitted to <b>3 of 6</b> missions. Keep going - most are still open for more.</p>
       <div class="mgrid stagger">
-        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 in review · +5 coins / photo</div></div><div class="mr"><span class="mstat s-review">In review</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted · +4 coins / photo</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted · +2 coins / email</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week · +8 coins / clip</div></div><div class="mr"><span class="mstat s-new">New</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started · +3 coins / barcode</div></div><div class="mr"><span class="mstat s-open">Open</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
-        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days · +6 coins / photo</div></div><div class="mr"><span class="mstat s-soon">Closing soon</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></a>
+        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 in review · +5 coins / photo</div></div><div class="mr"><span class="mstat s-review">In review</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted · +4 coins / photo</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted · +2 coins / email</div></div><div class="mr"><span class="mstat s-earn">Approved</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
+        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week · +8 coins / clip</div></div><div class="mr"><span class="mstat s-new">New</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
+        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started · +3 coins / barcode</div></div><div class="mr"><span class="mstat s-open">Open</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
+        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days · +6 coins / photo</div></div><div class="mr"><span class="mstat s-soon">Closing soon</span><span class="mchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div></a>
       </div>
 
       <h2 class="col-h mt reveal" id="activity">Recent activity</h2>
       <div class="act stagger">
-        <div class="actr"><span class="aav" style="--c:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9.5" r="1.4"/><circle cx="12" cy="8" r="1.5"/><circle cx="16" cy="9.5" r="1.4"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg></span><div><div class="an">Dog photo accepted</div><div class="at">2 hours ago</div></div><span class="amt">+4</span></div>
-        <div class="actr"><span class="aav" style="--c:#E0357D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="5.5"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6"/></svg></span><div><div class="an">Cat photo accepted</div><div class="at">Yesterday</div></div><span class="amt">+5</span></div>
-        <div class="actr"><span class="aav" style="--c:#13C783"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><div><div class="an">Cashed out</div><div class="at">Last week</div></div><span class="amt cash">$50</span></div>
+        <div class="actr"><span class="aav" style="--c:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div><div class="an">Dog photo accepted</div><div class="at">2 hours ago</div></div><span class="amt">+4</span></div>
+        <div class="actr"><span class="aav" style="--c:#E0357D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div><div class="an">Cat photo accepted</div><div class="at">Yesterday</div></div><span class="amt">+5</span></div>
+        <div class="actr"><span class="aav" style="--c:#13C783"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48"/><path d="M15 6h1v4"/><path d="m6.134 14.768.866-.5 2 3.464"/><circle cx="16" cy="8" r="6"/></svg></span><div><div class="an">Cashed out</div><div class="at">Last week</div></div><span class="amt cash">$50</span></div>
       </div>
   </div>
 </main>
@@ -290,6 +306,14 @@ footer.wrap{border-top:none}
   set('navScore',score);
   set('statScore',score);
   if(tier)set('statTier',tier.tier);
+})();
+(function(){
+  // Mobile profile: tap the "?" on the Score tile to toggle the score explanation popover.
+  var h=document.querySelector('.scorehelp'); if(!h) return;
+  function setOpen(o){ h.setAttribute('aria-expanded', o?'true':'false'); }
+  h.addEventListener('click',function(e){ e.stopPropagation(); setOpen(h.getAttribute('aria-expanded')!=='true'); });
+  document.addEventListener('click',function(e){ if(!h.parentNode.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
 })();
 (function(){
   // Dismissable new-mission banner.
