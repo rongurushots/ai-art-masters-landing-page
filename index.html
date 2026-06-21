@@ -205,23 +205,24 @@
   .anim #how .sec-head.in,
   .anim #how .flow.how-anim .fstep.in .ic,
   .anim #how .flow.how-anim .fstep.in .fbody{opacity:1;transform:none}
-  /* connector base: clearly visible (the faint --line2 read as "missing" on a phone) and reaching
-     into the next icon. Anchor BOTH ends (top + bottom) instead of using a % height: iOS Safari
-     computes percentage heights against an auto-height flex parent as 0, so the line had no height
-     and never showed. top/bottom uses the rendered box, which renders correctly everywhere. */
+  /* connector geometry: a real 3px-wide box filled with a dashed gradient, anchored top + bottom.
+     iOS Safari/WebKit renders border-only zero-width boxes, % heights on auto-height flex parents,
+     and color-mix() unreliably - any of which made the line invisible on iPhone. A filled box with
+     a hardcoded color and top/bottom offsets renders everywhere. */
   #how .flow .fstep:nth-child(1)::after,
   #how .flow .fstep:nth-child(2)::after{
-    top:62px;
-    bottom:-12px;                                                     /* reach ~12px into the next icon */
-    height:auto;
-    border-left-color:color-mix(in srgb,var(--primary) 42%,var(--line2));
+    left:26px; width:3px; top:62px; bottom:-12px; height:auto;     /* -12px reaches into the next icon */
+    border:none;
+    background:repeating-linear-gradient(to bottom,#8088db 0 5px,transparent 5px 11px);
+    transform-origin:top;
   }
-  /* with motion: each dashed line draws in (scaleY 0 -> 1) as its step scrolls into view.
-     Higher specificity + later in source than the scrub rules above, so this wins on mobile. */
+  /* visible by default (override the scrub var rule above); the line draws in on .in, and if the
+     animation never runs the line still shows. */
   .anim #how .flow.how-anim .fstep:nth-child(1)::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:scaleY(0);transform-origin:top;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+  .anim #how .flow.how-anim .fstep:nth-child(2)::after{transform:none}
   .anim #how .flow.how-anim .fstep:nth-child(1).in::after,
-  .anim #how .flow.how-anim .fstep:nth-child(2).in::after{transform:scaleY(1)}
+  .anim #how .flow.how-anim .fstep:nth-child(2).in::after{animation:howDraw .55s cubic-bezier(.4,0,.2,1) both}
+  @keyframes howDraw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 
   /* medley chips: subtle fade + small rise, NOT the big horizontal converge */
   .anim #why .mchip{transform:translateY(12px)!important;opacity:0!important;transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .45s ease}
