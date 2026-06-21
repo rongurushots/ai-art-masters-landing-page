@@ -21,9 +21,9 @@
 
 /* mobile-only "?" explainer on the Score stat tile (desktop uses the nav score pill tooltip) */
 .scoretile{position:relative}
-.scorehelp{display:none;position:absolute;top:8px;right:8px;width:22px;height:22px;border:none;border-radius:50%;background:var(--line);color:var(--ink3);font-family:var(--fd);font-weight:800;font-size:12px;line-height:1;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+.scorehelp{display:none;position:absolute;top:8px;right:8px;width:18px;height:18px;border:none;border-radius:50%;background:var(--line);color:var(--ink3);font-family:var(--fd);font-weight:800;font-size:11px;line-height:1;align-items:center;justify-content:center;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
 .scorehelp:hover,.scorehelp[aria-expanded="true"]{background:var(--primary);color:#fff}
-.scorepop{position:absolute;top:calc(100% + 8px);right:0;width:min(290px,84vw);background:var(--ink);color:#fff;font-family:var(--fb);font-weight:500;font-size:12px;line-height:1.6;text-align:left;text-wrap:pretty;padding:13px 15px;border-radius:12px;box-shadow:0 12px 30px rgba(36,31,71,.22);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:120}
+.scorepop{position:absolute;top:calc(100% + 8px);right:0;width:min(290px,60vw);background:var(--ink);color:#fff;font-family:var(--fb);font-weight:500;font-size:12px;line-height:1.6;text-align:left;text-wrap:pretty;padding:13px 15px;border-radius:12px;box-shadow:0 12px 30px rgba(36,31,71,.22);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:120}
 .scorepop::after{content:"";position:absolute;bottom:100%;right:14px;border:7px solid transparent;border-bottom-color:var(--ink)}
 .scorehelp[aria-expanded="true"]+.scorepop{opacity:1;visibility:visible;transform:translateY(0)}
 
