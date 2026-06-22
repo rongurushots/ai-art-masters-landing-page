@@ -29,6 +29,16 @@
   var SITE = "https://www.ai-art-masters.com";
   var EXTGRAD = "linear-gradient(135deg,#4F5BFF,#8B5CF6)";  // shared photo-card background
 
+  // brand coin glyph (matches chrome.js / .coin). Mission payouts show in coins, not $.
+  var COIN = '<svg class="coin" width="14" height="14" viewBox="0 0 20 20" aria-hidden="true" style="vertical-align:-2px;margin-right:3px"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg>';
+  // coins are 1:1 with the old $ figure (50 coins = $50). Render as "+4<coin> / photo".
+  function payHTML(p) {
+    var s = String(p == null ? "" : p).replace(/^\$/, "");      // "8 / video clip"
+    var m = s.match(/^(\d[\d,]*)\s*(.*)$/);
+    if (!m) return COIN + esc(s);
+    return "+" + m[1] + COIN + (m[2] ? " " + esc(m[2]) : "");    // "+8<coin> / video clip"
+  }
+
   // The real missions come first; the two always-open generic missions are extras.
   var MISSIONS = [
     { name: "Selfie Videos", href: SITE + "/SelfieVideos-Landing", external: true, img: SITE + "/assets/selector-selfie-videos-C1RBq8Ui.png", icon: IC.video, iconColor: "#FF5A5F", req: "One 10-60 sec selfie video, recorded at home, spoken in any Arabic dialect.", pay: "$8 / video clip" },
@@ -54,7 +64,7 @@
       img + tag + '<span class="ov"></span>' +
       "<h4>" + icon + esc(m.name) + "</h4>" +
       '<p class="breq">' + esc(m.req) + "</p>" +
-      '<div class="prow"><span class="ppay">' + esc(m.pay) + "</span></div></a>";
+      '<div class="prow"><span class="ppay">' + payHTML(m.pay) + "</span></div></a>";
   }
 
   function render() { return MISSIONS.map(card).join(""); }

@@ -265,17 +265,19 @@
         <span class="ear"></span>
         <div class="ahead">
           <span class="alogo"><svg viewBox="0 0 24 20" aria-hidden="true"><path d="M14.9297 0C15.5984 1.83e-05 16.2228 0.334243 16.5938 0.890625L17.4062 2.10938C17.7772 2.66576 18.4016 2.99998 19.0703 3H20C22.2091 3 24 4.79086 24 7V16C24 18.2091 22.2091 20 20 20H4C1.79086 20 8.05e-09 18.2091 0 16V7C0 4.79086 1.79086 3 4 3H4.92969C5.59837 2.99998 6.22283 2.66576 6.59375 2.10938L7.40625 0.890625C7.77717 0.334243 8.40163 1.83e-05 9.07031 0H14.9297ZM12 5C12 8.3135 9.3135 11 6 11C9.3135 11 12 13.6865 12 17C12 13.6865 14.6865 11 18 11C14.6865 11 12 8.3135 12 5Z" fill="#4F5BFF"/></svg></span>
-          <span class="bpill"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg><span class="bnum">46</span></span>
+          <span class="bpill"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg><span class="bnum">96</span></span>
         </div>
+        <!-- coin that flies from the earn screen up into the balance pill (positioned at runtime) -->
+        <svg class="flycoin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.4" fill="#E0951A"/><circle cx="10" cy="10" r="8.4" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".8" ry="1.1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".8" ry="1.1" fill="#D98A0A"/><path d="M7.6 11.3 Q10 13.4 12.4 11.3" fill="none" stroke="#D98A0A" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="7" cy="6.4" rx="2.4" ry="1.1" fill="#fff" opacity=".34"/></svg>
         <div class="stage">
 
           <!-- 1 · pick a mission -->
           <div class="scrn s1">
             <div class="stitle">Pick a mission</div>
             <div class="mlist">
-              <div class="mrow m-photo"><span class="mic" style="background:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13.5" r="3.4"/><path d="M8 6l1.4-2.4h5.2L16 6"/></svg></span><span class="nm">Photo</span><span class="pay">+4 / photo</span></div>
-              <div class="mrow m-video"><span class="mic" style="background:#4F5BFF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><span class="nm">Video</span><span class="pay">+8 / clip</span></div>
-              <div class="mrow m-audio"><span class="mic" style="background:#845EF7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg></span><span class="nm">Audio</span><span class="pay">+6 / clip</span></div>
+              <div class="mrow m-photo"><span class="mic" style="background:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13.5" r="3.4"/><path d="M8 6l1.4-2.4h5.2L16 6"/></svg></span><span class="nm">Photo</span><span class="pay">+4<svg class="pc" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg> / photo</span></div>
+              <div class="mrow m-video"><span class="mic" style="background:#4F5BFF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg></span><span class="nm">Video</span><span class="pay">+8<svg class="pc" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg> / clip</span></div>
+              <div class="mrow m-audio"><span class="mic" style="background:#845EF7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg></span><span class="nm">Audio</span><span class="pay">+6<svg class="pc" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg> / clip</span></div>
             </div>
             <span class="tapper"><span class="tapring"></span><svg class="hand" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span>
           </div>
@@ -320,16 +322,39 @@
             <svg class="spk c" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/></svg>
           </div>
 
-          <!-- 4 · cash out @ 50 coins → gift card -->
+          <!-- 4 · cash-out stage (data-s4 beats): threshold counter+bar → pick reward → cash-out button → gift card flies off -->
           <div class="scrn s4">
-            <div class="stitle">Cash out</div>
-            <div class="gift">
-              <div class="gtop"><span class="glbl">Gift card</span></div>
-              <div class="amt">$50</div>
+            <!-- beat A — counter + progress bar reach 50, then "Cash out unlocked" -->
+            <div class="cv cv-th">
+              <div class="thnum"><svg class="ccoin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg><b class="thnow">0</b> / 100 coins</div>
+              <div class="thbar"><span></span></div>
+              <div class="thmsg">Cash out unlocked</div>
             </div>
-            <div class="cashbtn">Cash out</div>
-            <span class="tapper"><span class="tapring"></span><svg class="hand handb" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span>
-            <div class="sent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gift card sent</div>
+            <!-- beat B — pick a reward; selected card lifts and a pink Cash out button appears -->
+            <div class="cv cv-pick">
+              <div class="stitle">Pick your reward</div>
+              <div class="opts">
+                <div class="opt opt-sel">
+                  <span class="ocost"><svg class="ccoin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg>100</span>
+                  <span class="oget">$100 gift card</span>
+                </div>
+                <div class="opt opt-alt">
+                  <span class="ocost"><svg class="ccoin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/></svg>50</span>
+                  <span class="oget">$50 gift card</span>
+                </div>
+              </div>
+              <div class="cashbtn">Cash out<span class="tapper"><span class="tapring"></span><svg class="hand handb" viewBox="0 0 160 160" fill="#fff" stroke="#000" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M45.6328 28.4951C47.7147 27.7381 49.8073 27.8494 51.7754 28.8408L51.7764 28.8389C53.8528 29.8276 55.267 31.5867 56.0957 33.8545L56.0967 33.8564L70.166 72.4395L70.1709 72.4521C70.4122 73.1278 70.6513 73.3467 70.748 73.4131C70.8816 73.4726 70.9661 73.4798 71.0459 73.4639C71.0704 73.4494 71.084 73.4388 71.0918 73.4307C71.1059 73.416 71.1439 73.3728 71.1855 73.2656L71.1953 73.2402L71.2061 73.2148C71.2154 73.1925 71.3185 72.925 71.0254 72.1787L71.0156 72.1533L71.0059 72.127L66.8389 60.6006V60.5996C66.3879 59.3831 66.287 58.0134 66.9766 56.7461C67.6376 55.5313 68.8156 54.8062 70.0391 54.3613L70.0459 54.3584L70.0537 54.3564C72.7232 53.4093 75.3742 53.4302 77.8955 54.5107C80.6068 55.6727 82.4483 58.1468 83.6367 61.3916H83.6377L85.6396 66.8027L85.6475 66.8242L85.6543 66.8447C85.7873 67.2306 85.9207 67.47 86.0234 67.6094C86.073 67.6766 86.1116 67.7162 86.1357 67.7373C86.159 67.7577 86.1722 67.7638 86.1738 67.7646C86.3364 67.8459 86.4333 67.8538 86.5225 67.8359C86.5472 67.8213 86.5615 67.8109 86.5693 67.8027C86.5827 67.7888 86.6133 67.7491 86.6514 67.6572C86.6828 67.5578 86.7416 67.2249 86.4805 66.4932L84.3799 60.623C83.9216 59.4008 83.8158 58.0215 84.5098 56.7461C85.1707 55.5315 86.348 54.8062 87.5713 54.3613C90.3402 53.351 93.0948 53.4761 95.6973 54.7773C98.3348 56.0961 100.151 58.388 101.227 61.3994H101.228L102.252 64.2031C102.528 64.9268 102.764 65.1385 102.817 65.1797C102.944 65.2387 103.045 65.2581 103.158 65.2422C103.19 65.2106 103.231 65.1538 103.275 65.04L103.285 65.0146L103.296 64.9893C103.319 64.9334 103.413 64.6423 103.15 63.9033L101.581 59.5742V59.5732C101.271 58.7222 101.143 57.6733 101.629 56.6533C102.108 55.6479 102.99 55.0767 103.821 54.7549L103.874 54.7354C105.983 53.9857 108.175 54.0594 110.362 54.8467C112.553 55.6355 114.529 57.1074 116.311 59.1221L116.657 59.5186C118.37 61.5351 119.745 64.0599 120.819 67.0332H120.818L124.388 76.7656L124.391 76.7754C127.315 84.8821 128.486 92.419 127.801 99.3506V99.3516C127.113 106.267 124.598 112.334 120.251 117.489L120.25 117.488C115.935 122.648 109.913 126.574 102.306 129.334C93.8138 132.429 85.2609 132.833 76.7031 130.524V130.525C68.0041 128.216 59.9655 122.257 52.5459 112.955L52.5449 112.954L35.3906 91.417L35.3633 91.3828L35.3379 91.3467C35.0324 90.9266 34.7276 90.4893 34.4248 90.0352C34.0376 89.4542 33.7195 88.808 33.459 88.1133L33.4512 88.0928L33.4434 88.0713C32.7665 86.137 32.8684 84.1813 33.7246 82.3154H33.7236C34.6321 80.2966 36.2909 78.9331 38.4424 78.1689C39.9222 77.619 41.4415 77.4947 42.9346 77.9023H42.9355C44.4697 78.3115 45.8361 79.2445 47.0508 80.501L47.0645 80.5146L47.0771 80.5283L60.9473 95.4248C61.2046 95.6812 61.4046 95.8477 61.5479 95.9541C61.5404 95.9183 61.5304 95.876 61.5156 95.8271L40.9209 39.3945L40.7754 38.9736C40.0927 36.8685 40.072 34.782 40.9072 32.833L40.9111 32.8232L40.916 32.8125C41.8367 30.7293 43.4622 29.2822 45.6328 28.4961V28.4951Z"/></svg></span></div>
+            </div>
+            <!-- beat C — gift card appears, then slides off screen -->
+            <div class="cv cv-card">
+              <div class="giftwrap">
+                <div class="gift">
+                  <div class="gtop"><span class="glbl">Gift card</span></div>
+                  <div class="amt">$100</div>
+                </div>
+                <div class="sent"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Gift card sent</div>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -437,13 +462,15 @@
   // the full earn-loop: pick → submit → earn → cash out. Each lands on 50 coins.
   var dev=document.getElementById('device');
   if(dev){
-    var bnum=dev.querySelector('.bnum'), ptxt=dev.querySelector('.ptxt'),
+    var bnum=dev.querySelector('.bnum'), bpill=dev.querySelector('.bpill'),
+        flycoin=dev.querySelector('.flycoin'), bigcoin=dev.querySelector('.bigcoin'),
+        screenEl=dev.querySelector('.screen'), ptxt=dev.querySelector('.ptxt'),
         s2t=dev.querySelector('.s2 .stitle'), earnedEl=dev.querySelector('.earned'),
-        esubEl=dev.querySelector('.esub'), upT;
+        esubEl=dev.querySelector('.esub'), thnowEl=dev.querySelector('.s4 .thnow'), upT;
     var MEDIA=[
-      {id:'photo',base:46,coins:4,title:'Submit your photo', earn:'+4 coins', sub:'Dog photo accepted'},
-      {id:'video',base:42,coins:8,title:'Submit your video', earn:'+8 coins', sub:'Video accepted'},
-      {id:'audio',base:44,coins:6,title:'Submit your recording',  earn:'+6 coins', sub:'Audio recording accepted'}
+      {id:'photo',base:96,coins:4,title:'Submit your photo', earn:'+4 coins', sub:'Dog photo accepted'},
+      {id:'video',base:92,coins:8,title:'Submit your video', earn:'+8 coins', sub:'Video accepted'},
+      {id:'audio',base:94,coins:6,title:'Submit your recording',  earn:'+6 coins', sub:'Audio recording accepted'}
     ];
     var mi=0;
     function countTo(el,from,to,dur){if(!el)return;var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/dur);el.textContent=Math.round(from+(to-from)*k);if(k<1)requestAnimationFrame(f);})(performance.now());}
@@ -453,23 +480,72 @@
       if(earnedEl)earnedEl.textContent=m.earn;
       if(esubEl)esubEl.textContent=m.sub;
     }
+    // fly the big earn coin up into the balance pill at the pill-coin's exact position + size,
+    // then bump the pill and credit the balance. Positions are read live so it always lands right.
+    function flyCoinToPill(){
+      if(!flycoin||!bigcoin||!bpill||!screenEl)return;
+      var target=bpill.querySelector('svg')||bpill;
+      var sc=screenEl.getBoundingClientRect(), bc=bigcoin.getBoundingClientRect(), pc=target.getBoundingClientRect();
+      if(!bc.width||!pc.width)return;
+      flycoin.style.transition='none';
+      flycoin.style.width=bc.width+'px'; flycoin.style.height=bc.height+'px';
+      flycoin.style.left=(bc.left-sc.left)+'px'; flycoin.style.top=(bc.top-sc.top)+'px';
+      flycoin.style.transform='none'; flycoin.style.opacity='1';
+      bigcoin.style.opacity='0';                 // hand the coin off to the flyer
+      flycoin.getBoundingClientRect();           // reflow so the next change animates
+      var s=pc.width/bc.width, cx=bc.width/2, cy=bc.height/2;
+      var dx=(pc.left+pc.width/2)-(bc.left+bc.width/2), dy=(pc.top+pc.height/2)-(bc.top+bc.height/2);
+      // transform-origin is top-left, so offset for the centre shift the scale introduces
+      var tx=dx+cx*(1-s), ty=dy+cy*(1-s);
+      flycoin.style.transition='transform .6s cubic-bezier(.5,0,.25,1),opacity .18s ease .46s';
+      flycoin.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
+      flycoin.style.opacity='0';                 // fade as it merges into the pill
+      // clear the "+N coins / accepted" texts right as the coin leaves (quick fade).
+      // (animation:none cancels the uiin entrance whose 'both' fill would otherwise pin opacity:1)
+      if(earnedEl){earnedEl.style.animation='none';earnedEl.style.opacity='0';}
+      if(esubEl){esubEl.style.animation='none';esubEl.style.opacity='0';}
+      setTimeout(function(){
+        flycoin.style.transition='none'; flycoin.style.opacity='0'; flycoin.style.transform='none';
+        // NOTE: do not restore bigcoin here - it stays gone for the rest of the earn screen;
+        // step 1 of the next loop restores it.
+        var mm=MEDIA[mi]; if(bnum)bnum.textContent=mm.base+mm.coins;   // credit the earned coins
+        if(bpill){bpill.classList.add('bump'); setTimeout(function(){bpill.classList.remove('bump');},520);}
+      },660);
+    }
     if(!anim){var m0=MEDIA[0];applyMedia(m0);dev.setAttribute('data-step','3');dev.setAttribute('data-s2','done');if(bnum)bnum.textContent=m0.base+m0.coins;}
     else{
       // per-step hold times; the gap after step 4 is the pause between flows
-      var holds={1:2400,2:5000,3:2400,4:3700,loopPause:1200};
+      var holds={1:2600,2:5200,3:1900,4:7000,loopPause:1000};
       var step=0, subT=[];
       function clearSub(){subT.forEach(clearTimeout);subT=[];}
       function tick(){
         step=step%4+1; clearSub();
         var m=MEDIA[mi];
-        if(step===1){applyMedia(m); if(bnum)bnum.textContent=m.base; dev.removeAttribute('data-s2'); if(ptxt)ptxt.textContent='Uploading…';}
+        if(step===1){applyMedia(m); if(bnum)bnum.textContent=m.base; dev.removeAttribute('data-s2'); dev.removeAttribute('data-s4');
+          if(bigcoin)bigcoin.style.opacity=''; if(flycoin){flycoin.style.transition='none';flycoin.style.opacity='0';flycoin.style.transform='none';}
+          if(earnedEl){earnedEl.style.animation='';earnedEl.style.opacity='';} if(esubEl){esubEl.style.animation='';esubEl.style.opacity='';}   // restore earn texts
+          if(thnowEl)thnowEl.textContent='0';                                            // reset threshold counter
+          if(ptxt)ptxt.textContent='Uploading…';}
         dev.setAttribute('data-step',String(step));
         if(step===2){
           dev.setAttribute('data-s2','pick'); if(ptxt)ptxt.textContent='Uploading…';
           subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='2')dev.setAttribute('data-s2','upload');},1400));
           subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='2'){dev.setAttribute('data-s2','done');if(ptxt)ptxt.textContent='Submitted';}},3700));
         }
-        if(step===3)countTo(bnum,m.base,m.base+m.coins,735);
+        if(step===3){
+          if(bnum)bnum.textContent=m.base;                 // pill stays put until the coin lands
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='3')flyCoinToPill();},1150));
+        }
+        if(step===4){
+          // cash-out stage beats: threshold (counter+bar→50, unlock) → pick → select → button+tap → gift card → fly off
+          dev.setAttribute('data-s4','threshold');
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='4')countTo(thnowEl,0,100,800);},120));
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='4')dev.setAttribute('data-s4','pick');},1900));
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='4')dev.setAttribute('data-s4','sel');},2900));
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='4')dev.setAttribute('data-s4','btn');},3800));
+          subT.push(setTimeout(function(){if(dev.getAttribute('data-step')==='4')dev.setAttribute('data-s4','card');},5600));
+          // (no slide-off beat) the gift card rests on screen, then the loop crossfades to the next mission
+        }
         var next=holds[step]+(step===4?holds.loopPause:0);
         if(step===4)mi=(mi+1)%MEDIA.length;   // advance to next submission type
         setTimeout(tick,next);
