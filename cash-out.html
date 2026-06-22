@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cash out - AI Art Masters</title>
+<meta name="description" content="Turn your coins into gift cards. The more coins you save, the more each one is worth.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand/aam.css">
+<style>
+/* ===== Cash-out page - standard 1140 .wrap so the shared nav aligns.
+   NEVER style a bare `.brand` here (that's the nav site-logo link). ===== */
+.cashout{padding-top:clamp(22px,4vw,40px);padding-bottom:clamp(60px,8vw,90px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 16px rgba(36,31,71,.05)}
+
+.co-title{font-family:var(--fd);font-weight:800;font-size:clamp(26px,4vw,34px);line-height:1.06;letter-spacing:-.01em}
+.co-lede{color:var(--ink2);font-size:15px;line-height:1.6;margin:8px 0 30px;max-width:56ch}
+
+/* heading sits ABOVE the grid, so the option list and the summary card top-align */
+.co-secsub{font-family:var(--fm);font-size:13px;color:var(--ink3);line-height:1.6;margin:-8px 0 18px}
+
+.co-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media(min-width:861px){.co-grid{grid-template-columns:minmax(0,1fr) 320px}}
+
+/* vertical amount list - each option is ONE line on desktop */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;padding:16px 18px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;box-shadow:0 6px 16px rgba(36,31,71,.05);cursor:pointer;text-align:left;font:inherit;position:relative;transition:border-color .2s,background .2s,box-shadow .2s}
+.opt:hover{border-color:var(--primary)}
+.opt.sel{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,#fff);box-shadow:0 0 0 1.5px var(--primary)}
+.opt:disabled{opacity:.5;cursor:not-allowed}
+.opt:disabled:hover{border-color:var(--line)}
+.o-radio{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line2);transition:border-color .2s,background .2s}
+.opt.sel .o-radio{border-color:var(--primary);background:var(--primary) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>") center/12px no-repeat}
+/* left group: coins + rate on one line */
+.o-main{flex:1;min-width:0;display:flex;align-items:baseline;white-space:nowrap;overflow:hidden}
+.o-coins{font-family:var(--fd);font-weight:800;font-size:16px;color:var(--ink)}
+.o-coins .coin{width:15px;height:15px;margin-right:5px;vertical-align:-.16em}
+.o-rate{font-family:var(--fm);font-size:13px;color:var(--ink3)}
+.o-rate::before{content:"·";margin:0 7px;color:var(--line2)}
+/* right group: $amount + gift card on one line; figures stay ink (no green) */
+.o-cash{flex:none;font-family:var(--fd);font-weight:800;font-size:18px;color:var(--ink);white-space:nowrap}
+.o-cash small{font-family:var(--fm);font-weight:600;font-size:12px;color:var(--ink3);margin-left:6px}
+.o-tag{position:absolute;top:-9px;right:14px;font-family:var(--fd);font-weight:800;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--primary);border-radius:999px;padding:3px 9px}
+/* mobile: let the row wrap rather than clip */
+@media(max-width:560px){.o-main{white-space:normal;flex-direction:column;align-items:flex-start;gap:2px}.o-rate::before{display:none}}
+
+/* sticky summary - left aligned, ink figures */
+.sum{padding:22px}
+@media(min-width:861px){.co-side .sum{position:sticky;top:90px}}
+.sum-lbl{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);font-weight:700}
+.sum-amt{font-family:var(--fd);font-weight:800;font-size:40px;color:var(--ink);line-height:1;margin-top:6px}
+.sum-sub{font-family:var(--fm);font-size:13px;color:var(--ink3);margin-top:8px}
+.sum-div{border:none;border-top:1px solid var(--line);margin:18px 0}
+.sum-row{display:flex;align-items:center;justify-content:space-between;font-family:var(--fm);font-size:13px;color:var(--ink3)}
+.sum-row b{font-family:var(--fd);font-weight:800;color:var(--ink);display:inline-flex;align-items:center}
+.sum-row b .coin{width:15px;height:15px;margin-right:4px;vertical-align:-.16em}
+.sum-btn{width:100%;margin-top:18px}
+.sum .gogift-note{font-family:var(--fm);font-size:11.5px;color:var(--ink3);text-align:center;margin:13px 0 0;line-height:1.5}
+.sum .gogift-note a{color:var(--primary);font-weight:600}
+
+/* success */
+.co-done{text-align:center;padding:44px 24px;max-width:520px;margin:0 auto}
+.co-done .d-ic{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:color-mix(in srgb,var(--primary) 12%,#fff);display:flex;align-items:center;justify-content:center;color:var(--primary)}
+.co-done .d-ic svg{width:36px;height:36px}
+.co-done h2{font-family:var(--fd);font-weight:800;font-size:24px;color:var(--ink)}
+.co-done p{font-family:var(--fb);font-size:14px;line-height:1.6;color:var(--ink2);margin:10px auto 0;max-width:42ch}
+.hide{display:none!important}
+</style>
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');}catch(e){}</script>
+</head>
+<body>
+
+<!-- shared app nav (same as the rest of the signed-in site) -->
+<script>window.AAM_CHROME={mode:'app'};</script>
+<script src="assets/chrome.js"></script>
+
+<main class="cashout wrap">
+
+  <div id="exchangeView">
+    <h1 class="co-title reveal">Cash out</h1>
+    <p class="co-lede reveal">Turn your coins into a gift card - the more you save, the more each one is worth.</p>
+
+    <div class="co-grid">
+      <!-- left: amount options (one line each on desktop) -->
+      <div class="opts stagger" id="opts"></div>
+
+      <!-- right: sticky summary, top-aligned with the list -->
+      <aside class="co-side reveal">
+        <div class="card sum">
+          <div class="sum-lbl">You'll receive</div>
+          <div class="sum-amt" id="sumAmt">$0</div>
+          <div class="sum-sub" id="sumSub">Pick an amount to continue</div>
+          <hr class="sum-div">
+          <div class="sum-row"><span>Coins left after</span><b id="sumLeft"></b></div>
+          <button class="btn btn-k sum-btn" id="confirm" type="button" disabled style="opacity:.5;pointer-events:none">Cash out</button>
+          <p class="gogift-note">Gift cards delivered by <a href="https://www.global.gogift.com" target="_blank" rel="noopener">GoGift</a> - redeem at thousands of brands across 100+ countries.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- success -->
+  <div class="card co-done hide" id="done">
+    <div class="d-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h2 id="doneTitle">Gift card on its way!</h2>
+    <p id="doneMsg"></p>
+    <a class="btn btn-p" href="home.html" style="margin-top:20px">Back to my profile</a>
+  </div>
+
+</main>
+
+<div id="aam-footer"></div>
+
+<script>
+(function(){
+  "use strict";
+  var BALANCE = 1240;                 // demo balance (swap for the real wallet value)
+  var MIN = 50;
+
+  // Progressive tiers - the more coins exchanged at once, the better the coin->$ rate.
+  var TIERS = [
+    { coins:50,   cash:50,   bonus:0  },
+    { coins:100,  cash:110,  bonus:10 },
+    { coins:200,  cash:240,  bonus:20 },
+    { coins:500,  cash:650,  bonus:30 },
+    { coins:1000, cash:1400, bonus:40 }
+  ];
+
+  var fmt = function(n){ return n.toLocaleString('en-US'); };
+  var coinGlyph = (window.AAM && window.AAM.coin) || "<svg class='coin' viewBox='0 0 20 20'><circle cx='10' cy='10' r='9.2' fill='#E0951A'/><circle cx='10' cy='10' r='8.3' fill='#FFC22E'/><circle cx='10' cy='10' r='6.3' fill='#FFD84D'/></svg>";
+
+  var bestTier = TIERS.filter(function(t){return t.coins<=BALANCE;}).pop() || TIERS[0];
+
+  document.getElementById('opts').innerHTML = TIERS.map(function(t,i){
+    var ok = t.coins<=BALANCE, best = (t===bestTier);
+    var rate = ok ? (t.bonus ? '+'+t.bonus+'% bonus' : '') : 'need '+fmt(t.coins-BALANCE)+' more';
+    return "<button type='button' class='opt"+(best?' sel':'')+"' data-i='"+i+"'"+(ok?'':' disabled')+">"+
+      (best?"<span class='o-tag'>Best rate</span>":"")+
+      "<span class='o-radio'></span>"+
+      "<span class='o-main'><span class='o-coins'>"+coinGlyph+fmt(t.coins)+" coins</span>"+
+        (rate?"<span class='o-rate'>"+rate+"</span>":"")+"</span>"+
+      "<span class='o-cash'>$"+fmt(t.cash)+"<small>gift card</small></span>"+
+    "</button>";
+  }).join('');
+
+  var sel = bestTier;
+  var optsBox=document.getElementById('opts'), confirmEl=document.getElementById('confirm');
+  var sumAmt=document.getElementById('sumAmt'), sumSub=document.getElementById('sumSub'), sumLeft=document.getElementById('sumLeft');
+
+  optsBox.addEventListener('click',function(e){
+    var b=e.target.closest('.opt'); if(!b||b.disabled)return;
+    sel=TIERS[+b.getAttribute('data-i')];
+    [].forEach.call(optsBox.children,function(x){x.classList.remove('sel');}); b.classList.add('sel');
+    update();
+  });
+
+  function update(){
+    if(sel){
+      sumAmt.textContent='$'+fmt(sel.cash);
+      sumSub.textContent='for '+fmt(sel.coins)+' coins · gift card';
+      sumLeft.innerHTML=coinGlyph+fmt(BALANCE-sel.coins);
+      confirmEl.disabled=false; confirmEl.style.opacity='1'; confirmEl.style.pointerEvents='auto';
+    } else {
+      sumAmt.textContent='$0'; sumSub.textContent='Pick an amount to continue'; sumLeft.innerHTML=coinGlyph+fmt(BALANCE);
+      confirmEl.disabled=true; confirmEl.style.opacity='.5'; confirmEl.style.pointerEvents='none';
+    }
+  }
+
+  confirmEl.addEventListener('click',function(){
+    if(!sel)return;
+    document.getElementById('exchangeView').classList.add('hide');
+    var done=document.getElementById('done'); done.classList.remove('hide');
+    document.getElementById('doneMsg').innerHTML="We're sending your <b>$"+fmt(sel.cash)+"</b> gift card to your email - redeem it for any brand on GoGift. "+fmt(BALANCE-sel.coins)+" coins stay in your wallet.";
+    window.scrollTo(0,0);
+  });
+
+  update();
+})();
+</script>
+</body></html>
