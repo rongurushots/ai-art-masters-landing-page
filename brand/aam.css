@@ -99,6 +99,13 @@ a{color:inherit;text-decoration:none}
 
 .coin{display:inline-block;vertical-align:-2px}
 
+/* coins + amount (molecule) - brand coin glyph tight against a figure, sized to the surrounding
+   text and sitting on its baseline so it aligns inline with neighbouring copy. Inherits font +
+   color. A leading sign (e.g. "+") goes OUTSIDE the span: +<span class="coin-amt">50</span>
+   (chrome.js injects the coin glyph via AAM.hydrateCoins). */
+.coin-amt{white-space:nowrap;font-variant-numeric:tabular-nums;font-family:var(--fd);font-weight:800}
+.coin-amt .coin{width:1em;height:1em;vertical-align:-0.18em;margin-right:3px}
+
 /* HERO (organism) */
 .hero{padding-top:clamp(48px,8vw,90px);padding-bottom:clamp(56px,8vw,90px);position:relative}
 .hero-in{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;text-align:center}

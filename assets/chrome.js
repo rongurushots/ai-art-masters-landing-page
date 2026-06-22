@@ -55,20 +55,18 @@
   function navApp() {
     return '<nav class="nav" id="nav"><div class="nav-in">' +
       '<a class="brand" href="home.html">' + CAMERA + '<span class="wm">AI Art Masters</span></a>' +
-      '<div class="nav-links"><a href="#missions">Missions</a><a href="#openMissions">Available missions</a><a href="#activity">Activity</a></div>' +
       '<div class="nav-right">' +
         '<span class="scorechip" tabindex="0" aria-label="Your score">' + STAR +
-          '<span id="navScore">73</span><span class="sden">/100</span>' +
+          '<span id="navScore">73</span>' +
           '<span class="scoretip" role="tooltip">Your score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved, and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</span>' +
         '</span>' +
-        '<span class="coinchip">' + COIN + '1,240 coins</span>' +
+        '<span class="coinchip">' + COIN + '1,240</span>' +
         '<a class="signin" href="' + LANDING + '">Sign out</a>' +
         '<span style="width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--fd);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center">R</span>' +
       '</div>' +
       TOGGLE +
       '</div>' +
       '<div class="nav-mobile" id="navMobile">' +
-      '<a href="#missions">Missions</a><a href="#openMissions">Available missions</a><a href="#activity">Activity</a><a href="#balance">Wallet</a>' +
       '<a class="m-signin" href="' + LANDING + '">Sign out</a>' +
       '</div></nav>';
   }
@@ -128,12 +126,26 @@
   }
   wireNav();
 
-  /* ---- footer fills its slot once the page is parsed ---- */
-  function mountFooter() {
+  /* ---- coins + amount molecule: inject the brand coin glyph into any
+          <span class="coin-amt">+50</span> so amounts read consistently everywhere
+          (progression bar, mission cards, ...) without copy-pasting the SVG. ---- */
+  function hydrateCoins(root) {
+    (root || document).querySelectorAll(".coin-amt").forEach(function (el) {
+      if (el.querySelector(".coin")) return;             // already has its coin
+      el.insertAdjacentHTML("afterbegin", COIN);         // coin leads the figure
+    });
+  }
+  window.AAM = window.AAM || {};
+  window.AAM.coin = COIN;
+  window.AAM.hydrateCoins = hydrateCoins;
+
+  /* ---- footer fills its slot, and coin amounts hydrate, once the page is parsed ---- */
+  function onReady() {
     var slot = document.getElementById("aam-footer");
     if (slot) { slot.outerHTML = footer(); }
     else { document.body.insertAdjacentHTML("beforeend", footer()); }
+    hydrateCoins(document);
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountFooter);
-  else mountFooter();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", onReady);
+  else onReady();
 })();
