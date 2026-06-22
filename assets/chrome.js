@@ -37,6 +37,23 @@
   var COIN =
     '<svg class="coin" width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg>';
 
+  /* Wallet chip (app nav). Demo balance - swap COINS for the real wallet value.
+     A pink dot + tooltip signal cash-out readiness once the balance clears the 50-coin floor. */
+  var COINS = 1240;        // current coin balance
+  var COIN_MIN = 50;       // minimum coins needed to cash out
+  function fmtCoins(n) { return n.toLocaleString("en-US"); }
+  function coinChip() {
+    var ready = COINS >= COIN_MIN;
+    var tip = ready
+      ? "You can cash out. Exchange coins for gift cards - and the more coins you save, the more each one is worth."
+      : "Reach <b>" + COIN_MIN + " coins</b> to cash out. Exchange them for gift cards - and the more you save, the better the rate.";
+    return '<a class="coinchip" href="cash-out.html" aria-label="Your coins - cash out">' + COIN +
+      fmtCoins(COINS) +
+      (ready ? '<span class="coindot" aria-hidden="true"></span>' : '') +
+      '<span class="cointip" role="tooltip">' + tip + '</span>' +
+      '</a>';
+  }
+
   function navMarketing() {
     var m = cfg.missionsHref || "#briefs";
     return '<nav class="nav" id="nav"><div class="nav-in">' +
@@ -60,7 +77,7 @@
           '<span id="navScore">73</span>' +
           '<span class="scoretip" role="tooltip">Your score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved, and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</span>' +
         '</span>' +
-        '<span class="coinchip">' + COIN + '1,240</span>' +
+        coinChip() +
         '<a class="signin" href="' + LANDING + '">Sign out</a>' +
         '<span style="width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--fd);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center">R</span>' +
       '</div>' +
@@ -139,12 +156,31 @@
   window.AAM.coin = COIN;
   window.AAM.hydrateCoins = hydrateCoins;
 
-  /* ---- footer fills its slot, and coin amounts hydrate, once the page is parsed ---- */
+  /* ---- subtle reveal-on-scroll for any page. Elements with .reveal / .stagger fade up as they
+          enter view. Idempotent: skips anything already revealed by a page's own observer, so it
+          safely covers pages that don't ship their own (e.g. cash-out). ---- */
+  function initReveal() {
+    if (window.__aamRevealOwned) return;                                   // page runs its own reveal observer
+    if (!document.documentElement.classList.contains("anim")) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } });
+    }, { threshold: 0.16, rootMargin: "0px 0px -10% 0px" });
+    var ci = 0;
+    [].forEach.call(document.querySelectorAll(".reveal,.stagger"), function (el) {
+      if (el.classList.contains("in")) return;                              // a page observer already handled it
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {     // in view on load -> gentle cascade
+        setTimeout(function () { el.classList.add("in"); }, ci * 90); ci++;
+      } else { io.observe(el); }                                            // below the fold -> reveal on scroll
+    });
+  }
+
+  /* ---- footer fills its slot, coins hydrate, and reveals arm once the page is parsed ---- */
   function onReady() {
     var slot = document.getElementById("aam-footer");
     if (slot) { slot.outerHTML = footer(); }
     else { document.body.insertAdjacentHTML("beforeend", footer()); }
     hydrateCoins(document);
+    initReveal();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", onReady);
   else onReady();

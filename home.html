@@ -6,22 +6,14 @@
 <link rel="stylesheet" href="brand/aam.css">
 <style>
 /* ---- profile-specific styles ---- */
-.msum{font-family:var(--fm);font-size:13px;color:var(--ink2);margin:-4px 0 14px}
+.msum{font-family:var(--fm);font-size:13px;color:var(--ink2);margin:-8px 0 22px}
 .msum b{color:var(--ink);font-weight:700}
 
 /* clearer separation between profile sections (Your missions / Recent activity / Available missions) */
 .home .col-h{margin-top:52px}
 @media(max-width:560px){.home .col-h{margin-top:40px}}
 
-/* top-bar score chip + smiley coin */
-.scorechip{position:relative;display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-weight:800;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:default;outline:none;transition:border-color .2s}
-.scorechip svg{width:15px;height:15px;color:var(--primary)}
-.scorechip .sden{color:var(--ink3);font-weight:700;font-size:11px}
-.scorechip:hover,.scorechip:focus-visible{border-color:var(--primary)}
-/* "what is the user score" explainer - on hover/focus of the pill */
-.scoretip{position:absolute;top:calc(100% + 10px);right:0;width:min(300px,82vw);background:var(--ink);color:#fff;font-family:var(--fb);font-weight:500;font-size:12px;line-height:1.6;text-align:left;text-wrap:pretty;hyphens:none;padding:13px 15px;border-radius:12px;box-shadow:0 12px 30px rgba(36,31,71,.22);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:120;pointer-events:none}
-.scoretip::after{content:"";position:absolute;bottom:100%;right:18px;border:7px solid transparent;border-bottom-color:var(--ink)}
-.scorechip:hover .scoretip,.scorechip:focus-within .scoretip{opacity:1;visibility:visible;transform:translateY(0)}
+/* score/wallet nav chips + their tooltips now live in aam.css (shared across signed-in pages) */
 
 /* mobile-only "?" explainer on the Score stat tile (desktop uses the nav score pill tooltip) */
 .scoretile{position:relative}
@@ -126,16 +118,28 @@
 .mcard .mi{width:40px;height:40px;border-radius:11px;background:color-mix(in srgb,var(--c,#8E8AAE) 15%,#fff);color:var(--c,#8E8AAE)}
 .mcard .mi svg{width:22px;height:22px}
 .mcard .mn{font-size:15px}
-.mcard .mp{font-size:12px;color:var(--ink3);margin-top:3px}
-.mcard .mr{flex-direction:column;align-items:flex-end;gap:0;text-align:right;line-height:1.1}
-.mcard .mval{font-size:16px;color:var(--ink)}
-.mcard .mper{font-family:var(--fm);font-size:11px;color:var(--ink3);margin-top:2px}
+.mcard .mp{font-size:12px;color:var(--ink3);margin-top:3px;font-weight:600}
+/* status color codes - colour carries the state (no separate pill) */
+.mcard.s-review .mp{color:var(--primary-deep)}   /* in review  - indigo */
+.mcard.s-earn .mp{color:var(--green-ink)}        /* approved   - green */
+.mcard.s-new .mp{color:var(--accent-deep)}       /* new        - pink */
+.mcard.s-soon .mp{color:#A85E00}                 /* closing soon - amber */
+.mcard.s-open .mp{color:var(--ink3)}             /* open/not started - neutral */
+.mcard .mr{flex-direction:row;align-items:baseline;gap:2px;white-space:nowrap;flex:none}
+.mcard .mval{font-size:15px;color:var(--ink)}
+.mcard .mper{font-family:var(--fm);font-size:12px;color:var(--ink3);white-space:nowrap}
 
 /* minimalist activity - color only on the earned amount; grounded (flat) */
 .act{box-shadow:none}
 .actr{transition:background .2s}
 .actr:hover{background:color-mix(in srgb,var(--primary) 4%,#fff)}
 .actr .aav{background:color-mix(in srgb,var(--c,#8E8AAE) 15%,#fff);color:var(--c,#8E8AAE)}
+.actr .amt{font-family:var(--fd);font-weight:800;font-size:14px}   /* coin payout matches the coin styling used elsewhere */
+/* Recent activity rows reveal via the shared .stagger system (like the stat tiles + missions grid);
+   the earned amount gives a small extra pop, echoing the coin motion elsewhere on the site. */
+.anim .act.in .amt{animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+.anim .act.in .actr:nth-child(2) .amt{animation-delay:.10s}
+.anim .act.in .actr:nth-child(3) .amt{animation-delay:.20s}
 
 /* full footer (matches the landing page): keep the shared footer.wrap styling from aam.css */
 
@@ -244,19 +248,19 @@
       <h2 class="col-h reveal" id="missions">Your missions</h2>
       <p class="msum reveal">You've submitted to <b>3 of 6</b> missions. Keep going - most are still open for more.</p>
       <div class="mgrid stagger">
-        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 in review</div></div><div class="mr"><span class="coin-amt mval">5</span><span class="mper">/ photo</span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted</div></div><div class="mr"><span class="coin-amt mval">4</span><span class="mper">/ photo</span></div></a>
-        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted</div></div><div class="mr"><span class="coin-amt mval">2</span><span class="mper">/ email</span></div></a>
-        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week</div></div><div class="mr"><span class="coin-amt mval">8</span><span class="mper">/ clip</span></div></a>
-        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started</div></div><div class="mr"><span class="coin-amt mval">3</span><span class="mper">/ barcode</span></div></a>
-        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days</div></div><div class="mr"><span class="coin-amt mval">6</span><span class="mper">/ photo</span></div></a>
+        <a class="mcard s-review" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener" style="--c:#E0357D"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div class="mb"><div class="mn">Cats</div><div class="mp">2 in review</div></div><div class="mr"><span class="coin-amt mval">5</span><span class="mper">/photo</span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener" style="--c:#F76707"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div class="mb"><div class="mn">Dogs</div><div class="mp">3 accepted</div></div><div class="mr"><span class="coin-amt mval">4</span><span class="mper">/photo</span></div></a>
+        <a class="mcard s-earn" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener" style="--c:#13C783"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span><div class="mb"><div class="mn">Emails</div><div class="mp">1 accepted</div></div><div class="mr"><span class="coin-amt mval">2</span><span class="mper">/email</span></div></a>
+        <a class="mcard s-new" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener" style="--c:#4F5BFF"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span><div class="mb"><div class="mn">Selfie Videos</div><div class="mp">New this week</div></div><div class="mr"><span class="coin-amt mval">8</span><span class="mper">/clip</span></div></a>
+        <a class="mcard s-open" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener" style="--c:#8B5CF6"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="1.3" height="14" fill="currentColor" stroke="none"/><rect x="5.5" y="5" width="2.4" height="14" fill="currentColor" stroke="none"/><rect x="9" y="5" width="1.3" height="14" fill="currentColor" stroke="none"/><rect x="11.4" y="5" width="3" height="14" fill="currentColor" stroke="none"/><rect x="15.6" y="5" width="1.3" height="14" fill="currentColor" stroke="none"/><rect x="18" y="5" width="2.4" height="14" fill="currentColor" stroke="none"/><rect x="21.4" y="5" width="1.3" height="14" fill="currentColor" stroke="none"/></svg></span><div class="mb"><div class="mn">Barcodes</div><div class="mp">Not started</div></div><div class="mr"><span class="coin-amt mval">3</span><span class="mper">/barcode</span></div></a>
+        <a class="mcard s-soon" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener" style="--c:#13B8D4"><span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span><div class="mb"><div class="mn">Virtual Try On</div><div class="mp">Ends in 2 days</div></div><div class="mr"><span class="coin-amt mval">6</span><span class="mper">/photo</span></div></a>
       </div>
 
       <h2 class="col-h mt reveal" id="activity">Recent activity</h2>
       <div class="act stagger">
-        <div class="actr"><span class="aav" style="--c:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div><div class="an">Dog photo accepted</div><div class="at">2 hours ago</div></div><span class="amt">+4</span></div>
-        <div class="actr"><span class="aav" style="--c:#E0357D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div><div class="an">Cat photo accepted</div><div class="at">Yesterday</div></div><span class="amt">+5</span></div>
-        <div class="actr"><span class="aav" style="--c:#E0951A"><svg class="coin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg></span><div><div class="an">Cashed out</div><div class="at">Last week</div></div><span class="amt cash">$50</span></div>
+        <div class="actr"><span class="aav" style="--c:#F76707"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/></svg></span><div><div class="an">Dogs</div><div class="at">Photo accepted · 2 hours ago</div></div><span class="coin-amt amt">4</span></div>
+        <div class="actr"><span class="aav" style="--c:#E0357D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17l-.75-.75Z"/></svg></span><div><div class="an">Cats</div><div class="at">Photo accepted · Yesterday</div></div><span class="coin-amt amt">5</span></div>
+        <div class="actr"><span class="aav" style="--c:#E0951A"><svg class="coin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg></span><div><div class="an">Cash out</div><div class="at">Gift card sent · Last week</div></div><span class="amt cash">$50</span></div>
       </div>
 
       <h2 class="col-h mt reveal" id="openMissions">Available missions</h2>
@@ -267,20 +271,6 @@
 
 <!-- footer is injected here by the shared chrome (assets/chrome.js) -->
 <div id="aam-footer"></div>
-
-<!-- Cash-out approval modal -->
-<div class="cash-modal" id="cashModal" aria-hidden="true">
-  <div class="cash-backdrop" data-close></div>
-  <div class="cash-sheet" role="dialog" aria-modal="true" aria-labelledby="cashTitle">
-    <div class="cash-sheet-ico"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-    <h3 id="cashTitle">Cash out coins</h3>
-    <p>Withdraw your balance of <b>1,240 coins</b> to your payout method?</p>
-    <div class="cash-actions">
-      <button type="button" class="btn btn-g" data-close>Not now</button>
-      <button type="button" class="btn btn-p" id="cashConfirm">Confirm</button>
-    </div>
-  </div>
-</div>
 
 <script src="assets/user-score.js"></script>
 <script>
@@ -330,37 +320,25 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
 })();
 (function(){
-  // Dismissable new-mission banner.
+  // Dismissable new-mission banner. (Reveal-on-scroll is handled by the shared observer in chrome.js.)
   var nc=document.getElementById('newsClose'), nm=document.getElementById('newMission');
   if(nc&&nm)nc.addEventListener('click',function(){nm.remove();});
-  // nav mobile toggle is handled by assets/chrome.js
-  var anim=document.documentElement.classList.contains('anim');
-  if(!anim) return;
-  var io=new IntersectionObserver(function(ents){ents.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.16,rootMargin:'0px 0px -12% 0px'});
-  // cascade the blocks already in view on load (matches the site's staggered reveal); observe the rest for scroll
-  var ci=0;
-  [].forEach.call(document.querySelectorAll('.reveal,.stagger'),function(el){
-    if(el.getBoundingClientRect().top < window.innerHeight*0.92){ setTimeout(function(){el.classList.add('in');}, ci*90); ci++; }
-    else { io.observe(el); }
-  });
 })();
 (function(){
-  // Cash-out. Desktop: the regular button under the stats opens the approval modal. Mobile: the
-  // balance tile arms into a "Cash out" button for 2s; a second tap opens the modal. Prototype.
+  // Cash-out entry. Both the desktop button and the mobile armed tile lead to the full
+  // cash-out flow (cash-out.html), where the user picks an amount + gift card. Prototype.
   var tile=document.getElementById('balance'), armT;
-  var modal=document.getElementById('cashModal');
   var mq=window.matchMedia('(max-width:560px)');
   function isMobile(){ return mq.matches; }
   function disarm(){ if(tile) tile.classList.remove('armed'); clearTimeout(armT); }
-  function openModal(){ if(!modal)return; modal.classList.add('show'); modal.setAttribute('aria-hidden','false'); }
-  function closeModal(){ if(!modal)return; modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); disarm(); }
+  function goCashOut(){ window.location.href='cash-out.html'; }
   function act(){
     if(!isMobile()) return;                                          // desktop uses the regular button below
     if(!tile.classList.contains('armed')){
       tile.classList.add('armed');                                   // whole tile -> Cash out button
       clearTimeout(armT); armT=setTimeout(disarm,2000);              // disarm after 2s
     } else {
-      clearTimeout(armT); openModal();                               // second tap -> approval modal
+      clearTimeout(armT); goCashOut();                               // second tap -> cash-out flow
     }
   }
   function syncCash(){                                               // tile is only a button on mobile
@@ -375,12 +353,7 @@
     if(mq.addEventListener) mq.addEventListener('change',syncCash); else window.addEventListener('resize',syncCash);
   }
   var deskCash=document.getElementById('cashOut');
-  if(deskCash) deskCash.addEventListener('click',openModal);
-  if(modal){
-    [].forEach.call(modal.querySelectorAll('[data-close]'),function(el){el.addEventListener('click',closeModal);});
-    var cc=document.getElementById('cashConfirm'); if(cc) cc.addEventListener('click',closeModal);
-    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
-  }
+  if(deskCash) deskCash.addEventListener('click',goCashOut);
 })();
 </script>
 </body></html>
