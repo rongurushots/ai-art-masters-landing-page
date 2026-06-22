@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selfie Video - by AI Art Masters</title>
+<meta name="description" content="Record a short selfie video and earn for every accepted clip. Open worldwide, any phone.">
+<!--
+  GENERIC MISSION LANDING - Selfie Video (a permanent parent-run mission).
+  Built on the sub-brand landing system (sub-brand-template.html + brand/aam.css).
+  Theme: indigo primary, pink accent. The subject mark (video) lives in #ic-subject.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand/aam.css">
+<style>
+  /* page-local: the mission subject mark + lockup helpers (the only per-page CSS) */
+  .lock{display:flex;align-items:center;gap:10px}
+  .lock .chip{width:34px;height:34px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex:none}
+  .lock .chip svg{width:20px;height:20px;color:#fff;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .lock .nm{font-family:var(--fd);font-weight:800;font-size:18px;line-height:1}
+  .lock .by{font-family:var(--fb);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
+  .subic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .foot-mark{display:flex;align-items:center;gap:8px}.foot-mark svg{width:22px;height:18px}
+</style>
+</head>
+<body class="theme-sub" style="--primary:#4F5BFF;--primary-deep:#3B45D6;--accent:#FF4D94;--accent-deep:#D62E73;--hl:var(--primary)">
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');}catch(e){}</script>
+
+<!-- subject icon: a video camera mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ic-subject" viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.2l5-2.6v8.8l-5-2.6z"/></symbol>
+</defs></svg>
+
+<!-- nav is injected by the shared chrome (assets/chrome.js) -->
+<script>window.AAM_CHROME={mode:'marketing',base:'index.html',missionsHref:'#missions'};</script>
+<script src="assets/chrome.js"></script>
+
+<header class="hero wrap">
+  <div class="hero-in">
+    <div class="hcopy">
+      <div class="badge"><span class="d"></span> Your videos pay</div>
+      <h1>Get paid to record a <span class="hl">short video.</span></h1>
+      <p class="sub">A short selfie video, recorded at home on your phone, can earn real money. Record it, send it in, and earn coins for every accepted clip. No special skills needed.</p>
+      <div class="cta-row"><a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a><a class="btn btn-g btn-lg" href="#missions">See missions</a></div>
+      <div class="coinline"><b>1 coin = $1</b> · cash out from 50 coins</div>
+    </div>
+    <div class="mock">
+      <div class="phone"><div class="scr">
+        <div class="ph-top"><span class="ph-bal">Example wallet</span><span class="ph-bal" style="color:var(--primary)">Lvl 3</span></div>
+        <div class="ph-num">40 <span class="c">coins</span></div>
+        <div class="ph-sub">40 coins = $40</div>
+        <div class="ph-meter"><span></span></div>
+        <div class="ph-mrow"><span>40 / 50 to cash out</span><span>Cash out at 50</span></div>
+        <div class="ph-btn">Cash out at $50</div>
+        <div class="ph-rows">
+          <div class="ph-r"><span class="ph-av" style="background:var(--primary)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ph-nm">Video clip accepted</span><span class="ph-pay">+8</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec wrap" id="how">
+  <div class="sec-head reveal"><div class="sec-eye">How it works</div><h2 class="sec-h2">Three steps to get paid</h2><p class="sec-sub">No followers, no gear, no experience. If you can record a short clip, you can earn.</p></div>
+  <div class="steps stagger">
+    <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.2l5-2.6v8.8l-5-2.6z"/></svg></div><h3>Record a clip</h3><p>Open the mission, read the short guide, and record a quick selfie video on your phone.</p></div>
+    <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></div><h3>Send it in</h3><p>Add your clip to the mission. A real person checks each one against a clear checklist.</p></div>
+    <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 11h6"/></svg></div><h3>Cash out</h3><p>Every accepted clip earns coins. 1 coin is $1. From 50 coins, redeem a gift card.</p></div>
+  </div>
+</section>
+
+<section class="sec wrap" id="missions">
+  <div class="sec-head reveal"><div class="sec-eye">Open missions</div><h2 class="sec-h2">Missions open now</h2><p class="sec-sub">Each mission has a set payout. Pick any that fit you - you can do more than one.</p></div>
+  <div class="briefs stagger">
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Say a few words</h4><div class="prow"><span class="ppay">$8 / clip</span><span class="go">&#8599;</span></div></a>
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Read a short line</h4><div class="prow"><span class="ppay">$8 / clip</span><span class="go">&#8599;</span></div></a>
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Show different angles</h4><div class="prow"><span class="ppay">$10 / clip</span><span class="go">&#8599;</span></div></a>
+  </div>
+</section>
+
+<section class="sec wrap">
+  <div class="qband reveal">
+    <div class="q">1 coin = $1. Reviewed fast. Paid for real.</div>
+    <div class="a">No fees, no surprises. You choose what to send, and you can delete it anytime.</div>
+  </div>
+</section>
+
+<section class="sec wrap" id="faq">
+  <div class="sec-head reveal"><h2 class="sec-h2">FAQ</h2></div>
+  <div class="faq stagger">
+    <details><summary>What do I need to take part?<span class="pm">+</span></summary><div class="faq-a">Just a smartphone. Every mission has a short, clear guide, so you always know what to record and how.</div></details>
+    <details><summary>How long is each video?<span class="pm">+</span></summary><div class="faq-a">Most clips are short - often 10 to 60 seconds. The mission tells you exactly what is needed before you start.</div></details>
+    <details><summary>How do I get paid?<span class="pm">+</span></summary><div class="faq-a">Accepted clips earn coins. 1 coin is $1. From 50 coins you can redeem a gift card from a well-known brand, delivered to your email.</div></details>
+    <details><summary>Is my video kept private?<span class="pm">+</span></summary><div class="faq-a">You choose what to send, we only use it for the mission you pick, we never sell your data, and you can delete it anytime.</div></details>
+  </div>
+</section>
+
+<section class="final wrap">
+  <h2>Your next short video can <span class="hl">earn you money.</span></h2>
+  <p>Make a free account and start earning from the clips you record.</p>
+  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Create your free account</a>
+</section>
+
+<!-- footer is injected here by the shared chrome (assets/chrome.js) -->
+<div id="aam-footer"></div>
+
+<script>
+(function(){
+  // nav + footer are handled by assets/chrome.js; this page only runs scroll reveals
+  if(!document.documentElement.classList.contains('anim')) return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.16,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal,.stagger').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body></html>

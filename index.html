@@ -26,11 +26,8 @@
 .paylogo.more{background:transparent;border:0;box-shadow:none}
 .paylogo.more>i{color:var(--primary)}
 
-/* Missions: drop the white frame so the photos read cleaner */
-.briefs .brief{border:0;box-shadow:0 10px 26px rgba(36,31,71,.16)}
-/* Price moves to a top-right badge over the photo */
-.briefs .brief .prow{position:absolute;top:12px;right:12px;left:auto;bottom:auto;width:auto;margin:0;z-index:3}
-.briefs .brief .ppay{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 11px;font-family:var(--fd);font-weight:700;font-size:12px;color:#fff;backdrop-filter:blur(3px)}
+/* gallery card appearance (no white frame + payout pill) now lives in aam.css
+   (.briefs .brief:not(.solid)) so the landing and profile galleries are identical */
 /* Pull the missions grid closer to "How it works" so it feels connected */
 #briefs{margin-top:var(--how-gallgap,-124px);transform:translateY(var(--how-galshift,-30px))}
 /* Gallery thumbnails: clear first→last cascade as the grid scrolls in */
@@ -251,19 +248,9 @@
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><radialGradient id="aamGold" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#FFF4C2"/><stop offset=".4" stop-color="#F7CB52"/><stop offset=".8" stop-color="#E2A521"/><stop offset="1" stop-color="#B97A0C"/></radialGradient><linearGradient id="aamGoldRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEBC44"/><stop offset="1" stop-color="#7E5206"/></linearGradient></defs></svg>
 
-<nav class="nav" id="nav"><div class="nav-in">
-  <a class="brand" href="#"><svg viewBox="0 0 24 20" style="width:26px;height:22px"><path d="M14.9297 0C15.5984 1.83494e-05 16.2228 0.334243 16.5938 0.890625L17.4062 2.10938C17.7772 2.66576 18.4016 2.99998 19.0703 3H20C22.2091 3 24 4.79086 24 7V16C24 18.2091 22.2091 20 20 20H4C1.79086 20 8.05333e-09 18.2091 0 16V7C0 4.79086 1.79086 3 4 3H4.92969C5.59837 2.99998 6.22283 2.66576 6.59375 2.10938L7.40625 0.890625C7.77717 0.334243 8.40163 1.83494e-05 9.07031 0H14.9297ZM12 5C12 8.3135 9.3135 11 6 11C9.3135 11 12 13.6865 12 17C12 13.6865 14.6865 11 18 11C14.6865 11 12 8.3135 12 5Z" fill="#4F5BFF"/></svg><span class="wm">AI Art Masters</span></a>
-  <div class="nav-links"><a href="#how">How it works</a><a href="#briefs">Start earning</a><a href="#faq">FAQ</a></div>
-  <div class="nav-right"><a class="signin" href="home.html">Sign in</a><a class="btn btn-p" href="welcome-quiz.html">Start earning</a></div>
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile"><span></span><span></span><span></span></button>
-</div>
-<div class="nav-mobile" id="navMobile">
-  <a href="#how">How it works</a>
-  <a href="#briefs">Start earning</a>
-  <a href="#faq">FAQ</a>
-  <a class="m-signin" href="home.html">Sign in</a>
-  <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a>
-</div></nav>
+<!-- nav is injected by the shared chrome (assets/chrome.js) -->
+<script>window.AAM_CHROME={mode:'marketing',base:'',missionsHref:'#briefs'};</script>
+<script src="assets/chrome.js"></script>
 
 <header class="hero wrap">
   <div class="hero-in">
@@ -367,9 +354,8 @@
 
 <section class="sec wrap" id="briefs">
   <div class="sec-head reveal"><h2 class="sec-h2">Available missions</h2></div>
-  <div class="briefs">
-    <a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/SelfieVideos-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-selfie-videos-C1RBq8Ui.png" alt="Selfie Videos" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#FF5A5F" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="12" height="10" rx="2"/><path d="M14.5 10.5l6-3v9l-6-3z"/></svg>Selfie Videos</h4><p class="breq">One 10–60 sec selfie video, recorded at home, spoken in any Arabic dialect.</p><div class="prow"><span class="ppay">$8 / video clip</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Pets-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-dogs-B6dPZelV.jpg" alt="Dogs" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#3B82F6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9.5" r="1.6"/><circle cx="12" cy="8" r="1.7"/><circle cx="16" cy="9.5" r="1.6"/><path d="M12 11.5c-3 0-4.8 2.4-4.1 4.6.5 1.5 2.3 2.1 4.1 2.1s3.6-.6 4.1-2.1c.7-2.2-1.1-4.6-4.1-4.6Z" fill="currentColor" stroke="none"/></svg>Dogs</h4><p class="breq">70+ clear photos of your dog, taken over 12+ months in different places. Natural, no studio.</p><div class="prow"><span class="ppay">$4 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Cats-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-cats-A4a5-G7o.jpg" alt="Cats" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#F59E0B" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="6"/><path d="M6.5 7 L9 9.6M17.5 7 L15 9.6M5 13.5H8M19 13.5H16"/></svg>Cats</h4><p class="breq">70+ clear photos of your cat, taken over 12+ months in varied settings. Natural and unedited.</p><div class="prow"><span class="ppay">$5 / photo</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/EmailsHunter-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/emailshunter-hero-CJdpmLfI.jpg" alt="Emails" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg>Emails</h4><p class="breq">Real business emails - we keep only the subject and sender. Originals, recent, in your language.</p><div class="prow"><span class="ppay">$2 / email</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/Barcode-Collector" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-barcodes-9BbnRcBm.jpg" alt="Barcodes" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#8B5CF6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6v12M6.5 6v12M9 6v12M11 6v12M13.5 6v12M16 6v12M18 6v12M20 6v12"/></svg>Barcodes</h4><p class="breq">A clear photo of one full barcode you own - used or expired cards, tickets, coupons.</p><div class="prow"><span class="ppay">$3 / barcode</span></div></a><a class="brief" style="background:linear-gradient(135deg,#4F5BFF,#8B5CF6)" href="https://www.ai-art-masters.com/VirtualTryOn-Landing" target="_blank" rel="noopener"><img class="bphoto" onerror="this.style.display='none'" src="https://www.ai-art-masters.com/assets/selector-virtual-tryon-CLUfoxf-.png" alt="Virtual Try On" loading="lazy"><span class="ov"></span><h4><svg class="micon" style="color:#EC4899" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 4.5 L5 7 L7 9.2 L8.2 8 V19 H15.8 V8 L17 9.2 L19 7 L15.5 4.5 C14.8 6 9.2 6 8.5 4.5 Z"/></svg>Virtual Try On</h4><p class="breq">5 real full-outfit photos of yourself from your camera roll - no filters, no studio shots.</p><div class="prow"><span class="ppay">$6 / photo</span></div></a>
-  </div>
+  <div class="briefs" id="aam-missions"></div>
+  <script src="assets/missions.js"></script>
 </section>
 
 <section class="sec wrap" id="payout">
@@ -440,28 +426,13 @@
   <a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a>
 </section>
 
-<footer class="wrap">
-  <div class="foot-in">
-    <div class="foot-brand"><span class="wm">AI Art Masters</span><p>Turn what's on your phone into real income. Open worldwide, any phone.</p></div>
-    <div class="fcol"><h5>Earn</h5><a href="#briefs">Open missions</a><a href="#how">How it works</a><a href="#payout">Rewards</a></div>
-    <div class="fcol"><h5>Account</h5><a href="welcome-quiz.html">Get started</a><a href="#">Sign in</a></div>
-    <div class="fcol"><h5>Company</h5><a href="#">About</a><a href="#faq">FAQ</a><a href="#">Contact</a></div>
-  </div>
-  <div class="foot-bot"><span>© 2026 AI Art Masters</span><span>Privacy · Terms</span></div>
-</footer>
+<!-- footer is injected here by the shared chrome (assets/chrome.js) -->
+<div id="aam-footer"></div>
 
 <script>
 (function(){
   var anim=document.documentElement.classList.contains('anim');
-  var nav=document.getElementById('nav');
-  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY>20); }
-  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
-  var tog=document.getElementById('navToggle'), menu=document.getElementById('navMobile');
-  if(tog&&menu){
-    function close(){menu.classList.remove('open');tog.setAttribute('aria-expanded','false');}
-    tog.addEventListener('click',function(){var open=menu.classList.toggle('open');tog.setAttribute('aria-expanded',open?'true':'false');});
-    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
-  }
+  // nav scroll state + mobile toggle are handled by assets/chrome.js
   // hero device - three submission flows (photo → video → audio), each running
   // the full earn-loop: pick → submit → earn → cash out. Each lands on 50 coins.
   var dev=document.getElementById('device');
@@ -581,62 +552,8 @@
     }
   }
 
-  // Available missions gallery: scroll-scrubbed on every screen size (Ron wants the scrub kept on
-  // mobile). Each thumbnail scales + fades in tied directly to scroll position, cascading first ->
-  // last, and the whole grid finishes when the section reaches the centre of the screen.
-  var bgrid=document.querySelector('#briefs .briefs');
-  var bcards=Array.prototype.slice.call(document.querySelectorAll('#briefs .briefs>.brief'));
-  if(bgrid&&bcards.length){
-    var bSpread=0.5, bN=bcards.length, bTick=false, bDone=false, bLatched=false;   // cards stagger across the first 50% of the scrub
-    // Reveal the whole gallery and stop scrubbing. Called when the scrub completes once (play-once
-    // per refresh) or when a link jumps straight to #briefs - so the footer/nav never lands on a
-    // half-scrubbed grid.
-    function revealAllBriefs(){
-      bLatched=true; bDone=true; bgrid.classList.add('in');
-      bcards.forEach(function(c){c.style.opacity='';c.style.transform='';});
-    }
-    var setGP=function(){
-      bTick=false;
-      if(bLatched) return;                         // play once per refresh: never re-scrub after a full reveal
-      var vh=window.innerHeight||document.documentElement.clientHeight;
-      if(matchMedia('(max-width:759px)').matches){
-        // Mobile: per-card scrub. Each thumbnail scales 62%->100% as its own centre rises from the
-        // bottom of the screen (vh) up to ~80% down, so it finishes low on screen - never too high/late.
-        var allIn=true;
-        for(var j=0;j<bN;j++){
-          var rc=bcards[j].getBoundingClientRect(), cyc=rc.top+rc.height/2;
-          var pc=(vh-cyc)/(vh*0.28); pc=pc<0?0:pc>1?1:pc;   // 1 when card centre is ~72% down the screen
-          if(pc<(bcards[j]._mx||0)) pc=bcards[j]._mx;       // monotonic: a revealed card never scrubs back on scroll-up
-          bcards[j]._mx=pc;
-          bcards[j].style.opacity=pc.toFixed(3);
-          bcards[j].style.transform='scale('+(0.62+0.38*pc).toFixed(3)+')';
-          if(pc<1) allIn=false;
-        }
-        if(allIn) revealAllBriefs();               // every card fully in -> latch
-        return;
-      }
-      var r=bgrid.getBoundingClientRect(), center=r.top+r.height/2;
-      var startY=vh*1.15, endY=vh*0.5;            // begins as the grid enters from below, ends when it's centred
-      var p=(startY-center)/(startY-endY); p=p<0?0:p>1?1:p;
-      if(p>=1){ revealAllBriefs(); return; }       // settled: latch + drop inline styles so hover works normally
-      for(var i=0;i<bN;i++){
-        var off=(bN>1?i/(bN-1):0)*bSpread;
-        var lp=(p-off)/(1-bSpread); lp=lp<0?0:lp>1?1:lp;
-        bcards[i].style.opacity=lp.toFixed(3);
-        bcards[i].style.transform='scale('+(0.62+0.38*lp).toFixed(3)+')';
-      }
-    };
-    var onBScroll=function(){ if(!bTick){ bTick=true; requestAnimationFrame(setGP); } };
-    window.addEventListener('scroll',onBScroll,{passive:true});
-    window.addEventListener('resize',onBScroll);
-    // A link straight to the gallery (footer "Open missions", nav/hero "missions" CTAs) reveals the
-    // full grid instead of a half-scrubbed frame.
-    function briefsJump(){ if(location.hash==='#briefs') revealAllBriefs(); }
-    addEventListener('hashchange',briefsJump);
-    [].slice.call(document.querySelectorAll('a[href="#briefs"]')).forEach(function(a){ a.addEventListener('click',function(){ setTimeout(revealAllBriefs,0); }); });
-    briefsJump();
-    setGP();
-  }
+  // Available missions gallery scroll-scrub now lives in the shared component (assets/missions.js,
+  // AAMMissions.setupScrub) so the landing and the profile animate identically.
 
   // How it works - fully scroll-scrubbed timeline. Every element (title, the 3 steps, the 2
   // dashed connectors) is tied directly to scroll position. The whole sequence is described in

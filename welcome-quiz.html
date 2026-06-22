@@ -87,9 +87,9 @@ select.fld{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xm
 .seg button{border:none;background:transparent;font-family:var(--fd);font-weight:700;font-size:13px;color:var(--ink2);padding:7px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
 .seg button.on{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(36,31,71,.1)}
 
-/* skin tones */
-.tones{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-.tone{width:58px;height:58px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line2);position:relative;transition:box-shadow .2s}
+/* skin tones - 10-step Monk Skin Tone scale shown as an ordered grid */
+.tones{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;justify-items:center;max-width:340px;margin:0 auto}
+.tone{width:52px;height:52px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line2);position:relative;transition:box-shadow .2s}
 .tone:hover{box-shadow:0 0 0 1.5px var(--primary)}
 .tone.sel{box-shadow:0 0 0 3px var(--primary)}
 .tone.sel::after{content:"";position:absolute;inset:0;margin:auto;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.9) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234F5BFF' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>") center/14px no-repeat}
@@ -201,15 +201,38 @@ var _pw='';
 
 /* restore any saved draft so a returning user keeps progress */
 try{ var saved = JSON.parse(localStorage.getItem(STORAGE_KEY)||'null'); if(saved && saved.answers){ profile = Object.assign(profile, saved); profile.answers = Object.assign({}, profile.answers, saved.answers); } }catch(e){}
-function saveDraft(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); }catch(e){} }
+/* Onboarding progress - the single source of truth the profile (home.html) reads
+   to sync its "Complete your profile" banner. Counts profile-completion steps that
+   are actually answered (optional steps only count when filled). */
+function computeOnboarding(){
+  var a = profile.answers;
+  var checks = [
+    !!(a.firstName && a.firstName.trim() && a.lastName && a.lastName.trim()),  // name
+    (a.age!=null && a.age>=18),                                                // dob
+    !!a.gender,                                                                // gender (optional)
+    !!(a.country && a.city && a.city.trim()),                                  // location
+    (a.height && a.height.cm>0 && a.weight && a.weight.kg>0),                  // body
+    !!a.nativeLanguage,                                                        // languages
+    (a.skinTone!=null),                                                        // skin tone (optional)
+    (a.abilities && a.abilities.length>0),                                     // abilities
+    !!(a.profession && a.profession.trim()),                                   // profession (optional)
+    (a.modelRelease===true),                                                   // model release
+    (a.acceptedTerms===true),                                                  // terms
+    /.+@.+\..+/.test(a.email||'')                                              // account
+  ];
+  var done = checks.filter(Boolean).length;
+  return { completed:done, total:checks.length, done:(done===checks.length) };
+}
+function saveDraft(){ try{ profile.onboarding = computeOnboarding(); localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); }catch(e){} }
 
 /* ---- reference lists ---- */
 var COUNTRIES = ["United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Ireland","Portugal","Poland","Sweden","Norway","Denmark","Finland","Belgium","Austria","Switzerland","Greece","Czechia","Romania","Hungary","Israel","Turkey","India","Pakistan","Bangladesh","Philippines","Indonesia","Malaysia","Singapore","Thailand","Vietnam","Japan","South Korea","China","Hong Kong","Taiwan","United Arab Emirates","Saudi Arabia","Egypt","Morocco","Nigeria","Kenya","Ghana","South Africa","Brazil","Mexico","Argentina","Chile","Colombia","Peru","New Zealand","Ukraine","Russia","Other"];
 var LANGUAGES = ["English","Spanish","Portuguese","French","German","Italian","Dutch","Polish","Russian","Ukrainian","Arabic","Hebrew","Turkish","Hindi","Urdu","Bengali","Tamil","Indonesian","Malay","Tagalog","Thai","Vietnamese","Mandarin Chinese","Cantonese","Japanese","Korean","Greek","Swedish","Norwegian","Danish","Finnish","Romanian","Hungarian","Czech","Other"];
 var GENDERS = ["Female","Male","Other","Prefer not to say"];
+/* Official 10-step Monk Skin Tone (MST) Scale - https://skintone.google */
 var TONES = [
-  {id:1,c:"#F6DBC6"},{id:2,c:"#EAC0A2"},{id:3,c:"#D6A179"},
-  {id:4,c:"#B97E58"},{id:5,c:"#8C5A3B"},{id:6,c:"#5E3B27"}
+  {id:1,c:"#F6EDE4"},{id:2,c:"#F3E7DB"},{id:3,c:"#F7EAD0"},{id:4,c:"#EADABA"},{id:5,c:"#D7BD96"},
+  {id:6,c:"#A07E56"},{id:7,c:"#825C43"},{id:8,c:"#604134"},{id:9,c:"#3A312A"},{id:10,c:"#292420"}
 ];
 var ABILITIES = [
   {id:"photos", t:"Photos", d:"Everyday photos and objects"},
