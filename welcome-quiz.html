@@ -25,7 +25,7 @@ body{margin:0;background:var(--bg);min-height:100vh;min-height:100dvh}
 .qz-back{flex:none;width:40px;height:40px;margin-left:-9px;border:none;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink2);transition:color .2s}
 .qz-back:hover{color:var(--primary)}
 .qz-back[hidden]{display:none}
-.qz-step{margin-left:auto;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--ink3)}
+.qz-step{margin:0 auto;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--ink3)}
 /* save & exit: always-available way to leave the quiz (draft is kept) */
 .qz-quit{flex:none;width:40px;height:40px;margin-right:-9px;border:none;background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink3);transition:color .2s}
 .qz-quit:hover{color:var(--ink)}
@@ -247,6 +247,18 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){retur
 function checkSVG(){ return "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>"; }
 function options(list, val){ return list.map(function(o){return "<option value='"+esc(o)+"'"+(o===val?" selected":"")+">"+esc(o)+"</option>";}).join(''); }
 
+/* ---- field validators: reject impossible / nonsense values (common-sense ranges) ----
+   Names/cities accept any script (the audience is worldwide, incl. non-Latin), so we only
+   reject digits, stray symbols and absurd lengths rather than enforcing a Latin alphabet. */
+var LIMITS = { AGE_MIN:18, AGE_MAX:100, H_MIN:130, H_MAX:230, W_MIN:35, W_MAX:250 };  // cm / kg
+var BAD_TEXT = /[0-9@#$%^&*_=+<>{}\[\]\/\\|~`]/;          // chars a real name/city/job never contains
+function textOk(s, max){ s=(s||'').trim(); return s.length>0 && s.length<=max && !BAD_TEXT.test(s); }
+function nameOk(s){ return textOk(s, 50); }
+function cityOk(s){ return textOk(s, 60); }
+function profOk(s){ s=(s||'').trim(); return s.length<=60 && /[^\d\s]/.test(s) && !/[@#$%^&*_=+<>{}\[\]\/\\|~`]/.test(s); }  // optional, but no digit-only / junk
+function heightOk(cm){ return cm!=null && cm>=LIMITS.H_MIN && cm<=LIMITS.H_MAX; }
+function weightOk(kg){ return kg!=null && kg>=LIMITS.W_MIN && kg<=LIMITS.W_MAX; }
+
 /* ============================================================
    STEPS - each describes a screen. `render` returns HTML,
    `valid` returns true when the user can continue.
@@ -265,15 +277,16 @@ var steps = [
         "</div></div>";
     },
     bind:function(){ bindInput('firstName','firstName'); bindInput('lastName','lastName'); },
-    valid:function(){ return A.firstName.trim().length>0 && A.lastName.trim().length>0; } },
+    valid:function(){ return nameOk(A.firstName) && nameOk(A.lastName); },
+    err:function(){ if(A.firstName.trim() && !nameOk(A.firstName)) return 'Enter a valid first name.'; if(A.lastName.trim() && !nameOk(A.lastName)) return 'Enter a valid last name.'; return ''; } },
 
   { key:'dob', count:true, render:function(){
       return head('About you','What\'s your date of birth?','You need to be at least 18 to join.')+
         "<div class='qz-body'><input type='date' class='fld' id='dob' value='"+esc(A.dob)+"' max='"+maxDob()+"'></div>";
     },
     bind:function(){ var el=document.getElementById('dob'); el.addEventListener('change',function(){ A.dob=el.value; A.age=ageFrom(el.value); saveDraft(); refreshNext(); }); },
-    valid:function(){ return A.age!=null && A.age>=18; },
-    err:function(){ if(A.dob && A.age!=null && A.age<18) return 'You need to be at least 18 years old to join.'; return ''; } },
+    valid:function(){ return A.age!=null && A.age>=LIMITS.AGE_MIN && A.age<=LIMITS.AGE_MAX; },
+    err:function(){ if(A.dob && A.age!=null && A.age<LIMITS.AGE_MIN) return 'You need to be at least 18 years old to join.'; if(A.dob && A.age!=null && A.age>LIMITS.AGE_MAX) return 'Please enter a valid date of birth.'; return ''; } },
 
   { key:'gender', count:true, render:function(){
       return head('About you','How do you describe yourself?','Optional, but it helps us match more missions to you.')+
@@ -290,7 +303,8 @@ var steps = [
         "</div>";
     },
     bind:function(){ var c=document.getElementById('country'); c.addEventListener('change',function(){A.country=c.value;saveDraft();refreshNext();}); bindInput('city','city'); },
-    valid:function(){ return !!A.country && A.city.trim().length>0; } },
+    valid:function(){ return !!A.country && cityOk(A.city); },
+    err:function(){ if(A.city.trim() && !cityOk(A.city)) return 'Enter a valid city name.'; return ''; } },
 
   { key:'body', count:true, render:function(){
       return head('About you','Your height and weight','This helps match you to modelling and try-on missions.')+
@@ -304,7 +318,8 @@ var steps = [
         "</div>";
     },
     bind:bindBody,
-    valid:function(){ return A.height.cm>0 && A.weight.kg>0; } },
+    valid:function(){ return heightOk(A.height.cm) && weightOk(A.weight.kg); },
+    err:function(){ if(A.height.cm!=null && !heightOk(A.height.cm)) return 'Please enter a realistic height.'; if(A.weight.kg!=null && !weightOk(A.weight.kg)) return 'Please enter a realistic weight.'; return ''; } },
 
   { key:'languages', count:true, render:function(){
       return head('About you','Languages you speak','')+
@@ -351,7 +366,8 @@ var steps = [
         "<div class='qz-body'><input class='fld' id='profession' placeholder='e.g. Student, Photographer, Nurse' value='"+esc(A.profession)+"'></div>";
     },
     bind:function(){ bindInput('profession','profession'); },
-    valid:function(){ return true; }, optional:true },
+    valid:function(){ return A.profession.trim()==='' || profOk(A.profession); },
+    err:function(){ if(A.profession.trim() && !profOk(A.profession)) return 'Enter a valid profession.'; return ''; }, optional:true },
 
   { key:'release', count:true, render:function(){
       return head('Almost done','Model release','Please read and agree before you send any photos or videos of people.')+
@@ -411,11 +427,11 @@ function bindBody(){
   function drawH(){
     var box=document.getElementById('hInputs');
     if(A.height.unit==='cm'){
-      box.innerHTML="<input class='fld' id='hcm' type='number' inputmode='numeric' placeholder='Height in cm' value='"+(A.height.cm||'')+"'>";
+      box.innerHTML="<input class='fld' id='hcm' type='number' inputmode='numeric' min='130' max='230' placeholder='Height in cm' value='"+(A.height.cm||'')+"'>";
       document.getElementById('hcm').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.height.cm=v>0?Math.round(v):null; A.height.value=A.height.cm; saveDraft(); refreshNext(); });
     } else {
       var ft=A.height.cm?Math.floor(A.height.cm/30.48):''; var inch=A.height.cm?Math.round((A.height.cm/2.54)-(Math.floor(A.height.cm/30.48)*12)):'';
-      box.innerHTML="<div class='fld-row two'><input class='fld' id='hft' type='number' inputmode='numeric' placeholder='Feet' value='"+ft+"'><input class='fld' id='hin' type='number' inputmode='numeric' placeholder='Inches' value='"+inch+"'></div>";
+      box.innerHTML="<div class='fld-row two'><input class='fld' id='hft' type='number' inputmode='numeric' min='4' max='7' placeholder='Feet' value='"+ft+"'><input class='fld' id='hin' type='number' inputmode='numeric' min='0' max='11' placeholder='Inches' value='"+inch+"'></div>";
       function upd(){ var f=parseFloat(document.getElementById('hft').value)||0; var i=parseFloat(document.getElementById('hin').value)||0; var cm=Math.round((f*12+i)*2.54); A.height.cm=cm>0?cm:null; A.height.value=A.height.cm; saveDraft(); refreshNext(); }
       document.getElementById('hft').addEventListener('input',upd); document.getElementById('hin').addEventListener('input',upd);
     }
@@ -423,11 +439,11 @@ function bindBody(){
   function drawW(){
     var box=document.getElementById('wInputs');
     if(A.weight.unit==='kg'){
-      box.innerHTML="<input class='fld' id='wkg' type='number' inputmode='numeric' placeholder='Weight in kg' value='"+(A.weight.kg||'')+"'>";
+      box.innerHTML="<input class='fld' id='wkg' type='number' inputmode='numeric' min='35' max='250' placeholder='Weight in kg' value='"+(A.weight.kg||'')+"'>";
       document.getElementById('wkg').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.weight.kg=v>0?Math.round(v):null; A.weight.value=A.weight.kg; saveDraft(); refreshNext(); });
     } else {
       var lb=A.weight.kg?Math.round(A.weight.kg*2.2046):'';
-      box.innerHTML="<input class='fld' id='wlb' type='number' inputmode='numeric' placeholder='Weight in lb' value='"+lb+"'>";
+      box.innerHTML="<input class='fld' id='wlb' type='number' inputmode='numeric' min='77' max='551' placeholder='Weight in lb' value='"+lb+"'>";
       document.getElementById('wlb').addEventListener('input',function(e){ var v=parseFloat(e.target.value); A.weight.kg=v>0?Math.round(v/2.2046):null; A.weight.value=v>0?Math.round(v):null; saveDraft(); refreshNext(); });
     }
   }
