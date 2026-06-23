@@ -660,7 +660,7 @@ footer.wrap{border-top:1px solid var(--line);padding-top:clamp(54px,7vw,78px);pa
 .actr .aav svg{width:18px;height:18px}
 .actr .an{font-weight:700;font-size:14px}
 .actr .at{font-family:var(--fm);font-size:11px;color:var(--ink3);margin-top:1px}
-.actr .amt{margin-left:auto;font-family:var(--fm);font-size:13px;font-weight:700;color:var(--green-ink)}
+.actr .amt{margin-left:auto;font-family:var(--fm);font-size:13px;font-weight:700;color:var(--ink)}
 .actr .amt.cash{color:var(--ink2)}
 
 /* user score card — reputation/trust number; drives mission access (docs/USER_SCORE.md) */
