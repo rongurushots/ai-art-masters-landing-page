@@ -39,14 +39,14 @@
 
   /* Wallet chip (app nav). Demo balance - swap COINS for the real wallet value.
      A pink dot + tooltip signal cash-out readiness once the balance clears the 50-coin floor. */
-  var COINS = 1240;        // current coin balance
+  var COINS = (cfg.coins != null) ? cfg.coins : 1240;   // real balance via window.AAM_CHROME.coins (new users: 0); demo default otherwise
   var COIN_MIN = 50;       // minimum coins needed to cash out
   function fmtCoins(n) { return n.toLocaleString("en-US"); }
   function coinChip() {
     var ready = COINS >= COIN_MIN;
     var tip = ready
-      ? "You can cash out. Exchange coins for gift cards - and the more coins you save, the more each one is worth."
-      : "Reach <b>" + COIN_MIN + " coins</b> to cash out. Exchange them for gift cards - and the more you save, the better the rate.";
+      ? "You can cash out. Turn your coins into a gift card."
+      : "Keep earning, and you'll be able to turn your coins into a gift card.";
     return '<a class="coinchip" href="cash-out.html" aria-label="Your coins - cash out">' + COIN +
       fmtCoins(COINS) +
       (ready ? '<span class="coindot" aria-hidden="true"></span>' : '') +
@@ -74,7 +74,7 @@
       '<a class="brand" href="home.html">' + CAMERA + '<span class="wm">AI Art Masters</span></a>' +
       '<div class="nav-right">' +
         '<span class="scorechip" tabindex="0" aria-label="Your score">' + STAR +
-          '<span id="navScore">73</span>' +
+          '<span id="navScore">' + (cfg.score != null ? cfg.score : 73) + '</span>' +
           '<span class="scoretip" role="tooltip">Your score reflects how well you follow mission instructions and the quality of your submissions. The closer you follow the guidance, the more likely you are to be approved, and the higher your score climbs. A higher score unlocks advanced, higher-value missions, so doing great work directly leads to earning more.</span>' +
         '</span>' +
         coinChip() +
@@ -110,7 +110,7 @@
     return '<footer class="wrap">' +
       '<div class="foot-in">' +
         '<div class="foot-brand"><span class="wm">AI Art Masters</span>' +
-        '<p>Turn what\'s on your phone into real income. Open worldwide, any phone.</p></div>' +
+        '<p>Turn everyday content into rewards.</p></div>' +
         cols +
       '</div>' +
       '<div class="foot-bot"><span>© 2026 AI Art Masters</span><span>Privacy · Terms</span></div>' +
@@ -174,11 +174,37 @@
     });
   }
 
-  /* ---- footer fills its slot, coins hydrate, and reveals arm once the page is parsed ---- */
+  /* ---- "Complete your profile" banner: show #setupBanner only if the welcome-quiz isn't finished,
+          and fill its progress bar + count from the saved draft. Any page that drops the markup gets it. ---- */
+  function hydrateSetupBanner() {
+    var banner = document.getElementById("setupBanner");
+    if (!banner) return;
+    if (cfg.mode !== "app") { banner.hidden = true; return; }   // signed-in (app) pages only; never pre-sign-in / marketing
+    var p = null;
+    try {
+      var d = JSON.parse(localStorage.getItem("aam_welcome_quiz_v1") || "null");
+      if (d && d.onboarding && typeof d.onboarding.total === "number" && d.onboarding.total > 0) p = d.onboarding;
+      else { var all = JSON.parse(localStorage.getItem("aam_profiles") || "[]"); if (all.length) p = { completed: 1, total: 1, done: true }; }
+    } catch (e) {}
+    if (!p) p = { completed: 6, total: 12, done: false };   // demo fallback so the banner is visible in the prototype
+    if (p.done) { banner.hidden = true; return; }
+    var total = p.total, done = Math.max(0, Math.min(p.completed, total));
+    var cnt = document.getElementById("setupCount"); if (cnt) cnt.textContent = done + "/" + total;
+    var steps = document.getElementById("setupSteps");
+    if (steps) {
+      steps.setAttribute("aria-label", done + " of " + total + " steps complete");
+      var h = ""; for (var i = 0; i < total; i++) { h += "<span" + (i < done ? ' class="on"' : "") + "></span>"; }
+      steps.innerHTML = h;
+    }
+    banner.hidden = false;
+  }
+
+  /* ---- footer fills its slot, coins hydrate, banner shows, and reveals arm once the page is parsed ---- */
   function onReady() {
     var slot = document.getElementById("aam-footer");
     if (slot) { slot.outerHTML = footer(); }
     else { document.body.insertAdjacentHTML("beforeend", footer()); }
+    hydrateSetupBanner();
     hydrateCoins(document);
     initReveal();
   }

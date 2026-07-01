@@ -40,17 +40,17 @@
     return COIN + m[1] + (m[2] ? " " + esc(m[2]) : "");          // "<coin>8 / video clip"
   }
 
-  // The real missions come first; the two always-open generic missions are extras.
+  // Order: the two quick self-serve selfie missions lead; subject missions next; the original Selfie Videos sits last.
   var MISSIONS = [
-    { name: "Selfie Videos", href: SITE + "/SelfieVideos-Landing", external: true, img: SITE + "/assets/selector-selfie-videos-C1RBq8Ui.png", icon: IC.video, iconColor: "#FF5A5F", req: "One 10-60 sec selfie video, recorded at home, spoken in any Arabic dialect.", pay: "$8 / video clip" },
+    { name: "Selfie Photo", href: "selfie-photo.html", external: false, img: "design/selfie-image-thumb.png", grad: "linear-gradient(135deg,#FF7B7B,#E0357D)", icon: IC.photo, iconColor: "#FFD166", req: "A few clear selfies from your phone. Take them at home or outdoors, no filters.", pay: "$5 / photo" },
+    { name: "Selfie Video", href: "selfie-video.html", external: false, img: "design/selfie-video-thumb.png", grad: EXTGRAD, icon: IC.video, iconColor: "#FF4D94", req: "One short selfie video, 10-60 seconds, recorded at home. Speak in any language.", pay: "$8 / clip" },
     { name: "Dogs", href: SITE + "/Pets-Landing", external: true, img: SITE + "/assets/selector-dogs-B6dPZelV.jpg", icon: IC.dog, iconColor: "#3B82F6", req: "70+ clear photos of your dog, taken over 12+ months in different places. Natural, no studio.", pay: "$4 / photo" },
     { name: "Cats", href: SITE + "/Cats-Landing", external: true, img: SITE + "/assets/selector-cats-A4a5-G7o.jpg", icon: IC.cat, iconColor: "#F59E0B", req: "70+ clear photos of your cat, taken over 12+ months in varied settings. Natural and unedited.", pay: "$5 / photo" },
     { name: "Emails", href: SITE + "/EmailsHunter-Landing", external: true, img: SITE + "/assets/emailshunter-hero-CJdpmLfI.jpg", icon: IC.mail, iconColor: "#10B981", req: "Real business emails - we keep only the subject and sender. Originals, recent, in your language.", pay: "$2 / email" },
     { name: "Best Email Collector", href: SITE + "/BestEmailCollector-Landing", external: true, img: SITE + "/assets/best-email-collector-hero-C5f2SyST.jpg", icon: IC.mail, iconColor: "#06B6D4", req: "Share a few business emails - we keep only the subject and sender, fully anonymized.", pay: "$2 / email" },
     { name: "Barcodes", href: SITE + "/Barcode-Collector", external: true, img: SITE + "/assets/selector-barcodes-9BbnRcBm.jpg", icon: IC.barcode, iconColor: "#8B5CF6", req: "A clear photo of one full barcode you own - used or expired cards, tickets, coupons.", pay: "$3 / barcode" },
     { name: "Virtual Try On", href: SITE + "/VirtualTryOn-Landing", external: true, img: SITE + "/assets/selector-virtual-tryon-CLUfoxf-.png", icon: IC.shirt, iconColor: "#EC4899", req: "5 real full-outfit photos of yourself from your camera roll - no filters, no studio shots.", pay: "$6 / photo" },
-    { name: "Selfie Photo", href: "selfie-photo.html", external: false, img: "design/selfie-image-thumb.png", grad: "linear-gradient(135deg,#FF7B7B,#E0357D)", icon: IC.photo, iconColor: "#FFD166", req: "A few clear selfies from your phone. Take them at home or outdoors, no filters.", pay: "$5 / photo" },
-    { name: "Selfie Video", href: "selfie-video.html", external: false, img: "design/selfie-video-thumb.png", grad: EXTGRAD, icon: IC.video, iconColor: "#FF4D94", req: "One short selfie video, 10-60 seconds, recorded at home. Speak in any language.", pay: "$8 / clip" }
+    { name: "Selfie Videos (Arabic)", href: SITE + "/SelfieVideos-Landing", external: true, img: SITE + "/assets/selector-selfie-videos-C1RBq8Ui.png", icon: IC.video, iconColor: "#FF5A5F", req: "One 10-60 sec selfie video, recorded at home, spoken in any Arabic dialect.", pay: "$8 / video clip" }
   ];
 
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }

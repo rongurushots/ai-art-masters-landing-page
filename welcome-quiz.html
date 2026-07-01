@@ -88,7 +88,7 @@ select.fld{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xm
 .seg button.on{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(36,31,71,.1)}
 
 /* skin tones - 10-step Monk Skin Tone scale shown as an ordered grid */
-.tones{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;justify-items:center;max-width:340px;margin:0 auto}
+.tones{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;justify-items:center;max-width:340px;margin:30px auto 0}
 .tone{width:52px;height:52px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line2);position:relative;transition:box-shadow .2s}
 .tone:hover{box-shadow:0 0 0 1.5px var(--primary)}
 .tone.sel{box-shadow:0 0 0 3px var(--primary)}
@@ -228,7 +228,7 @@ function saveDraft(){ try{ profile.onboarding = computeOnboarding(); localStorag
 /* ---- reference lists ---- */
 var COUNTRIES = ["United States","United Kingdom","Canada","Australia","Germany","France","Spain","Italy","Netherlands","Ireland","Portugal","Poland","Sweden","Norway","Denmark","Finland","Belgium","Austria","Switzerland","Greece","Czechia","Romania","Hungary","Israel","Turkey","India","Pakistan","Bangladesh","Philippines","Indonesia","Malaysia","Singapore","Thailand","Vietnam","Japan","South Korea","China","Hong Kong","Taiwan","United Arab Emirates","Saudi Arabia","Egypt","Morocco","Nigeria","Kenya","Ghana","South Africa","Brazil","Mexico","Argentina","Chile","Colombia","Peru","New Zealand","Ukraine","Russia","Other"];
 var LANGUAGES = ["English","Spanish","Portuguese","French","German","Italian","Dutch","Polish","Russian","Ukrainian","Arabic","Hebrew","Turkish","Hindi","Urdu","Bengali","Tamil","Indonesian","Malay","Tagalog","Thai","Vietnamese","Mandarin Chinese","Cantonese","Japanese","Korean","Greek","Swedish","Norwegian","Danish","Finnish","Romanian","Hungarian","Czech","Other"];
-var GENDERS = ["Female","Male","Other","Prefer not to say"];
+var GENDERS = ["Female","Male"];
 /* Official 10-step Monk Skin Tone (MST) Scale - https://skintone.google */
 var TONES = [
   {id:1,c:"#F6EDE4"},{id:2,c:"#F3E7DB"},{id:3,c:"#F7EAD0"},{id:4,c:"#EADABA"},{id:5,c:"#D7BD96"},
@@ -355,7 +355,7 @@ var steps = [
     valid:function(){ return A.skinTone!=null; }, optional:true },
 
   { key:'abilities', count:true, render:function(){
-      return head('Your work','What can you create?','Pick everything you\'re happy to do. You can change this later.')+
+      return head('Your content','What can you create?','Pick everything you\'re happy to do. You can change this later.')+
         "<div class='qz-body opts' id='abil'>"+ABILITIES.map(function(a){return optCard(a.t,a.d,A.abilities.indexOf(a.id)>-1,a.id);}).join('')+"</div>";
     },
     bind:function(){ document.getElementById('abil').addEventListener('click',function(e){ var c=e.target.closest('.opt'); if(!c)return; var id=c.getAttribute('data-val'); var i=A.abilities.indexOf(id); if(i>-1){A.abilities.splice(i,1);c.classList.remove('sel');}else{A.abilities.push(id);c.classList.add('sel');} saveDraft(); refreshNext(); }); },
