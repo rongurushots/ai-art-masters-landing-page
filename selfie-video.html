@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Selfie Video - by AI Art Masters</title>
-<meta name="description" content="Record a short selfie video and earn for every accepted clip. Open worldwide, any phone.">
+<meta name="description" content="Record a short selfie video and earn coins for every approved clip. Free to join, paid in gift cards.">
 <!--
   GENERIC MISSION LANDING - Selfie Video (a permanent parent-run mission).
   Built on the sub-brand landing system (sub-brand-template.html + brand/aam.css).
@@ -18,9 +18,19 @@
   .lock .by{font-family:var(--fb);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
   .subic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .foot-mark{display:flex;align-items:center;gap:8px}.foot-mark svg{width:22px;height:18px}
+  /* photo-forward hero mock: a real clip, approved, earning coins (no exchange rate, no threshold) */
+  .shot{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1/1;background:color-mix(in srgb,var(--primary) 12%,#fff)}
+  .shot img{width:100%;height:100%;object-fit:cover;display:block}
+  .shot .stamp{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 11px 4px;font-family:var(--fd);font-weight:800;font-size:12px;color:var(--green-ink);box-shadow:0 3px 10px rgba(36,31,71,.16)}
+  .shot .stamp svg{width:13px;height:13px}
+  .mrow2{display:flex;align-items:center;justify-content:space-between;margin-top:15px}
+  .mrow2 .earn{display:inline-flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:800;font-size:19px;color:var(--ink)}
+  .mrow2 .earn .coin{width:19px;height:19px}
+  .mrow2 .cashb{background:var(--primary);color:#fff;font-family:var(--fd);font-weight:800;font-size:13px;border-radius:11px;padding:9px 15px 8px;box-shadow:0 3px 0 var(--primary-deep)}
+  .wallet-line{margin-top:10px;font-family:var(--fm);font-size:12px;color:var(--ink3)}
 </style>
 </head>
-<body class="theme-sub" style="--primary:#4F5BFF;--primary-deep:#3B45D6;--accent:#FF4D94;--accent-deep:#D62E73;--hl:var(--primary)">
+<body class="theme-sub" style="--primary:#0FB5AE;--primary-deep:#0A8F89;--accent:#F4B942;--accent-deep:#C77B00;--hl:var(--primary)">
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');}catch(e){}</script>
 
 <!-- subject icon: a video camera mark -->
@@ -35,23 +45,16 @@
 <header class="hero wrap">
   <div class="hero-in">
     <div class="hcopy">
-      <div class="badge"><span class="d"></span> Your videos pay</div>
       <h1>Get paid to record a <span class="hl">short video.</span></h1>
-      <p class="sub">A short selfie video, recorded at home on your phone, can earn real money. Record it, send it in, and earn coins for every accepted clip. No special skills needed.</p>
+      <p class="sub">A short selfie video, recorded at home on your phone, can earn you coins. Record it, send it in, and earn for every approved clip. No special skills needed.</p>
       <div class="cta-row"><a class="btn btn-p btn-lg" href="welcome-quiz.html">Start earning</a><a class="btn btn-g btn-lg" href="#missions">See missions</a></div>
       <div class="coinline">Free to join, paid in gift cards.</div>
     </div>
     <div class="mock">
       <div class="phone"><div class="scr">
-        <div class="ph-top"><span class="ph-bal">Example wallet</span><span class="ph-bal" style="color:var(--primary)">Lvl 3</span></div>
-        <div class="ph-num">40 <span class="c">coins</span></div>
-        <div class="ph-sub">40 coins = $40</div>
-        <div class="ph-meter"><span></span></div>
-        <div class="ph-mrow"><span>40 / 50 to cash out</span><span>Cash out at 50</span></div>
-        <div class="ph-btn">Cash out at $50</div>
-        <div class="ph-rows">
-          <div class="ph-r"><span class="ph-av" style="background:var(--primary)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ph-nm">Video clip accepted</span><span class="ph-pay">+8</span></div>
-        </div>
+        <div class="shot"><img src="design/selfie-video-thumb.png" alt="A selfie video submitted to the mission" onerror="this.style.display='none'"><span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Approved</span></div>
+        <div class="mrow2"><span class="earn"><svg class="coin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9.2" fill="#E0951A"/><circle cx="10" cy="10" r="8.3" fill="#FFC22E"/><circle cx="10" cy="10" r="6.3" fill="#FFD84D"/><ellipse cx="7.9" cy="9" rx=".75" ry="1" fill="#D98A0A"/><ellipse cx="12.1" cy="9" rx=".75" ry="1" fill="#D98A0A"/><path d="M7.8 11.4 Q10 13.2 12.2 11.4" fill="none" stroke="#D98A0A" stroke-width="1.2" stroke-linecap="round"/></svg>+8 coins</span><span class="cashb">Cash out</span></div>
+        <div class="wallet-line">Wallet balance · 40 coins</div>
       </div></div>
     </div>
   </div>
@@ -62,16 +65,16 @@
   <div class="steps stagger">
     <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.2l5-2.6v8.8l-5-2.6z"/></svg></div><h3>Record a clip</h3><p>Open the mission, read the short guide, and record a quick selfie video on your phone.</p></div>
     <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></div><h3>Send it in</h3><p>Add your clip to the mission. A real person checks each one against a clear checklist.</p></div>
-    <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 11h6"/></svg></div><h3>Cash out</h3><p>Every accepted clip earns coins. 1 coin is $1. From 50 coins, redeem a gift card.</p></div>
+    <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 11h6"/></svg></div><h3>Cash out</h3><p>Every approved clip earns coins. Cash out for a gift card whenever you like.</p></div>
   </div>
 </section>
 
 <section class="sec wrap" id="missions">
   <div class="sec-head reveal"><div class="sec-eye">Open missions</div><h2 class="sec-h2">Missions open now</h2><p class="sec-sub">Each mission has a set payout. Pick any that fit you - you can do more than one.</p></div>
   <div class="briefs stagger">
-    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Say a few words</h4><div class="prow"><span class="ppay">$8 / clip</span><span class="go">&#8599;</span></div></a>
-    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Read a short line</h4><div class="prow"><span class="ppay">$8 / clip</span><span class="go">&#8599;</span></div></a>
-    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Show different angles</h4><div class="prow"><span class="ppay">$10 / clip</span><span class="go">&#8599;</span></div></a>
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Say a few words</h4><div class="prow"><span class="ppay">8 coins / clip</span></div></a>
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Read a short line</h4><div class="prow"><span class="ppay">8 coins / clip</span></div></a>
+    <a class="brief solid" href="welcome-quiz.html"><span class="top-ic"><svg class="subic"><use href="#ic-subject"/></svg></span><h4>Show different angles</h4><div class="prow"><span class="ppay">10 coins / clip</span></div></a>
   </div>
 </section>
 
@@ -81,13 +84,13 @@
   <div class="faq stagger">
     <details><summary>What do I need to take part?<span class="pm">+</span></summary><div class="faq-a">Just a smartphone. Every mission has a short, clear guide, so you always know what to record and how.</div></details>
     <details><summary>How long is each video?<span class="pm">+</span></summary><div class="faq-a">Most clips are short - often 10 to 60 seconds. The mission tells you exactly what is needed before you start.</div></details>
-    <details><summary>How do I get paid?<span class="pm">+</span></summary><div class="faq-a">Accepted clips earn coins. 1 coin is $1. From 50 coins you can redeem a gift card from a well-known brand, delivered to your email.</div></details>
+    <details><summary>How do I get paid?<span class="pm">+</span></summary><div class="faq-a">Approved clips earn coins. Cash out whenever you like for a gift card from a well-known brand, delivered to your email.</div></details>
     <details><summary>Is my video kept private?<span class="pm">+</span></summary><div class="faq-a">You choose what to send, we only use it for the mission you pick, we never sell your data, and you can delete it anytime.</div></details>
   </div>
 </section>
 
 <section class="final wrap">
-  <h2>Your next short video can <span class="hl">earn you money.</span></h2>
+  <h2>Your next short video can <span class="hl">earn you coins.</span></h2>
   <p>Make a free account and start earning from the clips you record.</p>
   <a class="btn btn-p btn-lg" href="welcome-quiz.html">Create your free account</a>
 </section>
